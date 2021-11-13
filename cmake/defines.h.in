@@ -1,0 +1,85 @@
+// Copyright 2021 Nikita Fediuchin. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#pragma once
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define __CONF__
+
+#define CONF_VERSION_MAJOR @conf_VERSION_MAJOR@
+#define CONF_VERSION_MINOR @conf_VERSION_MINOR@
+#define CONF_VERSION_PATCH @conf_VERSION_PATCH@
+
+typedef enum ConfResult
+{
+	SUCCESS_CONF_RESULT = 0,
+	FAILED_TO_ALLOCATE_CONF_RESULT = 1,
+	FAILED_TO_REALLOCATE_CONF_RESULT = 2,
+	FAILED_TO_OPEN_FILE_CONF_RESULT = 3,
+	BAD_KEY_CONF_RESULT = 4,
+	BAD_VALUE_CONF_RESULT = 5,
+    BAD_ITEM_CONF_RESULT = 6,
+	CONF_RESULT_COUNT = 7,
+} ConfResult;
+
+typedef enum ConfDataType
+{
+	INTEGER_CONF_DATA_TYPE = 0,
+    FLOATING_CONF_DATA_TYPE = 1,
+    BOOLEAN_CONF_DATA_TYPE = 2,
+	STRING_CONF_DATA_TYPE = 3,
+	CONF_DATA_TYPE_COUNT = 4,
+} ConfDataType;
+
+typedef union ConfValue
+{
+    int64_t integer;
+    double floating;
+    bool boolean;
+    const char* string;
+} ConfValue;
+
+typedef struct ConfItem
+{
+    const char* key;
+    size_t keySize;
+    ConfValue value;
+    ConfDataType type;
+} ConfItem;
+
+inline static const char* confResultToString(
+	ConfResult result)
+{
+	switch (result)
+	{
+	default:
+		return "Unknown json result";
+	case SUCCESS_CONF_RESULT:
+		return "Success";
+	case FAILED_TO_ALLOCATE_CONF_RESULT:
+    	return "Failed to allocate";
+    case FAILED_TO_REALLOCATE_CONF_RESULT:
+       	return "Failed to reallocate";
+    case FAILED_TO_OPEN_FILE_CONF_RESULT:
+        return "Failed to open file";
+    case BAD_KEY_CONF_RESULT:
+        return "Bad key";
+    case BAD_VALUE_CONF_RESULT:
+        return "Bad value";
+    case BAD_ITEM_CONF_RESULT:
+        return "Bad item";
+	}
+}
