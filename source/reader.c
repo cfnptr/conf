@@ -16,6 +16,7 @@
 #include "conf/file.h"
 
 #include <math.h>
+#include <ctype.h>
 #include <assert.h>
 #include <string.h>
 
@@ -204,70 +205,73 @@ inline static ConfResult createConfItems(
 			bool converted = false;
 			char* endChar = NULL;
 
-			int64_t integer = strtoll(
-				buffer,
-				&endChar,
-				10);
-
-			if (buffer != endChar)
+			if (isdigit(currentChar) != 0)
 			{
-				char end = *endChar;
+				int64_t integer = strtoll(
+					buffer,
+					&endChar,
+					10);
 
-				if (end == '\n')
+				if (buffer != endChar)
 				{
-					item.value.integer = integer;
-					item.type = INTEGER_CONF_DATA_TYPE;
-					converted = true;
-				}
-				else if (end == '.')
-				{
-					endChar++;
+					char end = *endChar;
 
-					char* fractionEndChar;
-
-					int64_t fraction = strtoll(
-						endChar,
-						&fractionEndChar,
-						10);
-
-					if (endChar != fractionEndChar &&
-						*fractionEndChar == '\n')
+					if (end == '\n')
 					{
-						item.value.floating = (double)integer + (double)fraction /
-							pow(10, (double)(fractionEndChar - endChar));
-						item.type = FLOATING_CONF_DATA_TYPE;
+						item.value.integer = integer;
+						item.type = INTEGER_CONF_DATA_TYPE;
 						converted = true;
+					}
+					else if (end == '.' && isdigit(*(endChar + 1)) != 0)
+					{
+						endChar++;
+
+						char* fractionEndChar;
+
+						int64_t fraction = strtoll(
+							endChar,
+							&fractionEndChar,
+							10);
+
+						if (endChar != fractionEndChar &&
+							*fractionEndChar == '\n')
+						{
+							item.value.floating = (double)integer + (double)fraction /
+								pow(10, (double)(fractionEndChar - endChar));
+							item.type = FLOATING_CONF_DATA_TYPE;
+							converted = true;
+						}
 					}
 				}
 			}
 
 			if (converted == false)
 			{
-				if (compareNoCase(buffer, "true", 4) == 0)
+				if (compareNoCase(buffer, "true\n", 5) == 0)
 				{
 					item.value.boolean = true;
 					item.type = BOOLEAN_CONF_DATA_TYPE;
 					converted = true;
 				}
-				else if (compareNoCase(buffer, "false", 5) == 0)
+				else if (compareNoCase(buffer, "false\n", 6) == 0)
 				{
 					item.value.boolean = false;
 					item.type = BOOLEAN_CONF_DATA_TYPE;
 					converted = true;
 				}
-				else if (compareNoCase(buffer, "inf", 3) == 0)
+				else if (compareNoCase(buffer, "inf\n", 4) == 0)
 				{
 					item.value.floating = INFINITY;
 					item.type = FLOATING_CONF_DATA_TYPE;
 					converted = true;
 				}
-				else if (compareNoCase(buffer, "-inf", 4) == 0)
+				else if (compareNoCase(buffer, "-inf\n", 5) == 0)
 				{
 					item.value.floating = -INFINITY;
 					item.type = FLOATING_CONF_DATA_TYPE;
 					converted = true;
 				}
-				else if (compareNoCase(buffer, "nan", 3) == 0)
+				else if (compareNoCase(buffer, "nan\n", 4) == 0)
 				{
 					item.value.floating = NAN;
 					item.type = FLOATING_CONF_DATA_TYPE;
