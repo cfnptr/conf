@@ -201,11 +201,12 @@ inline static ConfResult createConfItems(
 			}
 
 			buffer[bufferSize] = '\n';
+			char firstChar = buffer[0];
 
 			bool converted = false;
 			char* endChar = NULL;
 
-			if (isdigit(currentChar) != 0)
+			if (isdigit(firstChar) != 0 || firstChar == '-')
 			{
 				int64_t integer = strtoll(
 					buffer,
@@ -236,8 +237,10 @@ inline static ConfResult createConfItems(
 						if (endChar != fractionEndChar &&
 							*fractionEndChar == '\n')
 						{
-							item.value.floating = (double)integer + (double)fraction /
+							double half = (double)fraction /
 								pow(10, (double)(fractionEndChar - endChar));
+							item.value.floating = integer > 0 ?
+								(double)integer + half : (double)integer - half;
 							item.type = FLOATING_CONF_DATA_TYPE;
 							converted = true;
 						}
