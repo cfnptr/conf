@@ -10,7 +10,7 @@ endif ()
 
 project(conf
 	VERSION 1.0.0
-	DESCRIPTION "Simple configuration file library"
+	DESCRIPTION "Simple and fast configuration file library"
 	HOMEPAGE_URL "https://github.com/cfnptr/json"
 	LANGUAGES C)
 
@@ -22,8 +22,7 @@ configure_file(
 	conf/defines.h)
 
 add_library(conf STATIC
-	source/reader.c
-	source/writer.c)
+	source/reader.c)
 target_include_directories(conf PUBLIC
 	${PROJECT_BINARY_DIR}
 	${PROJECT_SOURCE_DIR}/include)

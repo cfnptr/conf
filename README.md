@@ -1,7 +1,5 @@
-## Work in Progress!
-
 ## Features
-* Configuration file reading/writing
+* Configuration file reading
 
 ## Supported operating systems
 * Ubuntu
@@ -16,7 +14,6 @@
 ```
 git clone https://github.com/cfnptr/conf
 cd conf
-git submodule update --init --recursive
 ```
 
 ## Building
@@ -37,10 +34,10 @@ minus Infinity=-INF
 Oh nooo=NaN
 
 # Also some booleans
-is planet round=true
+is.planet.round=true
 caseSensitive=False
 
-# And everything else is string
+# And everything else is strings
 hackingExploit=Hello world!
 Not recommended key example?= Yes :)
 ```

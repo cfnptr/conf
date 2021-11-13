@@ -23,8 +23,8 @@ typedef struct ConfReader* ConfReader;
  * Returns operation conf result.
  *
  * filePath - conf file path string.
- * confReader - conf reader instance.
- * errorLine - error result line index.
+ * confReader - pointer to conf reader instance.
+ * errorLine - pointer to error line index.
  */
 ConfResult createConfFileReader(
 	const char* filePath,
@@ -39,7 +39,7 @@ void destroyConfReader(
 	ConfReader confReader);
 
 /*
- * Get specified conf item type.
+ * Get specified item type.
  * Returns true if item is found.
  *
  * confReader - conf reader instance.
@@ -52,7 +52,7 @@ bool getConfReaderType(
 	ConfDataType* type);
 
 /*
- * Get specified conf item integer value by key.
+ * Get specified item integer value by key.
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
@@ -65,7 +65,7 @@ bool getConfReaderInteger(
 	int64_t* value);
 
 /*
- * Get specified conf item floating value by key.
+ * Get specified item floating value by key.
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
@@ -78,7 +78,7 @@ bool getConfReaderFloating(
 	double* value);
 
 /*
- * Get specified conf item boolean value by key.
+ * Get specified item boolean value by key.
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
@@ -91,7 +91,7 @@ bool getConfReaderBoolean(
 	bool* value);
 
 /*
- * Get specified conf item string value by key.
+ * Get specified item string value by key.
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
@@ -102,3 +102,5 @@ bool getConfReaderString(
 	ConfReader confReader,
 	const char* key,
 	const char** value);
+
+

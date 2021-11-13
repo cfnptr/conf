@@ -66,7 +66,7 @@ inline static const char* confResultToString(
 	switch (result)
 	{
 	default:
-		return "Unknown json result";
+		return "Unknown conf result";
 	case SUCCESS_CONF_RESULT:
 		return "Success";
 	case FAILED_TO_ALLOCATE_CONF_RESULT:
