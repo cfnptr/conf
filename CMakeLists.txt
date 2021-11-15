@@ -17,12 +17,16 @@ project(conf
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED TRUE)
 
+add_subdirectory(libraries/mpio)
+
 configure_file(
 	cmake/defines.h.in
 	conf/defines.h)
 
 add_library(conf STATIC
 	source/reader.c)
+target_link_libraries(conf PUBLIC
+	mpio)
 target_include_directories(conf PUBLIC
 	${PROJECT_BINARY_DIR}
 	${PROJECT_SOURCE_DIR}/include)

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "conf/reader.h"
-#include "conf/file.h"
+#include "mpio/file.h"
 
 #include <math.h>
 #include <ctype.h>

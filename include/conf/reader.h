@@ -23,8 +23,8 @@ typedef struct ConfReader* ConfReader;
  * Returns operation conf result.
  *
  * filePath - conf file path string.
- * confReader - pointer to conf reader instance.
- * errorLine - pointer to error line index.
+ * confReader - pointer to the conf reader instance.
+ * errorLine - pointer to the error line index.
  */
 ConfResult createConfFileReader(
 	const char* filePath,
@@ -102,5 +102,3 @@ bool getConfReaderString(
 	ConfReader confReader,
 	const char* key,
 	const char** value);
-
-
