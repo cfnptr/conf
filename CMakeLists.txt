@@ -25,9 +25,16 @@ configure_file(
 	cmake/defines.h.in
 	conf/defines.h)
 
+set(CONF_LINK_LIBRARIES mpio)
+
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+	list(APPEND CMAKE_SYSTEM_NAME m)
+endif()
+
 add_library(conf STATIC
 	source/reader.c)
-target_link_libraries(conf PUBLIC mpio)
+target_link_libraries(conf PUBLIC
+	${CONF_LINK_LIBRARIES})
 target_include_directories(conf PUBLIC
 	${PROJECT_BINARY_DIR}
 	${PROJECT_SOURCE_DIR}/include)
