@@ -25,7 +25,7 @@
 #elif _WIN32
 #define compareNoCase(a, b, l) _strnicmp(a, b, l)
 #else
-# Unknown operating system
+#error Unknown operating system
 #endif
 
 struct ConfReader
@@ -239,8 +239,8 @@ inline static ConfResult createConfItems(
 						{
 							double half = (double)fraction /
 								pow(10, (double)(fractionEndChar - endChar));
-							item.value.floating = integer > 0 ?
-								(double)integer + half : (double)integer - half;
+							item.value.floating = firstChar == '-' ?
+								(double)integer - half : (double)integer + half;
 							item.type = FLOATING_CONF_DATA_TYPE;
 							converted = true;
 						}
@@ -380,7 +380,7 @@ inline static ConfResult createConfItems(
 			buffer = newBuffer;
 		}
 
-		buffer[bufferSize++] = currentChar;
+		buffer[bufferSize++] = (char)currentChar;
 	}
 
 	free(buffer);

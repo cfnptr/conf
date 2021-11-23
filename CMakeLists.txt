@@ -17,6 +17,8 @@ project(conf
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED TRUE)
 
+option(CONF_ENABLE_TESTING "Enable tests building" ON)
+
 add_subdirectory(libraries/mpio)
 
 configure_file(
@@ -25,8 +27,15 @@ configure_file(
 
 add_library(conf STATIC
 	source/reader.c)
-target_link_libraries(conf PUBLIC
-	mpio)
+target_link_libraries(conf PUBLIC mpio)
 target_include_directories(conf PUBLIC
 	${PROJECT_BINARY_DIR}
 	${PROJECT_SOURCE_DIR}/include)
+
+if (CONF_ENABLE_TESTING)
+	enable_testing()
+
+	add_executable(TestConfReader tests/test_reader.c)
+	target_link_libraries(TestConfReader PUBLIC conf)
+	add_test(NAME TestConfReader COMMAND TestConfReader)
+endif ()
