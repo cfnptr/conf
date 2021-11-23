@@ -28,7 +28,7 @@ configure_file(
 set(CONF_LINK_LIBRARIES mpio)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-	list(APPEND CMAKE_SYSTEM_NAME m)
+	list(APPEND CONF_LINK_LIBRARIES m)
 endif()
 
 add_library(conf STATIC
