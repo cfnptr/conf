@@ -228,8 +228,8 @@ inline static bool testInteger(
 
 	if (value != integer)
 	{
-		printf("testInteger: incorrect value "
-			"(%lld instead of %s).\n",
+		printf("testInteger: incorrect value. "
+			"(%lld instead of %s)\n",
 			integer,
 			stringValue);
 		destroyConfReader(confReader);
@@ -299,8 +299,8 @@ inline static bool testFloating(
 
 	if (value != floating)
 	{
-		printf("testFloating: incorrect value "
-			"(%f instead of %s).\n",
+		printf("testFloating: incorrect value. "
+			"(%f instead of %s)\n",
 			floating,
 			stringValue);
 		destroyConfReader(confReader);
@@ -364,8 +364,8 @@ inline static bool testBoolean(
 
 	if (value != boolean)
 	{
-		printf("testBoolean: incorrect value "
-			"(%d instead of %s).\n",
+		printf("testBoolean: incorrect value. "
+			"(%d instead of %s)\n",
 			boolean,
 			stringValue);
 		destroyConfReader(confReader);
@@ -424,8 +424,8 @@ inline static bool testKey(const char* key)
 
 	if (integer != 123)
 	{
-		printf("testFloating: incorrect value "
-			"(%lld instead of 123).\n",
+		printf("testFloating: incorrect value. "
+			"(%lld instead of 123)\n",
 			integer);
 		destroyConfReader(confReader);
 		return false;
@@ -487,8 +487,8 @@ inline static bool testString(
 
 	if (strcmp(value, string) != 0)
 	{
-		printf("testString: incorrect value "
-			"(%s instead of %s).\n",
+		printf("testString: incorrect value. "
+			"(%s instead of %s)\n",
 			string,
 			value);
 		destroyConfReader(confReader);
@@ -544,15 +544,16 @@ inline static bool testConfig()
 
 	if (result == false)
 	{
-		printf("testConfig: failed to get value. (integer)\n");
+		printf("testConfig: failed to get value. "
+			"(key: integer)\n");
 		destroyConfReader(confReader);
 		return false;
 	}
 
 	if (integer != 123456789)
 	{
-		printf("testConfig: incorrect value "
-			"(%lld instead of 123456789).\n",
+		printf("testConfig: incorrect value. "
+			"(%lld instead of 123456789)\n",
 			integer);
 		destroyConfReader(confReader);
 		return false;
@@ -567,15 +568,16 @@ inline static bool testConfig()
 
 	if (result == false)
 	{
-		printf("testConfig: failed to get value. (DOUBLE)\n");
+		printf("testConfig: failed to get value. "
+			"(key: DOUBLE)\n");
 		destroyConfReader(confReader);
 		return false;
 	}
 
 	if (floating != 0.123)
 	{
-		printf("testConfig: incorrect value "
-			"(%f instead of 0.123).\n",
+		printf("testConfig: incorrect value. "
+			"(%f instead of 0.123)\n",
 			floating);
 		destroyConfReader(confReader);
 		return false;
@@ -590,15 +592,16 @@ inline static bool testConfig()
 
 	if (result == false)
 	{
-		printf("testConfig: failed to get value. (Boolean)\n");
+		printf("testConfig: failed to get value. "
+			"(key: Boolean)\n");
 		destroyConfReader(confReader);
 		return false;
 	}
 
 	if (boolean != true)
 	{
-		printf("testConfig: incorrect value "
-			"(%d instead of True).\n",
+		printf("testConfig: incorrect value. "
+			"(%d instead of True)\n",
 			boolean);
 		destroyConfReader(confReader);
 		return false;
@@ -613,15 +616,16 @@ inline static bool testConfig()
 
 	if (result == false)
 	{
-		printf("testConfig: failed to get value. (string )\n");
+		printf("testConfig: failed to get value. "
+			"(key: string )\n");
 		destroyConfReader(confReader);
 		return false;
 	}
 
 	if (strcmp(string, "Hello world!") != 0)
 	{
-		printf("testConfig: incorrect value "
-			"(%s instead of Hello world!).\n",
+		printf("testConfig: incorrect value. "
+			"(%s instead of Hello world!)\n",
 			string);
 		destroyConfReader(confReader);
 		return false;
@@ -691,7 +695,7 @@ int main()
 	result &= testString("\tTab symbol test");
 	result &= testString("looksLikeKey");
 	result &= testString("PLEASE DON'T SCREAM");
-	result &= testKey("!@#$%^&*()_+-{}[]:|\";'\\<>?,./");
+	result &= testString("!@#$%^&*()_+-{}[]:|\";'\\<>?,./");
 	result &= testConfig();
 	return result ? EXIT_SUCCESS : EXIT_FAILURE;
 }

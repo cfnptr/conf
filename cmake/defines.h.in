@@ -13,9 +13,6 @@
 // limitations under the License.
 
 #pragma once
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdbool.h>
 
 #define __CONF__
 
@@ -31,55 +28,37 @@ typedef enum ConfResult
 	FAILED_TO_OPEN_FILE_CONF_RESULT = 3,
 	BAD_KEY_CONF_RESULT = 4,
 	BAD_VALUE_CONF_RESULT = 5,
-    BAD_ITEM_CONF_RESULT = 6,
+	BAD_ITEM_CONF_RESULT = 6,
 	CONF_RESULT_COUNT = 7,
 } ConfResult;
 
 typedef enum ConfDataType
 {
 	INTEGER_CONF_DATA_TYPE = 0,
-    FLOATING_CONF_DATA_TYPE = 1,
-    BOOLEAN_CONF_DATA_TYPE = 2,
+	FLOATING_CONF_DATA_TYPE = 1,
+	BOOLEAN_CONF_DATA_TYPE = 2,
 	STRING_CONF_DATA_TYPE = 3,
 	CONF_DATA_TYPE_COUNT = 4,
 } ConfDataType;
 
-typedef union ConfValue
-{
-    int64_t integer;
-    double floating;
-    bool boolean;
-    const char* string;
-} ConfValue;
-
-typedef struct ConfItem
-{
-    const char* key;
-    size_t keySize;
-    ConfValue value;
-    ConfDataType type;
-} ConfItem;
+static const char* const confResultStrings[CONF_RESULT_COUNT] = {
+	"Success",
+	"Failed to allocate",
+	"Failed to reallocate",
+	"Failed to open file",
+	"Bad key",
+	"Bad value",
+	"bad item",
+};
 
 inline static const char* confResultToString(
 	ConfResult result)
 {
-	switch (result)
+	if (result < SUCCESS_CONF_RESULT ||
+		result >= CONF_RESULT_COUNT)
 	{
-	default:
 		return "Unknown conf result";
-	case SUCCESS_CONF_RESULT:
-		return "Success";
-	case FAILED_TO_ALLOCATE_CONF_RESULT:
-    	return "Failed to allocate";
-    case FAILED_TO_REALLOCATE_CONF_RESULT:
-       	return "Failed to reallocate";
-    case FAILED_TO_OPEN_FILE_CONF_RESULT:
-        return "Failed to open file";
-    case BAD_KEY_CONF_RESULT:
-        return "Bad key";
-    case BAD_VALUE_CONF_RESULT:
-        return "Bad value";
-    case BAD_ITEM_CONF_RESULT:
-        return "Bad item";
 	}
+
+	return confResultStrings[result];
 }

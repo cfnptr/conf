@@ -28,6 +28,22 @@
 #error Unknown operating system
 #endif
 
+typedef union ConfValue
+{
+	int64_t integer;
+	double floating;
+	bool boolean;
+	const char* string;
+} ConfValue;
+
+typedef struct ConfItem
+{
+	const char* key;
+	size_t keySize;
+	ConfValue value;
+	ConfDataType type;
+} ConfItem;
+
 struct ConfReader
 {
 	ConfItem* items;
@@ -396,7 +412,7 @@ inline static ConfResult createConfItems(
 	return SUCCESS_CONF_RESULT;
 }
 
-static int onGetNextChar(void* handle)
+static int onNextFileChar(void* handle)
 {
 	return getc(handle);
 }
@@ -433,7 +449,7 @@ ConfResult createConfFileReader(
 	size_t itemCount;
 
 	ConfResult result = createConfItems(
-		onGetNextChar,
+		onNextFileChar,
 		file,
 		&items,
 		&itemCount,

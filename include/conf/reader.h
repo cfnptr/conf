@@ -15,6 +15,10 @@
 #pragma once
 #include "conf/defines.h"
 
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
 // Conf reader instance handle.
 typedef struct ConfReader* ConfReader;
 
@@ -43,7 +47,7 @@ void destroyConfReader(
  * Returns true if item is found.
  *
  * confReader - conf reader instance.
- * key - item search key.
+ * key - string item search key.
  * type - pointer to the type value.
  */
 bool getConfReaderType(
@@ -56,7 +60,7 @@ bool getConfReaderType(
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
- * key - item search key.
+ * key - string item search key.
  * value - pointer to the value.
  */
 bool getConfReaderInteger(
@@ -69,7 +73,7 @@ bool getConfReaderInteger(
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
- * key - item search key.
+ * key - string item search key.
  * value - pointer to the value.
  */
 bool getConfReaderFloating(
@@ -82,7 +86,7 @@ bool getConfReaderFloating(
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
- * key - item search key.
+ * key - string item search key.
  * value - pointer to the value.
  */
 bool getConfReaderBoolean(
@@ -95,7 +99,7 @@ bool getConfReaderBoolean(
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
- * key - item search key.
+ * key - string item search key.
  * value - pointer to the value.
  */
 bool getConfReaderString(

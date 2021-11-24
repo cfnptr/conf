@@ -32,7 +32,8 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 add_library(conf STATIC
-	source/reader.c)
+	source/reader.c
+	source/writer.c)
 target_link_libraries(conf PUBLIC
 	${CONF_LINK_LIBRARIES})
 target_include_directories(conf PUBLIC
@@ -45,4 +46,8 @@ if (CONF_ENABLE_TESTING)
 	add_executable(TestConfReader tests/test_reader.c)
 	target_link_libraries(TestConfReader PUBLIC conf)
 	add_test(NAME TestConfReader COMMAND TestConfReader)
+
+	add_executable(TestConfWrite tests/test_writer.c)
+	target_link_libraries(TestConfWrite PUBLIC conf)
+	add_test(NAME TestConfWrite COMMAND TestConfWrite)
 endif ()
