@@ -1,5 +1,8 @@
 ## Features
-* Configuration file reading
+* Configuration file reading/writing
+* Simple config syntax (similar to .ini)
+* Automatic variable parsing (int, float, bool)
+* Built-in config syntax validation
 
 ## Supported operating systems
 * Ubuntu
@@ -22,6 +25,12 @@ git submodule update --init --recursive
 cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/
 cmake --build build/
 ```
+
+### CMake options
+| Name                | Description                | Default value |
+| ------------------- | -------------------------- | ------------- |
+| CONF_BUILD_SHARED   | Build CONF shared library  | ON            |
+| CONF_ENABLE_TESTING | Enable CONF tests building | ON            |
 
 ## Example conf file
 ```
