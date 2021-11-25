@@ -15,7 +15,7 @@ inline static bool createTestFile(
 
 	if (file == NULL)
 	{
-		printf("Failed to open test file.");
+		printf("Failed to open test file.\n");
 		return false;
 	}
 
@@ -28,7 +28,7 @@ inline static bool createTestFile(
 
 	if (writeResult != contentLength)
 	{
-		printf("Failed to write test file.");
+		printf("Failed to write test file.\n");
 		fclose(file);
 		return false;
 	}
@@ -42,7 +42,7 @@ inline static bool removeTestFile()
 
 	if (result != 0)
 	{
-		printf("Failed to remove test file.");
+		printf("Failed to remove test file.\n");
 		return false;
 	}
 

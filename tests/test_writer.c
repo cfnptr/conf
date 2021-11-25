@@ -15,7 +15,7 @@ inline static bool compareTestFile(
 
 	if (file == NULL)
 	{
-		printf("Failed to open test file.");
+		printf("Failed to open test file.\n");
 		return false;
 	}
 
@@ -26,7 +26,7 @@ inline static bool compareTestFile(
 
 	if (result != 0)
 	{
-		printf("Failed to seek test file end.");
+		printf("Failed to seek test file end.\n");
 		fclose(file);
 		return false;
 	}
@@ -35,7 +35,7 @@ inline static bool compareTestFile(
 
 	if (fileSize == 0)
 	{
-		printf("Zero size test file.");
+		printf("Zero size test file.\n");
 		fclose(file);
 		return false;
 	}
@@ -47,7 +47,7 @@ inline static bool compareTestFile(
 
 	if (result != 0)
 	{
-		printf("Failed to seek test file start.");
+		printf("Failed to seek test file start.\n");
 		fclose(file);
 		return false;
 	}
@@ -57,7 +57,7 @@ inline static bool compareTestFile(
 
 	if (data == NULL)
 	{
-		printf("Failed to allocate read buffer.");
+		printf("Failed to allocate read buffer.\n");
 		fclose(file);
 		return false;
 	}
@@ -70,13 +70,13 @@ inline static bool compareTestFile(
 
 	fclose(file);
 
-	if (readResult != fileSize)
+	if (readResult == 0)
 	{
-		printf("Failed to read test file.");
+		printf("Failed to read test file.\n");
 		return false;
 	}
 
-	data[fileSize] = '\0';
+	data[readResult] = '\0';
 
 	result = strcmp(
 		confData,
@@ -98,7 +98,7 @@ inline static bool removeTestFile()
 
 	if (result != 0)
 	{
-		printf("Failed to remove test file.");
+		printf("Failed to remove test file.\n");
 		return false;
 	}
 
