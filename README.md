@@ -1,3 +1,6 @@
+# CONF
+![CI](https://github.com/cfnptr/conf/actions/workflows/cmake.yml/badge.svg)
+
 ## Features
 * Configuration file reading/writing
 * Simple config syntax (similar to .ini)
