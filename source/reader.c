@@ -44,7 +44,7 @@ typedef struct ConfItem
 	ConfDataType type;
 } ConfItem;
 
-struct ConfReader
+struct ConfReader_T
 {
 	ConfItem* items;
 	size_t itemCount;
@@ -426,7 +426,7 @@ ConfResult createConfFileReader(
 	assert(errorLine != NULL);
 
 	ConfReader confReader = malloc(
-		sizeof(struct ConfReader));
+		sizeof(ConfReader_T));
 
 	if (confReader == NULL)
 	{
@@ -468,6 +468,14 @@ ConfResult createConfFileReader(
 
 	*_confReader = confReader;
 	return SUCCESS_CONF_RESULT;
+}
+ConfResult createConfDataReader(
+	const char* data,
+	ConfReader* confReader,
+	size_t* errorLine)
+{
+	// TODO:
+	abort();
 }
 
 void destroyConfReader(

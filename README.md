@@ -1,41 +1,41 @@
-# CONF
-![CI](https://github.com/cfnptr/conf/actions/workflows/cmake.yml/badge.svg)
+# CONF ![CI](https://github.com/cfnptr/conf/actions/workflows/cmake.yml/badge.svg)
+
+A library providing configuration file API for data reading and writing.
 
 ## Features
+
 * Configuration file reading/writing
-* Simple config syntax (similar to .ini)
+* Simple configuration syntax (similar to .ini)
 * Automatic variable parsing (int, float, bool)
-* Built-in config syntax validation
+* Built-in configuration syntax validation
 
 ## Supported operating systems
+
 * Ubuntu
 * MacOS
 * Windows
 
 ## Build requirements
+
 * C99 compiler
+* [Git 2.30+](https://git-scm.com/)
 * [CMake 3.10+](https://cmake.org/)
 
 ## Cloning
+
 ```
-git clone https://github.com/cfnptr/conf
-cd conf
-git submodule update --init --recursive
+git clone --recursive https://github.com/cfnptr/conf
 ```
 
-## Building
-```
-cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/
-cmake --build build/
-```
+## CMake options
 
-### CMake options
 | Name                | Description                | Default value |
-| ------------------- | -------------------------- | ------------- |
+|---------------------|----------------------------|---------------|
 | CONF_BUILD_SHARED   | Build CONF shared library  | ON            |
 | CONF_ENABLE_TESTING | Enable CONF tests building | ON            |
 
-## Example conf file
+## Example configuration
+
 ```
 # Conf comment syntax example
 integerValue=123
@@ -55,4 +55,5 @@ hackingExploit=Hello world!
 Not recommended key example?= Yes :)
 ```
 ## Third-party
+
 * [mpio](https://github.com/cfnptr/mpio/) (Apache-2.0 License)

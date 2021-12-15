@@ -18,7 +18,7 @@
 #include <math.h>
 #include <assert.h>
 
-struct ConfWriter
+struct ConfWriter_T
 {
 	FILE* file;
 };
@@ -31,7 +31,7 @@ ConfResult createConfFileWriter(
 	assert(_confWriter != NULL);
 
 	ConfWriter confWriter = malloc(
-		sizeof(struct ConfWriter));
+		sizeof(ConfWriter_T));
 
 	if (confWriter == NULL)
 		return FAILED_TO_ALLOCATE_CONF_RESULT;

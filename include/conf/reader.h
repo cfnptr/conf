@@ -19,12 +19,18 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-// Conf reader instance handle.
-typedef struct ConfReader* ConfReader;
+/*
+ * Conf reader structure.
+ */
+typedef struct ConfReader_T ConfReader_T;
+/*
+ * Conf reader instance.
+ */
+typedef ConfReader_T* ConfReader;
 
 /*
  * Create a new conf file reader instance.
- * Returns operation conf result.
+ * Returns operation Conf result.
  *
  * filePath - conf file path string.
  * confReader - pointer to the conf reader instance.
@@ -32,6 +38,18 @@ typedef struct ConfReader* ConfReader;
  */
 ConfResult createConfFileReader(
 	const char* filePath,
+	ConfReader* confReader,
+	size_t* errorLine);
+/*
+ * Create a new conf data reader instance.
+ * Returns operation Conf result.
+ *
+ * data - conf data string.
+ * confReader - pointer to the conf reader instance.
+ * errorLine - pointer to the error line index.
+ */
+ConfResult createConfDataReader(
+	const char* data,
 	ConfReader* confReader,
 	size_t* errorLine);
 

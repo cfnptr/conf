@@ -19,14 +19,20 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-// Conf writer instance handle.
-typedef struct ConfWriter* ConfWriter;
+/*
+ * Conf writer structure.
+ */
+typedef struct ConfWriter_T ConfWriter_T;
+/*
+ * Conf writer instance.
+ */
+typedef ConfWriter_T* ConfWriter;
 
 /*
  * Create a new conf file writer instance.
- * Returns operation conf result.
+ * Returns operation Conf result.
  *
- * filePath - conf file path string.
+ * filePath - file path string.
  * confWriter - pointer to the conf writer instance.
  */
 ConfResult createConfFileWriter(
@@ -37,8 +43,7 @@ ConfResult createConfFileWriter(
  * Destroy conf writer instance.
  * confWriter - conf writer instance or NULL.
  */
-void destroyConfWriter(
-	ConfWriter confWriter);
+void destroyConfWriter(ConfWriter confWriter);
 
 /*
  * Write specified comment to the file.

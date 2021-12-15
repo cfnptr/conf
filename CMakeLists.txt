@@ -28,9 +28,9 @@ configure_file(
 
 set(CONF_LINK_LIBRARIES mpio)
 
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+if (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	list(APPEND CONF_LINK_LIBRARIES m)
-endif()
+endif ()
 
 set(CONF_SOURCES
 	source/reader.c

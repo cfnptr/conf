@@ -1,7 +1,7 @@
 #include "conf/reader.h"
+#include "mpio/file.h"
 
 #include <math.h>
-#include <stdio.h>
 #include <string.h>
 
 #define TEST_FILE_NAME "testing-conf.txt"
@@ -9,7 +9,7 @@
 inline static bool createTestFile(
 	const char* content)
 {
-	FILE* file = fopen(
+	FILE* file = openFile(
 		TEST_FILE_NAME,
 		"w");
 
@@ -29,11 +29,11 @@ inline static bool createTestFile(
 	if (writeResult != contentLength)
 	{
 		printf("Failed to write test file.\n");
-		fclose(file);
+		closeFile(file);
 		return false;
 	}
 
-	fclose(file);
+	closeFile(file);
 	return true;
 }
 inline static bool removeTestFile()

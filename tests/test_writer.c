@@ -1,7 +1,7 @@
 #include "conf/writer.h"
+#include "mpio/file.h"
 
 #include <math.h>
-#include <stdio.h>
 #include <string.h>
 
 #define TEST_FILE_NAME "testing-conf.txt"
@@ -9,7 +9,7 @@
 inline static bool compareTestFile(
 	const char* confData)
 {
-	FILE* file = fopen(
+	FILE* file = openFile(
 		TEST_FILE_NAME,
 		"r");
 
@@ -19,7 +19,7 @@ inline static bool compareTestFile(
 		return false;
 	}
 
-	int result = fseek(
+	int result = seekFile(
 		file,
 		0,
 		SEEK_END);
@@ -27,20 +27,20 @@ inline static bool compareTestFile(
 	if (result != 0)
 	{
 		printf("Failed to seek test file end.\n");
-		fclose(file);
+		closeFile(file);
 		return false;
 	}
 
-	size_t fileSize = ftell(file);
+	size_t fileSize = tellFile(file);
 
 	if (fileSize == 0)
 	{
 		printf("Zero size test file.\n");
-		fclose(file);
+		closeFile(file);
 		return false;
 	}
 
-	result = fseek(
+	result = seekFile(
 		file,
 		0,
 		SEEK_SET);
@@ -48,7 +48,7 @@ inline static bool compareTestFile(
 	if (result != 0)
 	{
 		printf("Failed to seek test file start.\n");
-		fclose(file);
+		closeFile(file);
 		return false;
 	}
 
@@ -58,7 +58,7 @@ inline static bool compareTestFile(
 	if (data == NULL)
 	{
 		printf("Failed to allocate read buffer.\n");
-		fclose(file);
+		closeFile(file);
 		return false;
 	}
 
@@ -68,7 +68,7 @@ inline static bool compareTestFile(
 		fileSize,
 		file);
 
-	fclose(file);
+	closeFile(file);
 
 	if (readResult == 0)
 	{
