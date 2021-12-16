@@ -31,8 +31,8 @@ project(conf
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED TRUE)
 
-option(CONF_BUILD_SHARED "Build CONF shared library" ON)
-option(CONF_ENABLE_TESTING "Enable CONF tests building" ON)
+option(CONF_BUILD_SHARED "Build Conf shared library" ON)
+option(CONF_ENABLE_TESTING "Enable Conf tests building" ON)
 
 add_subdirectory(libraries/mpio)
 
