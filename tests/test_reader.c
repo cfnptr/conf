@@ -638,7 +638,7 @@ inline static bool testFileConfig()
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testFileConfig: incorrect result. "
-			   "(result: %s)\n",
+			"(result: %s)\n",
 			confResultToString(confResult));
 		return false;
 	}

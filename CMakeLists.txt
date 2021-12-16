@@ -25,7 +25,7 @@ endif ()
 project(conf
 	VERSION 1.1.0
 	DESCRIPTION "Simple and fast configuration file library"
-	HOMEPAGE_URL "https://github.com/cfnptr/json"
+	HOMEPAGE_URL "https://github.com/cfnptr/conf"
 	LANGUAGES C)
 
 set(CMAKE_C_STANDARD 99)
