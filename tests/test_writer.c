@@ -87,6 +87,7 @@ inline static bool compareTestFile(
 	if (readResult == 0)
 	{
 		printf("Failed to read test file.\n");
+		free(data);
 		return false;
 	}
 
