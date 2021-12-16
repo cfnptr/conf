@@ -25,15 +25,15 @@ struct ConfWriter_T
 
 ConfResult createConfFileWriter(
 	const char* filePath,
-	ConfWriter* _confWriter)
+	ConfWriter* confWriter)
 {
 	assert(filePath != NULL);
-	assert(_confWriter != NULL);
+	assert(confWriter != NULL);
 
-	ConfWriter confWriter = malloc(
+	ConfWriter confWriterInstance = malloc(
 		sizeof(ConfWriter_T));
 
-	if (confWriter == NULL)
+	if (confWriterInstance == NULL)
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 
 	FILE* file = openFile(
@@ -42,13 +42,13 @@ ConfResult createConfFileWriter(
 
 	if (file == NULL)
 	{
-		free(confWriter);
+		free(confWriterInstance);
 		return FAILED_TO_OPEN_FILE_CONF_RESULT;
 	}
 
-	confWriter->file = file;
+	confWriterInstance->file = file;
 
-	*_confWriter = confWriter;
+	*confWriter = confWriterInstance;
 	return SUCCESS_CONF_RESULT;
 }
 

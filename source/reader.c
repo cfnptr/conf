@@ -161,7 +161,9 @@ inline static ConfResult createConfItems(
 			bufferSize = 0;
 			continue;
 		}
-		else if (currentChar == '\n' || currentChar == EOF)
+		else if (currentChar == '\n' ||
+			currentChar == EOF ||
+			currentChar == '\0')
 		{
 			if (item.keySize == 0)
 			{
@@ -175,8 +177,11 @@ inline static ConfResult createConfItems(
 					return BAD_ITEM_CONF_RESULT;
 				}
 
-				if (currentChar == EOF)
+				if (currentChar == EOF ||
+					currentChar == '\0')
+				{
 					break;
+				}
 
 				bufferSize = 0;
 				lineIndex++;
@@ -350,8 +355,11 @@ inline static ConfResult createConfItems(
 
 			items[itemCount++] = item;
 
-			if (currentChar == EOF)
+			if (currentChar == EOF ||
+				currentChar == '\0')
+			{
 				break;
+			}
 
 			item.keySize = 0;
 			bufferSize = 0;
@@ -364,8 +372,12 @@ inline static ConfResult createConfItems(
 			{
 				currentChar = getNextChar(handle);
 
-				if (currentChar == '\n' || currentChar == EOF)
+				if (currentChar == '\n' ||
+					currentChar == EOF ||
+					currentChar == '\0')
+				{
 					break;
+				}
 			}
 
 			bufferSize = 0;
@@ -418,17 +430,17 @@ static int onNextFileChar(void* handle)
 }
 ConfResult createConfFileReader(
 	const char* filePath,
-	ConfReader* _confReader,
+	ConfReader* confReader,
 	size_t* errorLine)
 {
 	assert(filePath != NULL);
-	assert(_confReader != NULL);
+	assert(confReader != NULL);
 	assert(errorLine != NULL);
 
-	ConfReader confReader = malloc(
+	ConfReader confReaderInstance = malloc(
 		sizeof(ConfReader_T));
 
-	if (confReader == NULL)
+	if (confReaderInstance == NULL)
 	{
 		*errorLine = 0;
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
@@ -440,7 +452,7 @@ ConfResult createConfFileReader(
 
 	if (file == NULL)
 	{
-		free(confReader);
+		free(confReaderInstance);
 		*errorLine = 0;
 		return FAILED_TO_OPEN_FILE_CONF_RESULT;
 	}
@@ -459,23 +471,70 @@ ConfResult createConfFileReader(
 
 	if (result != SUCCESS_CONF_RESULT)
 	{
-		free(confReader);
+		free(confReaderInstance);
 		return result;
 	}
 
-	confReader->items = items;
-	confReader->itemCount = itemCount;
+	confReaderInstance->items = items;
+	confReaderInstance->itemCount = itemCount;
 
-	*_confReader = confReader;
+	*confReader = confReaderInstance;
 	return SUCCESS_CONF_RESULT;
+}
+
+typedef struct ConfReaderIterator
+{
+	const char* data;
+	size_t index;
+} ConfReaderIterator;
+static int onNextDataChar(void* handle)
+{
+	ConfReaderIterator* iterator = handle;
+	return iterator->data[iterator->index++];
 }
 ConfResult createConfDataReader(
 	const char* data,
 	ConfReader* confReader,
 	size_t* errorLine)
 {
-	// TODO:
-	abort();
+	assert(data != NULL);
+	assert(confReader != NULL);
+	assert(errorLine != NULL);
+
+	ConfReader confReaderInstance = malloc(
+		sizeof(ConfReader_T));
+
+	if (confReaderInstance == NULL)
+	{
+		*errorLine = 0;
+		return FAILED_TO_ALLOCATE_CONF_RESULT;
+	}
+
+	ConfReaderIterator iterator;
+	iterator.data = data;
+	iterator.index = 0;
+
+	ConfItem* items;
+	size_t itemCount;
+
+	ConfResult result = createConfItems(
+		onNextDataChar,
+		&iterator,
+		&items,
+		&itemCount,
+		errorLine);
+
+	if (result != SUCCESS_CONF_RESULT)
+	{
+		free(confReaderInstance);
+		return result;
+	}
+
+	confReaderInstance->items = items;
+	confReaderInstance->itemCount = itemCount;
+
+	*confReader = confReaderInstance;
+	return SUCCESS_CONF_RESULT;
 }
 
 void destroyConfReader(

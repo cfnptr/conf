@@ -1,3 +1,17 @@
+// Copyright 2021 Nikita Fediuchin. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "conf/reader.h"
 #include "mpio/file.h"
 
@@ -498,46 +512,27 @@ inline static bool testString(
 	destroyConfReader(confReader);
 	return removeTestFile();
 }
-inline static bool testConfig()
+
+static const char* const testConfigString =
+	"# This is test config\n"
+	"#Similar to real \n"
+	"\n"
+	"# Some integer value\n"
+	"integer=123456789\n"
+	"\n"
+	"\n"
+	"# some double value?\n"
+	"\n"
+	"DOUBLE=0.123\n"
+	"Boolean=True\n"
+	"\n"
+	"string =Hello world!\n"
+	"#comment\n";
+inline static bool testConfig(ConfReader confReader)
 {
-	bool result = createTestFile(
-		"# This is test config\n"
-		"#Similar to real \n"
-		"\n"
-		"# Some integer value\n"
-		"integer=123456789\n"
-		"\n"
-		"\n"
-		"# some double value?\n"
-		"\n"
-		"DOUBLE=0.123\n"
-		"Boolean=True\n"
-		"\n"
-		"string =Hello world!\n"
-		"#comment\n");
-
-	if (result == false)
-		return false;
-
-	ConfReader confReader;
-	size_t errorLine;
-
-	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
-
-	if (confResult != SUCCESS_CONF_RESULT)
-	{
-		printf("testConfig: incorrect result. "
-			"(result: %s)\n",
-			confResultToString(confResult));
-		return false;
-	}
-
 	int64_t integer;
 
-	result = getConfReaderInteger(
+	bool result = getConfReaderInteger(
 		confReader,
 		"integer",
 		&integer);
@@ -546,7 +541,6 @@ inline static bool testConfig()
 	{
 		printf("testConfig: failed to get value. "
 			"(key: integer)\n");
-		destroyConfReader(confReader);
 		return false;
 	}
 
@@ -555,7 +549,6 @@ inline static bool testConfig()
 		printf("testConfig: incorrect value. "
 			"(%lld instead of 123456789)\n",
 			integer);
-		destroyConfReader(confReader);
 		return false;
 	}
 
@@ -570,7 +563,6 @@ inline static bool testConfig()
 	{
 		printf("testConfig: failed to get value. "
 			"(key: DOUBLE)\n");
-		destroyConfReader(confReader);
 		return false;
 	}
 
@@ -579,7 +571,6 @@ inline static bool testConfig()
 		printf("testConfig: incorrect value. "
 			"(%f instead of 0.123)\n",
 			floating);
-		destroyConfReader(confReader);
 		return false;
 	}
 
@@ -594,7 +585,6 @@ inline static bool testConfig()
 	{
 		printf("testConfig: failed to get value. "
 			"(key: Boolean)\n");
-		destroyConfReader(confReader);
 		return false;
 	}
 
@@ -603,7 +593,6 @@ inline static bool testConfig()
 		printf("testConfig: incorrect value. "
 			"(%d instead of True)\n",
 			boolean);
-		destroyConfReader(confReader);
 		return false;
 	}
 
@@ -618,7 +607,6 @@ inline static bool testConfig()
 	{
 		printf("testConfig: failed to get value. "
 			"(key: string )\n");
-		destroyConfReader(confReader);
 		return false;
 	}
 
@@ -627,12 +615,59 @@ inline static bool testConfig()
 		printf("testConfig: incorrect value. "
 			"(%s instead of Hello world!)\n",
 			string);
-		destroyConfReader(confReader);
 		return false;
 	}
 
+	return true;
+}
+inline static bool testFileConfig()
+{
+	bool result = createTestFile(testConfigString);
+
+	if (result == false)
+		return false;
+
+	ConfReader confReader;
+	size_t errorLine;
+
+	ConfResult confResult = createConfFileReader(
+		TEST_FILE_NAME,
+		&confReader,
+		&errorLine);
+
+	if (confResult != SUCCESS_CONF_RESULT)
+	{
+		printf("testFileConfig: incorrect result. "
+			   "(result: %s)\n",
+			confResultToString(confResult));
+		return false;
+	}
+
+	result = testConfig(confReader);
 	destroyConfReader(confReader);
-	return removeTestFile();
+	return removeTestFile() && result;
+}
+inline static bool testDataConfig()
+{
+	ConfReader confReader;
+	size_t errorLine;
+
+	ConfResult confResult = createConfDataReader(
+		testConfigString,
+		&confReader,
+		&errorLine);
+
+	if (confResult != SUCCESS_CONF_RESULT)
+	{
+		printf("testDataConfig: incorrect result. "
+			"(result: %s)\n",
+			confResultToString(confResult));
+		return false;
+	}
+
+	bool result = testConfig(confReader);
+	destroyConfReader(confReader);
+	return result;
 }
 
 int main()
@@ -696,6 +731,7 @@ int main()
 	result &= testString("looksLikeKey");
 	result &= testString("PLEASE DON'T SCREAM");
 	result &= testString("!@#$%^&*()_+-{}[]:|\";'\\<>?,./");
-	result &= testConfig();
+	result &= testFileConfig();
+	result &= testDataConfig();
 	return result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
