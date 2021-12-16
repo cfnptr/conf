@@ -1,10 +1,9 @@
 # CONF ![CI](https://github.com/cfnptr/conf/actions/workflows/cmake.yml/badge.svg)
 
-A library providing configuration file API for data reading and writing.
+A library providing **configuration** API for file and data reading / writing.
 
 ## Features
 
-* Configuration file reading/writing
 * Simple configuration syntax (similar to .ini)
 * Automatic variable parsing (int, float, bool)
 * Built-in configuration syntax validation
@@ -34,7 +33,7 @@ git clone --recursive https://github.com/cfnptr/conf
 | CONF_BUILD_SHARED   | Build CONF shared library  | ON            |
 | CONF_ENABLE_TESTING | Enable CONF tests building | ON            |
 
-## Example configuration
+## Configuration example
 
 ```
 # Conf comment syntax example
