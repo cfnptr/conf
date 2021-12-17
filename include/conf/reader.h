@@ -15,7 +15,6 @@
 #pragma once
 #include "conf/defines.h"
 
-#include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
 

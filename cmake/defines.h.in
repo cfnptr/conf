@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #pragma once
+#include <stdint.h>
 
 #define __CONF__
 
@@ -20,7 +21,10 @@
 #define CONF_VERSION_MINOR @conf_VERSION_MINOR@
 #define CONF_VERSION_PATCH @conf_VERSION_PATCH@
 
-typedef enum ConfResult
+/*
+ * CONF results.
+ */
+typedef enum ConfResult_T
 {
 	SUCCESS_CONF_RESULT = 0,
 	FAILED_TO_ALLOCATE_CONF_RESULT = 1,
@@ -30,17 +34,31 @@ typedef enum ConfResult
 	BAD_VALUE_CONF_RESULT = 5,
 	BAD_ITEM_CONF_RESULT = 6,
 	CONF_RESULT_COUNT = 7,
-} ConfResult;
+} ConfResult_T;
+/*
+ * CONF result type.
+ */
+typedef uint8_t ConfResult;
 
-typedef enum ConfDataType
+/*
+ * CONF data types.
+ */
+typedef enum ConfDataType_T
 {
 	INTEGER_CONF_DATA_TYPE = 0,
 	FLOATING_CONF_DATA_TYPE = 1,
 	BOOLEAN_CONF_DATA_TYPE = 2,
 	STRING_CONF_DATA_TYPE = 3,
 	CONF_DATA_TYPE_COUNT = 4,
-} ConfDataType;
+} ConfDataType_T;
+/*
+ * CONF data type.
+ */
+typedef uint8_t ConfDataType;
 
+/*
+ * CONF result strings.
+ */
 static const char* const confResultStrings[CONF_RESULT_COUNT] = {
 	"Success",
 	"Failed to allocate",
@@ -51,14 +69,14 @@ static const char* const confResultStrings[CONF_RESULT_COUNT] = {
 	"bad item",
 };
 
+/*
+ * Returns CONF result as string.
+ * result - CONF result.
+ */
 inline static const char* confResultToString(
 	ConfResult result)
 {
-	if (result < SUCCESS_CONF_RESULT ||
-		result >= CONF_RESULT_COUNT)
-	{
-		return "Unknown conf result";
-	}
-
+	if (result >= CONF_RESULT_COUNT)
+		return "Unknown CONF result";
 	return confResultStrings[result];
 }
