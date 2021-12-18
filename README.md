@@ -30,8 +30,8 @@ git clone --recursive https://github.com/cfnptr/conf
 
 | Name                | Description                | Default value |
 |---------------------|----------------------------|---------------|
-| CONF_BUILD_SHARED   | Build Conf shared library  | `ON`          |
-| CONF_ENABLE_TESTING | Enable Conf tests building | `ON`          |
+| CONF_BUILD_SHARED   | Build CONF shared library  | `ON`          |
+| CONF_BUILD_TESTS    | Build CONF library tests   | `ON`          |
 
 ## Configuration example
 

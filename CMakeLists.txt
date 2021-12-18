@@ -31,8 +31,8 @@ project(conf
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED TRUE)
 
-option(CONF_BUILD_SHARED "Build Conf shared library" ON)
-option(CONF_ENABLE_TESTING "Enable Conf tests building" ON)
+option(CONF_BUILD_SHARED "Build CONF shared library" ON)
+option(CONF_BUILD_TESTS "Build CONF library tests" ON)
 
 add_subdirectory(libraries/mpio)
 
@@ -73,7 +73,7 @@ if (CONF_BUILD_SHARED)
 		${PROJECT_SOURCE_DIR}/include)
 endif ()
 
-if (CONF_ENABLE_TESTING)
+if (CONF_BUILD_TESTS)
 	enable_testing()
 
 	add_executable(TestConfReader tests/test_reader.c)
