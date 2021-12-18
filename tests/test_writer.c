@@ -24,8 +24,7 @@ inline static bool compareTestFile(
 	const char* confData)
 {
 	FILE* file = openFile(
-		TEST_FILE_NAME,
-		"r");
+		TEST_FILE_NAME, "r");
 
 	if (file == NULL)
 	{
@@ -34,9 +33,7 @@ inline static bool compareTestFile(
 	}
 
 	int result = seekFile(
-		file,
-		0,
-		SEEK_END);
+		file, 0, SEEK_END);
 
 	if (result != 0)
 	{
@@ -55,9 +52,7 @@ inline static bool compareTestFile(
 	}
 
 	result = seekFile(
-		file,
-		0,
-		SEEK_SET);
+		file, 0, SEEK_SET);
 
 	if (result != 0)
 	{
@@ -93,9 +88,7 @@ inline static bool compareTestFile(
 
 	data[readResult] = '\0';
 
-	result = strcmp(
-		confData,
-		data);
+	result = strcmp(confData, data);
 
 	if (result != 0)
 	{
@@ -155,10 +148,7 @@ inline static bool testComment()
 
 	char buffer[256];
 
-	sprintf(
-		buffer,
-		"# %s\n",
-		comment);
+	sprintf(buffer, "# %s\n", comment);
 
 	result = compareTestFile(
 		"# Some conf comment\n");
@@ -187,8 +177,7 @@ inline static bool testInteger(
 	{
 		printf("testInteger: incorrect result. "
 			"(value: %s, result: %s)\n",
-			stringValue,
-			confResultToString(confResult));
+			stringValue, confResultToString(confResult));
 		return false;
 	}
 
@@ -212,11 +201,7 @@ inline static bool testInteger(
 
 	char buffer[256];
 
-	sprintf(
-		buffer,
-		"%s=%s\n",
-		keyName,
-		stringValue);
+	sprintf(buffer, "%s=%s\n", keyName, stringValue);
 
 	result = compareTestFile(buffer);
 
@@ -244,8 +229,7 @@ inline static bool testFloating(
 	{
 		printf("testFloating: incorrect result. "
 			"(value: %s, result: %s)\n",
-			stringValue,
-			confResultToString(confResult));
+			stringValue, confResultToString(confResult));
 		return false;
 	}
 
@@ -269,11 +253,7 @@ inline static bool testFloating(
 
 	char buffer[256];
 
-	sprintf(
-		buffer,
-		"%s=%s\n",
-		keyName,
-		stringValue);
+	sprintf(buffer, "%s=%s\n", keyName, stringValue);
 
 	result = compareTestFile(buffer);
 
@@ -301,8 +281,7 @@ inline static bool testBoolean(
 	{
 		printf("testBoolean: incorrect result. "
 			"(value: %s, result: %s)\n",
-			stringValue,
-			confResultToString(confResult));
+			stringValue, confResultToString(confResult));
 		return false;
 	}
 
@@ -326,11 +305,7 @@ inline static bool testBoolean(
 
 	char buffer[256];
 
-	sprintf(
-		buffer,
-		"%s=%s\n",
-		keyName,
-		stringValue);
+	sprintf(buffer, "%s=%s\n", keyName, stringValue);
 
 	result = compareTestFile(buffer);
 
@@ -357,8 +332,7 @@ inline static bool testString(
 	{
 		printf("testString: incorrect result. "
 			"(value: %s, result: %s)\n",
-			value,
-			confResultToString(confResult));
+			value, confResultToString(confResult));
 		return false;
 	}
 
@@ -382,11 +356,7 @@ inline static bool testString(
 
 	char buffer[256];
 
-	sprintf(
-		buffer,
-		"%s=%s\n",
-		keyName,
-		value);
+	sprintf(buffer, "%s=%s\n", keyName, value);
 
 	result = compareTestFile(buffer);
 

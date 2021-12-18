@@ -24,8 +24,7 @@ inline static bool createTestFile(
 	const char* content)
 {
 	FILE* file = openFile(
-		TEST_FILE_NAME,
-		"w");
+		TEST_FILE_NAME, "w");
 
 	if (file == NULL)
 	{
@@ -101,8 +100,7 @@ inline static bool testGoodComment()
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
-		printf("testGoodComment: "
-			"incorrect result. (%s)\n",
+		printf("testGoodComment: incorrect result. (%s)\n",
 			confResultToString(confResult));
 		return false;
 	}
@@ -128,8 +126,7 @@ inline static bool testBadComment()
 
 	if (confResult != BAD_ITEM_CONF_RESULT)
 	{
-		printf("testBadComment: "
-			"incorrect result. (%s)\n",
+		printf("testBadComment: incorrect result. (%s)\n",
 			confResultToString(confResult));
 		return false;
 	}
@@ -154,8 +151,7 @@ inline static bool testBadKey()
 
 	if (confResult != BAD_KEY_CONF_RESULT)
 	{
-		printf("testBadKey: "
-			"incorrect result. (%s)\n",
+		printf("testBadKey: incorrect result. (%s)\n",
 			confResultToString(confResult));
 		return false;
 	}
@@ -180,8 +176,7 @@ inline static bool testBadValue()
 
 	if (confResult != BAD_VALUE_CONF_RESULT)
 	{
-		printf("testBadValue: "
-			"incorrect result. (%s)\n",
+		printf("testBadValue: incorrect result. (%s)\n",
 			confResultToString(confResult));
 		return false;
 	}
@@ -196,11 +191,7 @@ inline static bool testInteger(
 
 	char content[256];
 
-	sprintf(
-		content,
-		"%s=%s",
-		keyName,
-		stringValue);
+	sprintf(content, "%s=%s", keyName, stringValue);
 
 	bool result = createTestFile(content);
 
@@ -219,8 +210,7 @@ inline static bool testInteger(
 	{
 		printf("testInteger: incorrect result. "
 			"(value: %s, result: %s)\n",
-			stringValue,
-			confResultToString(confResult));
+			stringValue, confResultToString(confResult));
 		return false;
 	}
 
@@ -243,9 +233,8 @@ inline static bool testInteger(
 	if (value != integer)
 	{
 		printf("testInteger: incorrect value. "
-			"(%lld instead of %s)\n",
-			integer,
-			stringValue);
+			"(reference: %s, result: %lld)\n",
+			stringValue, integer);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -261,11 +250,7 @@ inline static bool testFloating(
 
 	char content[256];
 
-	sprintf(
-		content,
-		"%s=%s",
-		keyName,
-		stringValue);
+	sprintf(content, "%s=%s", keyName, stringValue);
 
 	bool result = createTestFile(content);
 
@@ -284,8 +269,7 @@ inline static bool testFloating(
 	{
 		printf("testFloating: incorrect result. "
 			"(value: %s, result: %s)\n",
-			stringValue,
-			confResultToString(confResult));
+			stringValue, confResultToString(confResult));
 		return false;
 	}
 
@@ -314,9 +298,8 @@ inline static bool testFloating(
 	if (value != floating)
 	{
 		printf("testFloating: incorrect value. "
-			"(%f instead of %s)\n",
-			floating,
-			stringValue);
+			"(reference: %s, result: %f)\n",
+			stringValue, floating);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -332,11 +315,7 @@ inline static bool testBoolean(
 
 	char content[256];
 
-	sprintf(
-		content,
-		"%s=%s",
-		keyName,
-		stringValue);
+	sprintf(content, "%s=%s", keyName, stringValue);
 
 	bool result = createTestFile(content);
 
@@ -355,8 +334,7 @@ inline static bool testBoolean(
 	{
 		printf("testBoolean: incorrect result. "
 			"(value: %s, result: %s)\n",
-			stringValue,
-			confResultToString(confResult));
+			stringValue, confResultToString(confResult));
 		return false;
 	}
 
@@ -379,9 +357,8 @@ inline static bool testBoolean(
 	if (value != boolean)
 	{
 		printf("testBoolean: incorrect value. "
-			"(%d instead of %s)\n",
-			boolean,
-			stringValue);
+			"(reference: %s, result: %d)\n",
+			stringValue, boolean);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -393,10 +370,7 @@ inline static bool testKey(const char* key)
 {
 	char content[256];
 
-	sprintf(
-		content,
-		"%s=123",
-		key);
+	sprintf(content, "%s=123", key);
 
 	bool result = createTestFile(content);
 
@@ -415,8 +389,7 @@ inline static bool testKey(const char* key)
 	{
 		printf("testKey: incorrect result. "
 			"(key: %s, result: %s)\n",
-			key,
-			confResultToString(confResult));
+			key, confResultToString(confResult));
 		return false;
 	}
 
@@ -439,7 +412,7 @@ inline static bool testKey(const char* key)
 	if (integer != 123)
 	{
 		printf("testFloating: incorrect value. "
-			"(%lld instead of 123)\n",
+			"(reference: 123, result: %lld)\n",
 			integer);
 		destroyConfReader(confReader);
 		return false;
@@ -455,11 +428,7 @@ inline static bool testString(
 
 	char content[256];
 
-	sprintf(
-		content,
-		"%s=%s",
-		keyName,
-		value);
+	sprintf(content, "%s=%s", keyName, value);
 
 	bool result = createTestFile(content);
 
@@ -478,8 +447,7 @@ inline static bool testString(
 	{
 		printf("testString: incorrect result. "
 			"(value: %s, result: %s)\n",
-			value,
-			confResultToString(confResult));
+			value, confResultToString(confResult));
 		return false;
 	}
 
@@ -502,9 +470,8 @@ inline static bool testString(
 	if (strcmp(value, string) != 0)
 	{
 		printf("testString: incorrect value. "
-			"(%s instead of %s)\n",
-			string,
-			value);
+			"(reference: %s, result: %s)\n",
+			value, string);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -547,7 +514,7 @@ inline static bool testConfig(ConfReader confReader)
 	if (integer != 123456789)
 	{
 		printf("testConfig: incorrect value. "
-			"(%lld instead of 123456789)\n",
+			"(reference: 123456789, result: %lld)\n",
 			integer);
 		return false;
 	}
@@ -569,7 +536,7 @@ inline static bool testConfig(ConfReader confReader)
 	if (floating != 0.123)
 	{
 		printf("testConfig: incorrect value. "
-			"(%f instead of 0.123)\n",
+			"(reference: 0.123, result: %f)\n",
 			floating);
 		return false;
 	}
@@ -591,7 +558,7 @@ inline static bool testConfig(ConfReader confReader)
 	if (boolean != true)
 	{
 		printf("testConfig: incorrect value. "
-			"(%d instead of True)\n",
+			"(reference: True, result: %d)\n",
 			boolean);
 		return false;
 	}
@@ -613,7 +580,7 @@ inline static bool testConfig(ConfReader confReader)
 	if (strcmp(string, "Hello world!") != 0)
 	{
 		printf("testConfig: incorrect value. "
-			"(%s instead of Hello world!)\n",
+			"(reference: Hello world!, result: %s)\n",
 			string);
 		return false;
 	}
