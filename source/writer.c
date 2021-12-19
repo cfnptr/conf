@@ -36,9 +36,7 @@ ConfResult createConfFileWriter(
 	if (confWriterInstance == NULL)
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 
-	FILE* file = openFile(
-		filePath,
-		"w");
+	FILE* file = openFile(filePath, "w");
 
 	if (file == NULL)
 	{
@@ -79,9 +77,7 @@ bool writeConfNewLine(
 	ConfWriter confWriter)
 {
 	assert(confWriter != NULL);
-
-	return fputc('\n',
-		confWriter->file) == '\n';
+	return fputc('\n', confWriter->file) == '\n';
 }
 
 bool writeConfInteger(

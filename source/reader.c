@@ -94,7 +94,7 @@ inline static ConfResult createConfItems(
 
 	if (items == NULL)
 	{
-		*errorLine = 0;
+		if (errorLine != NULL) *errorLine = 0;
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 	}
 
@@ -106,7 +106,7 @@ inline static ConfResult createConfItems(
 	if (buffer == NULL)
 	{
 		free(items);
-		*errorLine = 0;
+		if (errorLine != NULL) *errorLine = 0;
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 	}
 
@@ -116,10 +116,7 @@ inline static ConfResult createConfItems(
 
 	ConfItem item;
 
-	memset(
-		&item,
-		0,
-		sizeof(struct ConfItem));
+	memset(&item, 0, sizeof(struct ConfItem));
 
 	while (true)
 	{
@@ -130,30 +127,22 @@ inline static ConfResult createConfItems(
 			if (bufferSize == 0)
 			{
 				free(buffer);
-				destroyConfItems(
-					items,
-					itemCount);
-				*errorLine = lineIndex + 1;
+				destroyConfItems(items, itemCount);
+				if (errorLine != NULL) *errorLine = lineIndex + 1;
 				return BAD_KEY_CONF_RESULT;
 			}
 
-			char* key = malloc(
-				(bufferSize + 1) * sizeof(char));
+			char* key = malloc((bufferSize + 1) * sizeof(char));
 
 			if (key == NULL)
 			{
 				free(buffer);
-				destroyConfItems(
-					items,
-					itemCount);
-				*errorLine = lineIndex + 1;
+				destroyConfItems(items, itemCount);
+				if (errorLine != NULL) *errorLine = lineIndex + 1;
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
 
-			memcpy(
-				key,
-				buffer,
-				bufferSize);
+			memcpy(key, buffer, bufferSize);
 			key[bufferSize] = '\0';
 
 			item.key = key;
@@ -170,18 +159,13 @@ inline static ConfResult createConfItems(
 				if (bufferSize != 0)
 				{
 					free(buffer);
-					destroyConfItems(
-						items,
-						itemCount);
-					*errorLine = lineIndex + 1;
+					destroyConfItems(items, itemCount);
+					if (errorLine != NULL) *errorLine = lineIndex + 1;
 					return BAD_ITEM_CONF_RESULT;
 				}
 
-				if (currentChar == EOF ||
-					currentChar == '\0')
-				{
+				if (currentChar == EOF || currentChar == '\0')
 					break;
-				}
 
 				bufferSize = 0;
 				lineIndex++;
@@ -192,10 +176,8 @@ inline static ConfResult createConfItems(
 			{
 				free((char*)item.key);
 				free(buffer);
-				destroyConfItems(
-					items,
-					itemCount);
-				*errorLine = lineIndex + 1;
+				destroyConfItems(items, itemCount);
+				if (errorLine != NULL) *errorLine = lineIndex + 1;
 				return BAD_VALUE_CONF_RESULT;
 			}
 
@@ -203,18 +185,15 @@ inline static ConfResult createConfItems(
 			{
 				bufferCapacity *= 2;
 
-				char* newBuffer = realloc(
-					buffer,
+				char* newBuffer = realloc(buffer,
 					bufferCapacity * sizeof(char));
 
 				if (newBuffer == NULL)
 				{
 					free((char*)item.key);
 					free(buffer);
-					destroyConfItems(
-						items,
-						itemCount);
-					*errorLine = lineIndex + 1;
+					destroyConfItems(items, itemCount);
+					if (errorLine != NULL) *errorLine = lineIndex + 1;
 					return FAILED_TO_REALLOCATE_CONF_RESULT;
 				}
 
@@ -305,24 +284,18 @@ inline static ConfResult createConfItems(
 
 			if (converted == false)
 			{
-				char* string = malloc(
-					(bufferSize + 1) * sizeof(char));
+				char* string = malloc((bufferSize + 1) * sizeof(char));
 
 				if (string == NULL)
 				{
 					free((char*)item.key);
 					free(buffer);
-					destroyConfItems(
-						items,
-						itemCount);
-					*errorLine = lineIndex + 1;
+					destroyConfItems(items, itemCount);
+					if (errorLine != NULL) *errorLine = lineIndex + 1;
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
-				memcpy(
-					string,
-					buffer,
-					bufferSize);
+				memcpy(string, buffer, bufferSize);
 				string[bufferSize] = '\0';
 
 				item.value.string = string;
@@ -343,10 +316,8 @@ inline static ConfResult createConfItems(
 						free((char*)item.value.string);
 					free((char*)item.key);
 					free(buffer);
-					destroyConfItems(
-						items,
-						itemCount);
-					*errorLine = lineIndex + 1;
+					destroyConfItems(items, itemCount);
+					if (errorLine != NULL) *errorLine = lineIndex + 1;
 					return FAILED_TO_REALLOCATE_CONF_RESULT;
 				}
 
@@ -355,11 +326,8 @@ inline static ConfResult createConfItems(
 
 			items[itemCount++] = item;
 
-			if (currentChar == EOF ||
-				currentChar == '\0')
-			{
+			if (currentChar == EOF || currentChar == '\0')
 				break;
-			}
 
 			item.keySize = 0;
 			bufferSize = 0;
@@ -389,19 +357,15 @@ inline static ConfResult createConfItems(
 		{
 			bufferCapacity *= 2;
 
-			char* newBuffer = realloc(
-				buffer,
+			char* newBuffer = realloc(buffer,
 				bufferCapacity * sizeof(char));
 
 			if (newBuffer == NULL)
 			{
-				if (item.keySize != 0)
-					free((char*)item.key);
+				if (item.keySize != 0) free((char*)item.key);
 				free(buffer);
-				destroyConfItems(
-					items,
-					itemCount);
-				*errorLine = lineIndex + 1;
+				destroyConfItems(items, itemCount);
+				if (errorLine != NULL) *errorLine = lineIndex + 1;
 				return FAILED_TO_REALLOCATE_CONF_RESULT;
 			}
 
@@ -413,8 +377,7 @@ inline static ConfResult createConfItems(
 
 	free(buffer);
 
-	qsort(
-		items,
+	qsort(items,
 		itemCount,
 		sizeof(struct ConfItem),
 		compareConfItems);
@@ -435,25 +398,22 @@ ConfResult createConfFileReader(
 {
 	assert(filePath != NULL);
 	assert(confReader != NULL);
-	assert(errorLine != NULL);
 
 	ConfReader confReaderInstance = malloc(
 		sizeof(ConfReader_T));
 
 	if (confReaderInstance == NULL)
 	{
-		*errorLine = 0;
+		if (errorLine != NULL) *errorLine = 0;
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 	}
 
-	FILE* file = openFile(
-		filePath,
-		"r");
+	FILE* file = openFile(filePath, "r");
 
 	if (file == NULL)
 	{
 		free(confReaderInstance);
-		*errorLine = 0;
+		if (errorLine != NULL) *errorLine = 0;
 		return FAILED_TO_OPEN_FILE_CONF_RESULT;
 	}
 
@@ -479,7 +439,7 @@ ConfResult createConfFileReader(
 	confReaderInstance->itemCount = itemCount;
 
 	*confReader = confReaderInstance;
-	*errorLine = 0;
+	if (errorLine != NULL) *errorLine = 0;
 	return SUCCESS_CONF_RESULT;
 }
 

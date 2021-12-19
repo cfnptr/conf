@@ -33,7 +33,7 @@ typedef ConfReader_T* ConfReader;
  *
  * filePath - conf file path string.
  * confReader - pointer to the conf reader instance.
- * errorLine - pointer to the error line index.
+ * errorLine - pointer to the error line or NULL.
  */
 ConfResult createConfFileReader(
 	const char* filePath,
