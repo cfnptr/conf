@@ -479,6 +479,7 @@ ConfResult createConfFileReader(
 	confReaderInstance->itemCount = itemCount;
 
 	*confReader = confReaderInstance;
+	*errorLine = 0;
 	return SUCCESS_CONF_RESULT;
 }
 
