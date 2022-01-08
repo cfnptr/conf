@@ -28,12 +28,11 @@ typedef enum ConfResult_T
 {
 	SUCCESS_CONF_RESULT = 0,
 	FAILED_TO_ALLOCATE_CONF_RESULT = 1,
-	FAILED_TO_REALLOCATE_CONF_RESULT = 2,
-	FAILED_TO_OPEN_FILE_CONF_RESULT = 3,
-	BAD_KEY_CONF_RESULT = 4,
-	BAD_VALUE_CONF_RESULT = 5,
-	BAD_ITEM_CONF_RESULT = 6,
-	CONF_RESULT_COUNT = 7,
+	FAILED_TO_OPEN_FILE_CONF_RESULT = 2,
+	BAD_KEY_CONF_RESULT = 3,
+	BAD_VALUE_CONF_RESULT = 4,
+	BAD_ITEM_CONF_RESULT = 5,
+	CONF_RESULT_COUNT = 6,
 } ConfResult_T;
 /*
  * CONF result type.
@@ -62,11 +61,10 @@ typedef uint8_t ConfDataType;
 static const char* const confResultStrings[CONF_RESULT_COUNT] = {
 	"Success",
 	"Failed to allocate",
-	"Failed to reallocate",
 	"Failed to open file",
 	"Bad key",
 	"Bad value",
-	"bad item",
+	"Bad item",
 };
 
 /*

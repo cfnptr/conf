@@ -54,6 +54,9 @@ static int compareConfItems(
 	const void* a,
 	const void* b)
 {
+	// NOTE: a and b should not be NULL!
+	// Skipping here assertions for debug build speed.
+
 	const ConfItem* itemA = a;
 	const ConfItem* itemB = b;
 
@@ -70,6 +73,9 @@ inline static void destroyConfItems(
 	ConfItem* items,
 	size_t itemCount)
 {
+	assert(itemCount == 0 ||
+		(items != NULL && itemCount != 0));
+
 	for (size_t i = 0; i < itemCount; i++)
 	{
 		ConfItem item = items[i];
@@ -89,6 +95,10 @@ inline static ConfResult createConfItems(
 	size_t* _itemCount,
 	size_t* errorLine)
 {
+	assert(getNextChar != NULL);
+	assert(_items != NULL);
+	assert(_itemCount != NULL);
+
 	ConfItem* items = malloc(
 		sizeof(struct ConfItem));
 
@@ -194,7 +204,7 @@ inline static ConfResult createConfItems(
 					free(buffer);
 					destroyConfItems(items, itemCount);
 					if (errorLine != NULL) *errorLine = lineIndex + 1;
-					return FAILED_TO_REALLOCATE_CONF_RESULT;
+					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
 				buffer = newBuffer;
@@ -318,7 +328,7 @@ inline static ConfResult createConfItems(
 					free(buffer);
 					destroyConfItems(items, itemCount);
 					if (errorLine != NULL) *errorLine = lineIndex + 1;
-					return FAILED_TO_REALLOCATE_CONF_RESULT;
+					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
 				items = newItems;
@@ -366,7 +376,7 @@ inline static ConfResult createConfItems(
 				free(buffer);
 				destroyConfItems(items, itemCount);
 				if (errorLine != NULL) *errorLine = lineIndex + 1;
-				return FAILED_TO_REALLOCATE_CONF_RESULT;
+				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
 
 			buffer = newBuffer;
@@ -389,6 +399,9 @@ inline static ConfResult createConfItems(
 
 static int onNextFileChar(void* handle)
 {
+	// NOTE: handle should not be NULL!
+	// Skipping here assertion for debug build speed.
+
 	return getc(handle);
 }
 ConfResult createConfFileReader(
@@ -450,6 +463,9 @@ typedef struct ConfReaderIterator
 } ConfReaderIterator;
 static int onNextDataChar(void* handle)
 {
+	// NOTE: handle should not be NULL!
+	// Skipping here assertion for debug build speed.
+
 	ConfReaderIterator* iterator = handle;
 	return iterator->data[iterator->index++];
 }

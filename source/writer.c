@@ -95,7 +95,7 @@ bool writeConfInteger(
 		value) > 0;
 }
 
-inline static uint8_t getDoubleDigitCount(double  value)
+inline static uint8_t getDoubleDigitCount(double value)
 {
 	uint8_t count = 0;
 
