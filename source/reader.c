@@ -166,7 +166,7 @@ inline static ConfResult createConfItems(
 		{
 			if (item.keySize == 0)
 			{
-				if (bufferSize != 0)
+				if (bufferSize > 0)
 				{
 					free(buffer);
 					destroyConfItems(items, itemCount);
@@ -372,7 +372,7 @@ inline static ConfResult createConfItems(
 
 			if (!newBuffer)
 			{
-				if (item.keySize != 0) free((char*)item.key);
+				if (item.keySize > 0) free((char*)item.key);
 				free(buffer);
 				destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;

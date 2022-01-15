@@ -108,7 +108,7 @@ inline static uint8_t getDoubleDigitCount(double value)
 			abort();
 	}
 
-	return count != 0 ? count : 1;
+	return count > 0 ? count : 1;
 }
 bool writeConfFloating(
 	ConfWriter confWriter,

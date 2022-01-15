@@ -17,16 +17,19 @@
 
 #include <math.h>
 #include <string.h>
+#include <assert.h>
 
 #define TEST_FILE_NAME "testing-conf.txt"
 
 inline static bool createTestFile(
 	const char* content)
 {
+	assert(content);
+
 	FILE* file = openFile(
 		TEST_FILE_NAME, "w");
 
-	if (file == NULL)
+	if (!file)
 	{
 		printf("Failed to open test file.\n");
 		return false;
@@ -84,10 +87,7 @@ inline static bool testFailedToOpenFile()
 }
 inline static bool testGoodComment()
 {
-	bool result = createTestFile(
-		"# Some conf comment x=1 ");
-
-	if (result == false)
+	if (!createTestFile("# Some conf comment x=1 "))
 		return false;
 
 	ConfReader confReader;
@@ -110,10 +110,7 @@ inline static bool testGoodComment()
 }
 inline static bool testBadComment()
 {
-	bool result = createTestFile(
-		" # Some bad conf comment");
-
-	if (result == false)
+	if (!createTestFile(" # Some bad conf comment"))
 		return false;
 
 	ConfReader confReader;
@@ -135,10 +132,7 @@ inline static bool testBadComment()
 }
 inline static bool testBadKey()
 {
-	bool result = createTestFile(
-		"=123");
-
-	if (result == false)
+	if (!createTestFile("=123"))
 		return false;
 
 	ConfReader confReader;
@@ -160,10 +154,7 @@ inline static bool testBadKey()
 }
 inline static bool testBadValue()
 {
-	bool result = createTestFile(
-		"someKey=");
-
-	if (result == false)
+	if (!createTestFile("someKey="))
 		return false;
 
 	ConfReader confReader;
@@ -187,15 +178,14 @@ inline static bool testInteger(
 	int64_t value,
 	const char* stringValue)
 {
-	const char* keyName = "someInteger";
+	assert(stringValue);
 
+	const char* keyName = "someInteger";
 	char content[256];
 
 	sprintf(content, "%s=%s", keyName, stringValue);
 
-	bool result = createTestFile(content);
-
-	if (result == false)
+	if (!createTestFile(content))
 		return false;
 
 	ConfReader confReader;
@@ -216,12 +206,12 @@ inline static bool testInteger(
 
 	int64_t integer;
 
-	result = getConfReaderInteger(
+	bool result = getConfReaderInteger(
 		confReader,
 		keyName,
 		&integer);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testInteger: failed to get value. "
 			"(value: %s)\n",
@@ -246,15 +236,14 @@ inline static bool testFloating(
 	double value,
 	const char* stringValue)
 {
-	const char* keyName = "someFloating";
+	assert(stringValue);
 
+	const char* keyName = "someFloating";
 	char content[256];
 
 	sprintf(content, "%s=%s", keyName, stringValue);
 
-	bool result = createTestFile(content);
-
-	if (result == false)
+	if (!createTestFile(content))
 		return false;
 
 	ConfReader confReader;
@@ -275,12 +264,12 @@ inline static bool testFloating(
 
 	double floating;
 
-	result = getConfReaderFloating(
+	bool result = getConfReaderFloating(
 		confReader,
 		keyName,
 		&floating);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testFloating: failed to get value. "
 			"(value: %s)\n",
@@ -311,15 +300,14 @@ inline static bool testBoolean(
 	double value,
 	const char* stringValue)
 {
-	const char* keyName = "someBoolean";
+	assert(stringValue);
 
+	const char* keyName = "someBoolean";
 	char content[256];
 
 	sprintf(content, "%s=%s", keyName, stringValue);
 
-	bool result = createTestFile(content);
-
-	if (result == false)
+	if (!createTestFile(content))
 		return false;
 
 	ConfReader confReader;
@@ -340,12 +328,12 @@ inline static bool testBoolean(
 
 	bool boolean;
 
-	result = getConfReaderBoolean(
+	bool result = getConfReaderBoolean(
 		confReader,
 		keyName,
 		&boolean);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testBoolean: failed to get value. "
 			"(value: %s)\n",
@@ -368,13 +356,12 @@ inline static bool testBoolean(
 }
 inline static bool testKey(const char* key)
 {
-	char content[256];
+	assert(key);
 
+	char content[256];
 	sprintf(content, "%s=123", key);
 
-	bool result = createTestFile(content);
-
-	if (result == false)
+	if (!createTestFile(content))
 		return false;
 
 	ConfReader confReader;
@@ -395,12 +382,12 @@ inline static bool testKey(const char* key)
 
 	int64_t integer;
 
-	result = getConfReaderInteger(
+	bool result = getConfReaderInteger(
 		confReader,
 		key,
 		&integer);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testKey: failed to get value. "
 			"(key: %s)\n",
@@ -424,15 +411,14 @@ inline static bool testKey(const char* key)
 inline static bool testString(
 	const char* value)
 {
-	const char* keyName = "someString";
+	assert(value);
 
+	const char* keyName = "someString";
 	char content[256];
 
 	sprintf(content, "%s=%s", keyName, value);
 
-	bool result = createTestFile(content);
-
-	if (result == false)
+	if (!createTestFile(content))
 		return false;
 
 	ConfReader confReader;
@@ -453,12 +439,12 @@ inline static bool testString(
 
 	const char* string;
 
-	result = getConfReaderString(
+	bool result = getConfReaderString(
 		confReader,
 		keyName,
 		&string);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testString: failed to get value. "
 			"(value: %s)\n",
@@ -497,6 +483,8 @@ static const char* const testConfigString =
 	"#comment\n";
 inline static bool testConfig(ConfReader confReader)
 {
+	assert(confReader);
+
 	int64_t integer;
 
 	bool result = getConfReaderInteger(
@@ -504,7 +492,7 @@ inline static bool testConfig(ConfReader confReader)
 		"integer",
 		&integer);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testConfig: failed to get value. "
 			"(key: integer)\n");
@@ -526,7 +514,7 @@ inline static bool testConfig(ConfReader confReader)
 		"DOUBLE",
 		&floating);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testConfig: failed to get value. "
 			"(key: DOUBLE)\n");
@@ -548,14 +536,14 @@ inline static bool testConfig(ConfReader confReader)
 		"Boolean",
 		&boolean);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testConfig: failed to get value. "
 			"(key: Boolean)\n");
 		return false;
 	}
 
-	if (boolean != true)
+	if (!boolean)
 	{
 		printf("testConfig: incorrect value. "
 			"(reference: True, result: %d)\n",
@@ -570,7 +558,7 @@ inline static bool testConfig(ConfReader confReader)
 		"string ",
 		&string);
 
-	if (result == false)
+	if (!result)
 	{
 		printf("testConfig: failed to get value. "
 			"(key: string )\n");
@@ -589,9 +577,7 @@ inline static bool testConfig(ConfReader confReader)
 }
 inline static bool testFileConfig()
 {
-	bool result = createTestFile(testConfigString);
-
-	if (result == false)
+	if (!createTestFile(testConfigString))
 		return false;
 
 	ConfReader confReader;
@@ -610,9 +596,9 @@ inline static bool testFileConfig()
 		return false;
 	}
 
-	result = testConfig(confReader);
+	bool result = testConfig(confReader);
 	destroyConfReader(confReader);
-	return removeTestFile() && result;
+	return removeTestFile() & result;
 }
 inline static bool testDataConfig()
 {
