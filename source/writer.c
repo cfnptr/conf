@@ -27,18 +27,18 @@ ConfResult createConfFileWriter(
 	const char* filePath,
 	ConfWriter* confWriter)
 {
-	assert(filePath != NULL);
-	assert(confWriter != NULL);
+	assert(filePath);
+	assert(confWriter);
 
 	ConfWriter confWriterInstance = malloc(
 		sizeof(ConfWriter_T));
 
-	if (confWriterInstance == NULL)
+	if (!confWriterInstance)
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 
 	FILE* file = openFile(filePath, "w");
 
-	if (file == NULL)
+	if (!file)
 	{
 		free(confWriterInstance);
 		return FAILED_TO_OPEN_FILE_CONF_RESULT;
@@ -53,7 +53,7 @@ ConfResult createConfFileWriter(
 void destroyConfWriter(
 	ConfWriter confWriter)
 {
-	if (confWriter == NULL)
+	if (!confWriter)
 		return;
 
 	closeFile(confWriter->file);
@@ -64,8 +64,8 @@ bool writeConfComment(
 	ConfWriter confWriter,
 	const char* comment)
 {
-	assert(confWriter != NULL);
-	assert(comment != NULL);
+	assert(confWriter);
+	assert(comment);
 
 	return fprintf(
 		confWriter->file,
@@ -76,7 +76,7 @@ bool writeConfComment(
 bool writeConfNewLine(
 	ConfWriter confWriter)
 {
-	assert(confWriter != NULL);
+	assert(confWriter);
 	return fputc('\n', confWriter->file) == '\n';
 }
 
@@ -85,8 +85,8 @@ bool writeConfInteger(
 	const char* key,
 	int64_t value)
 {
-	assert(confWriter != NULL);
-	assert(key != NULL);
+	assert(confWriter);
+	assert(key);
 
 	return fprintf(
 		confWriter->file,
@@ -115,8 +115,8 @@ bool writeConfFloating(
 	const char* key,
 	double value)
 {
-	assert(confWriter != NULL);
-	assert(key != NULL);
+	assert(confWriter);
+	assert(key);
 
 	if (value == INFINITY)
 	{
@@ -155,10 +155,10 @@ bool writeConfBoolean(
 	const char* key,
 	bool value)
 {
-	assert(confWriter != NULL);
-	assert(key != NULL);
+	assert(confWriter);
+	assert(key);
 
-	if (value == true)
+	if (value)
 	{
 		return fprintf(
 			confWriter->file,
@@ -179,9 +179,9 @@ bool writeConfString(
 	const char* key,
 	const char* value)
 {
-	assert(confWriter != NULL);
-	assert(key != NULL);
-	assert(value != NULL);
+	assert(confWriter);
+	assert(key);
+	assert(value);
 
 	return fprintf(
 		confWriter->file,
