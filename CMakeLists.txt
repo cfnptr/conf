@@ -23,7 +23,7 @@ if (TARGET conf)
 endif ()
 
 project(conf
-	VERSION 1.1.0
+	VERSION 1.1.1
 	DESCRIPTION "Simple and fast configuration file library"
 	HOMEPAGE_URL "https://github.com/cfnptr/conf"
 	LANGUAGES C)
