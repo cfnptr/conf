@@ -344,7 +344,7 @@ inline static ConfResult createConfItems(
 			lineIndex++;
 			continue;
 		}
-		else if (currentChar == '#' && bufferSize == 0)
+		else if (currentChar == '#' && bufferSize == 0 && item.keySize == 0)
 		{
 			while(true)
 			{
