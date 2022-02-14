@@ -20,18 +20,18 @@ A library providing **configuration** API for file and data reading / writing.
 * [Git 2.30+](https://git-scm.com/)
 * [CMake 3.10+](https://cmake.org/)
 
-## Cloning
-
-```
-git clone --recursive https://github.com/cfnptr/conf
-```
-
-## CMake options
+### CMake options
 
 | Name                | Description                | Default value |
 |---------------------|----------------------------|---------------|
 | CONF_BUILD_SHARED   | Build CONF shared library  | `ON`          |
 | CONF_BUILD_TESTS    | Build CONF library tests   | `ON`          |
+
+## Cloning
+
+```
+git clone --recursive https://github.com/cfnptr/conf
+```
 
 ## Configuration example
 
