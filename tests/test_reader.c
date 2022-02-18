@@ -224,7 +224,8 @@ inline static bool testInteger(
 	{
 		printf("testInteger: incorrect value. "
 			"(reference: %s, result: %lld)\n",
-			stringValue, integer);
+			stringValue,
+			(long long int)integer);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -400,7 +401,7 @@ inline static bool testKey(const char* key)
 	{
 		printf("testFloating: incorrect value. "
 			"(reference: 123, result: %lld)\n",
-			integer);
+			(long long int)integer);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -503,7 +504,7 @@ inline static bool testConfig(ConfReader confReader)
 	{
 		printf("testConfig: incorrect value. "
 			"(reference: 123456789, result: %lld)\n",
-			integer);
+			(long long int)integer);
 		return false;
 	}
 

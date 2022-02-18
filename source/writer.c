@@ -92,7 +92,7 @@ bool writeConfInteger(
 		confWriter->file,
 		"%s=%lld\n",
 		key,
-		value) > 0;
+		(long long int)value) > 0;
 }
 
 inline static uint8_t getDoubleDigitCount(double value)
