@@ -56,7 +56,8 @@ void destroyConfWriter(
 	if (!confWriter)
 		return;
 
-	closeFile(confWriter->file);
+	if (confWriter->file)
+		closeFile(confWriter->file);
 	free(confWriter);
 }
 
