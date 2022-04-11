@@ -443,7 +443,8 @@ inline static bool testString(
 	bool result = getConfReaderString(
 		confReader,
 		keyName,
-		&string);
+		&string,
+		NULL);
 
 	if (!result)
 	{
@@ -553,11 +554,13 @@ inline static bool testConfig(ConfReader confReader)
 	}
 
 	const char* string;
+	uint64_t length;
 
 	result = getConfReaderString(
 		confReader,
 		"string ",
-		&string);
+		&string,
+		&length);
 
 	if (!result)
 	{
@@ -571,6 +574,13 @@ inline static bool testConfig(ConfReader confReader)
 		printf("testConfig: incorrect value. "
 			"(reference: Hello world!, result: %s)\n",
 			string);
+		return false;
+	}
+	if (length != strlen("Hello world!"))
+	{
+		printf("testConfig: incorrect value length. "
+			"(reference: %llu, result: %llu)\n",
+			(uint64_t)strlen("Hello world!"), length);
 		return false;
 	}
 

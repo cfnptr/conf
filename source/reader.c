@@ -28,17 +28,22 @@
 #error Unknown operating system
 #endif
 
+typedef struct ConfString
+{
+	char* value;
+	uint64_t length;
+} ConfString;
 typedef union ConfValue
 {
 	int64_t integer;
 	double floating;
 	bool boolean;
-	const char* string;
+	ConfString string;
 } ConfValue;
 
 typedef struct ConfItem
 {
-	const char* key;
+	char* key;
 	size_t keySize;
 	ConfValue value;
 	ConfDataType type;
@@ -81,9 +86,9 @@ inline static void destroyConfItems(
 		ConfItem item = items[i];
 
 		if (item.type == STRING_CONF_DATA_TYPE)
-			free((char*)item.value.string);
+			free(item.value.string.value);
 
-		free((char*)item.key);
+		free(item.key);
 	}
 
 	free(items);
@@ -184,7 +189,7 @@ inline static ConfResult createConfItems(
 
 			if (bufferSize == 0)
 			{
-				free((char*)item.key);
+				free(item.key);
 				free(buffer);
 				destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;
@@ -200,7 +205,7 @@ inline static ConfResult createConfItems(
 
 				if (!newBuffer)
 				{
-					free((char*)item.key);
+					free(item.key);
 					free(buffer);
 					destroyConfItems(items, itemCount);
 					if (errorLine) *errorLine = lineIndex + 1;
@@ -298,7 +303,7 @@ inline static ConfResult createConfItems(
 
 				if (!string)
 				{
-					free((char*)item.key);
+					free(item.key);
 					free(buffer);
 					destroyConfItems(items, itemCount);
 					if (errorLine) *errorLine = lineIndex + 1;
@@ -308,7 +313,8 @@ inline static ConfResult createConfItems(
 				memcpy(string, buffer, bufferSize);
 				string[bufferSize] = '\0';
 
-				item.value.string = string;
+				item.value.string.value = string;
+				item.value.string.length = bufferSize;
 				item.type = STRING_CONF_DATA_TYPE;
 			}
 
@@ -323,8 +329,8 @@ inline static ConfResult createConfItems(
 				if (!newItems)
 				{
 					if (item.type == STRING_CONF_DATA_TYPE)
-						free((char*)item.value.string);
-					free((char*)item.key);
+						free(item.value.string.value);
+					free(item.key);
 					free(buffer);
 					destroyConfItems(items, itemCount);
 					if (errorLine) *errorLine = lineIndex + 1;
@@ -372,7 +378,7 @@ inline static ConfResult createConfItems(
 
 			if (!newBuffer)
 			{
-				if (item.keySize > 0) free((char*)item.key);
+				if (item.keySize > 0) free(item.key);
 				free(buffer);
 				destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;
@@ -536,7 +542,7 @@ bool getConfReaderType(
 	assert(type);
 
 	ConfItem item;
-	item.key = key;
+	item.key = (char*)key;
 	item.keySize = strlen(key);
 
 	ConfItem* foundItem = bsearch(
@@ -563,7 +569,7 @@ bool getConfReaderInteger(
 	assert(value);
 
 	ConfItem item;
-	item.key = key;
+	item.key = (char*)key;
 	item.keySize = strlen(key);
 
 	ConfItem* foundItem = bsearch(
@@ -590,7 +596,7 @@ bool getConfReaderFloating(
 	assert(value);
 
 	ConfItem item;
-	item.key = key;
+	item.key = (char*)key;
 	item.keySize = strlen(key);
 
 	ConfItem* foundItem = bsearch(
@@ -617,7 +623,7 @@ bool getConfReaderBoolean(
 	assert(value);
 
 	ConfItem item;
-	item.key = key;
+	item.key = (char*)key;
 	item.keySize = strlen(key);
 
 	ConfItem* foundItem = bsearch(
@@ -637,14 +643,15 @@ bool getConfReaderBoolean(
 bool getConfReaderString(
 	ConfReader confReader,
 	const char* key,
-	const char** value)
+	const char** value,
+	uint64_t* length)
 {
 	assert(confReader);
 	assert(key);
 	assert(value);
 
 	ConfItem item;
-	item.key = key;
+	item.key = (char*)key;
 	item.keySize = strlen(key);
 
 	ConfItem* foundItem = bsearch(
@@ -657,6 +664,7 @@ bool getConfReaderString(
 	if (!foundItem || foundItem->type != STRING_CONF_DATA_TYPE)
 		return false;
 
-	*value = foundItem->value.string;
+	*value = foundItem->value.string.value;
+	if (length) *length = foundItem->value.string.length;
 	return true;
 }

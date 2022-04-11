@@ -118,8 +118,10 @@ bool getConfReaderBoolean(
  * confReader - conf reader instance.
  * key - string item search key.
  * value - pointer to the value.
+ * length - pointer to the value length or NULL.
  */
 bool getConfReaderString(
 	ConfReader confReader,
 	const char* key,
-	const char** value);
+	const char** value,
+	uint64_t* length);
