@@ -265,35 +265,44 @@ inline static ConfResult createConfItems(
 
 			if (!converted)
 			{
-				if (compareNoCase(buffer, "true\n", 5) == 0)
+				if (bufferSize >= 5)
 				{
-					item.value.boolean = true;
-					item.type = BOOLEAN_CONF_DATA_TYPE;
-					converted = true;
+					if (compareNoCase(buffer, "false", 5) == 0)
+					{
+						item.value.boolean = false;
+						item.type = BOOLEAN_CONF_DATA_TYPE;
+						converted = true;
+					}
 				}
-				else if (compareNoCase(buffer, "false\n", 6) == 0)
+				else if (bufferSize >= 4)
 				{
-					item.value.boolean = false;
-					item.type = BOOLEAN_CONF_DATA_TYPE;
-					converted = true;
+					if (compareNoCase(buffer, "true", 4) == 0)
+					{
+						item.value.boolean = true;
+						item.type = BOOLEAN_CONF_DATA_TYPE;
+						converted = true;
+					}
+					else if (compareNoCase(buffer, "-inf", 4) == 0)
+					{
+						item.value.floating = -INFINITY;
+						item.type = FLOATING_CONF_DATA_TYPE;
+						converted = true;
+					}
 				}
-				else if (compareNoCase(buffer, "inf\n", 4) == 0)
+				else if (bufferSize >= 3)
 				{
-					item.value.floating = INFINITY;
-					item.type = FLOATING_CONF_DATA_TYPE;
-					converted = true;
-				}
-				else if (compareNoCase(buffer, "-inf\n", 5) == 0)
-				{
-					item.value.floating = -INFINITY;
-					item.type = FLOATING_CONF_DATA_TYPE;
-					converted = true;
-				}
-				else if (compareNoCase(buffer, "nan\n", 4) == 0)
-				{
-					item.value.floating = NAN;
-					item.type = FLOATING_CONF_DATA_TYPE;
-					converted = true;
+					if (compareNoCase(buffer, "inf", 3) == 0)
+					{
+						item.value.floating = INFINITY;
+						item.type = FLOATING_CONF_DATA_TYPE;
+						converted = true;
+					}
+					else if (compareNoCase(buffer, "nan", 3) == 0)
+					{
+						item.value.floating = NAN;
+						item.type = FLOATING_CONF_DATA_TYPE;
+						converted = true;
+					}
 				}
 			}
 
@@ -366,6 +375,10 @@ inline static ConfResult createConfItems(
 
 			bufferSize = 0;
 			lineIndex++;
+			continue;
+		}
+		else if (currentChar == '\r')
+		{
 			continue;
 		}
 
