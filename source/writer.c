@@ -178,15 +178,28 @@ bool writeConfBoolean(
 bool writeConfString(
 	ConfWriter confWriter,
 	const char* key,
-	const char* value)
+	const char* value,
+	size_t length)
 {
 	assert(confWriter);
 	assert(key);
 	assert(value);
 
-	return fprintf(
-		confWriter->file,
-		"%s=%s\n",
-		key,
-		value) > 0;
+	if (length == 0)
+	{
+		return fprintf(
+			confWriter->file,
+			"%s=%s\n",
+			key,
+			value) > 0;
+	}
+	else
+	{
+		return fprintf(
+			confWriter->file,
+			"%s=%.*s\n",
+			key,
+			(int)length,
+			value) > 0;
+	}
 }

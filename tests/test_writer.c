@@ -341,7 +341,8 @@ inline static bool testString(
 	bool result = writeConfString(
 		confWriter,
 		keyName,
-		value);
+		value,
+		strlen(keyName));
 
 	if (!result)
 	{
@@ -447,7 +448,8 @@ inline static bool testConfig()
 	result = writeConfString(
 		confWriter,
 		"string ",
-		"Hello world!");
+		"Hello world!",
+		0);
 
 	if (!result)
 	{

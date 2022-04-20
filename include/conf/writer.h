@@ -110,8 +110,10 @@ bool writeConfBoolean(
  * confWriter - conf writer instance.
  * key - string item key.
  * value - string item value.
+ * length - string length. (0 = detect)
  */
 bool writeConfString(
 	ConfWriter confWriter,
 	const char* key,
-	const char* value);
+	const char* value,
+	size_t length);
