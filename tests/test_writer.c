@@ -342,7 +342,7 @@ inline static bool testString(
 		confWriter,
 		keyName,
 		value,
-		strlen(keyName));
+		strlen(value));
 
 	if (!result)
 	{
