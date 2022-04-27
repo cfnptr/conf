@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 if (${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
 	message(FATAL_ERROR "Prevented in-tree build")
@@ -40,7 +40,7 @@ configure_file(
 	cmake/defines.h.in
 	conf/defines.h)
 
-set(CONF_LINK_LIBRARIES mpio)
+set(CONF_LINK_LIBRARIES mpio-static)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")
 	list(APPEND CONF_LINK_LIBRARIES m)
