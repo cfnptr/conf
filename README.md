@@ -18,7 +18,7 @@ A library providing **configuration** API for file and data reading / writing.
 
 * C99 compiler
 * [Git 2.30+](https://git-scm.com/)
-* [CMake 3.20+](https://cmake.org/)
+* [CMake 3.16+](https://cmake.org/)
 
 ### CMake options
 
