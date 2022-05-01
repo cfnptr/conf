@@ -68,10 +68,8 @@ static int compareConfItems(
 	if (itemA->keySize != itemB->keySize)
 		return itemA->keySize < itemB->keySize ? -1 : 1;
 
-	return memcmp(
-		itemA->key,
-		itemB->key,
-		itemA->keySize);
+	return memcmp(itemA->key, itemB->key,
+		itemA->keySize * sizeof(char));
 }
 
 inline static void destroyConfItems(
@@ -157,7 +155,8 @@ inline static ConfResult createConfItems(
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
 
-			memcpy(key, buffer, bufferSize);
+			memcpy(key, buffer,
+				bufferSize * sizeof(char));
 			key[bufferSize] = '\0';
 
 			item.key = key;
@@ -319,7 +318,8 @@ inline static ConfResult createConfItems(
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
-				memcpy(string, buffer, bufferSize);
+				memcpy(string, buffer,
+					bufferSize * sizeof(char));
 				string[bufferSize] = '\0';
 
 				item.value.string.value = string;
