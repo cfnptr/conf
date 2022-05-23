@@ -96,20 +96,23 @@ bool writeConfInteger(
 		(long long int)value) > 0;
 }
 
-inline static uint8_t getDoubleDigitCount(double value)
+inline static bool getDoubleDigitCount(
+	double value,
+	uint8_t* count)
 {
-	uint8_t count = 0;
+	uint8_t digitCount = 0;
 
 	while ((double)((int64_t)value) != value)
 	{
 		value = value * 10.0;
-		count++;
+		digitCount++;
 
-		if (count == UINT8_MAX)
-			abort();
+		if (digitCount == UINT8_MAX)
+			return false;
 	}
 
-	return count > 0 ? count : 1;
+	*count = digitCount > 0 ? digitCount : 1;
+	return true;
 }
 bool writeConfFloating(
 	ConfWriter confWriter,
@@ -142,11 +145,19 @@ bool writeConfFloating(
 	}
 	else
 	{
+		uint8_t count;
+
+		bool result = getDoubleDigitCount(
+			value, &count);
+
+		if (!result)
+			return false;
+
 		return fprintf(
 			confWriter->file,
 			"%s=%.*f\n",
 			key,
-			getDoubleDigitCount(value),
+			count,
 			value) > 0;
 	}
 }
