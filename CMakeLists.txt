@@ -23,7 +23,7 @@ if (TARGET conf-static)
 endif ()
 
 project(conf
-	VERSION 1.3.0
+	VERSION 1.3.1
 	DESCRIPTION "Simple and fast configuration file library"
 	HOMEPAGE_URL "https://github.com/cfnptr/conf"
 	LANGUAGES C)
