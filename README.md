@@ -8,6 +8,27 @@ A library providing **configuration** API for file and data reading / writing.
 * Automatic variable parsing (int, float, bool)
 * Built-in configuration syntax validation
 
+## Configuration example
+
+```
+# Conf comment syntax example
+integerValue=123
+NegativeOne=-1
+
+# Supported floating values
+FloatingPI=3.141
+minus Infinity=-INF
+Oh nooo=NaN
+
+# Also some booleans
+is.planet.round=true
+caseSensitive=False
+
+# And everything else is strings
+hackingExploit=Hello world!
+Not recommended key example?= Yes :)
+```
+
 ## Supported operating systems
 
 * Ubuntu
@@ -31,27 +52,6 @@ A library providing **configuration** API for file and data reading / writing.
 
 ```
 git clone --recursive https://github.com/cfnptr/conf
-```
-
-## Configuration example
-
-```
-# Conf comment syntax example
-integerValue=123
-NegativeOne=-1
-
-# Supported floating values
-FloatingPI=3.141
-minus Infinity=-INF
-Oh nooo=NaN
-
-# Also some booleans
-is.planet.round=true
-caseSensitive=False
-
-# And everything else is strings
-hackingExploit=Hello world!
-Not recommended key example?= Yes :)
 ```
 
 ## Third-party
