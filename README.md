@@ -8,6 +8,58 @@ A library providing **configuration** API for file and data reading / writing.
 * Automatic variable parsing (int, float, bool)
 * Built-in configuration syntax validation
 
+## Usage example
+
+```c
+// ================ Reader ================
+
+ConfReader confReader;
+
+ConfResult confResult = createConfFileReader(
+    "some.conf", &confReader, NULL);
+
+if (confResult != SUCCESS_CONF_RESULT)
+    abort();
+
+const char* value;
+
+bool result = getConfReaderString(
+    confReader, "someKey", &value, NULL);
+
+if (!result)
+{
+    destroyConfReader(confReader);
+    abort();
+}
+
+printf("someKey: %s", value);
+destroyConfReader(confReader);
+
+// ================ Writer ================
+
+ConfWriter confWriter;
+
+ConfResult confResult = createConfFileWriter(
+    "some.conf", &confWriter);
+
+if (confResult != SUCCESS_CONF_RESULT)
+    abort();
+
+bool result = writeConfComment(confWriter,
+    "Some key value pair description.");
+result &= writeConfString(confWriter,
+    "someKey", "Some value.", 0);
+result &= writeConfNewLine(confWriter);
+
+if (!result)
+{
+    destroyConfReader(confReader);
+    abort();
+}
+
+destroyConfReader(confReader);
+```
+
 ## Configuration example
 
 ```
