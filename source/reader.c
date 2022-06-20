@@ -17,6 +17,7 @@
 
 #include <math.h>
 #include <ctype.h>
+#include <errno.h>
 #include <assert.h>
 #include <string.h>
 
@@ -227,7 +228,11 @@ inline static ConfResult createConfItems(
 					&endChar,
 					10);
 
-				if (buffer != endChar)
+				if (buffer == endChar || errno != 0)
+				{
+					errno = 0;
+				}
+				else
 				{
 					char end = *endChar;
 
@@ -248,8 +253,11 @@ inline static ConfResult createConfItems(
 							&fractionEndChar,
 							10);
 
-						if (endChar != fractionEndChar &&
-							*fractionEndChar == '\n')
+						if (endChar == fractionEndChar || errno != 0)
+						{
+							errno = 0;
+						}
+						else if (*fractionEndChar == '\n')
 						{
 							double half = (double)fraction /
 								pow(10, (double)(fractionEndChar - endChar));
