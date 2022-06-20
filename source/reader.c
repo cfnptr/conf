@@ -252,8 +252,8 @@ inline static ConfResult createConfItems(
 							&fractionEndChar,
 							10);
 
-						if (endChar != fractionEndChar &&
-							errno == 0 && *fractionEndChar == '\n')
+						if (endChar != fractionEndChar && errno == 0 && 
+							*fractionEndChar == '\n' && fraction >= 0)
 						{
 							double half = (double)fraction /
 								pow(10, (double)(fractionEndChar - endChar));
