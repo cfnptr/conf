@@ -223,16 +223,14 @@ inline static ConfResult createConfItems(
 
 			if (isdigit(firstChar) != 0 || firstChar == '-')
 			{
+				errno = 0;
+
 				int64_t integer = strtoll(
 					buffer,
 					&endChar,
 					10);
 
-				if (buffer == endChar || errno != 0)
-				{
-					errno = 0;
-				}
-				else
+				if (buffer != endChar && errno == 0)
 				{
 					char end = *endChar;
 
@@ -247,17 +245,15 @@ inline static ConfResult createConfItems(
 						endChar++;
 
 						char* fractionEndChar;
+						errno = 0;
 
 						int64_t fraction = strtoll(
 							endChar,
 							&fractionEndChar,
 							10);
 
-						if (endChar == fractionEndChar || errno != 0)
-						{
-							errno = 0;
-						}
-						else if (*fractionEndChar == '\n')
+						if (endChar != fractionEndChar &&
+							errno == 0 && *fractionEndChar == '\n')
 						{
 							double half = (double)fraction /
 								pow(10, (double)(fractionEndChar - endChar));
