@@ -255,8 +255,8 @@ inline static ConfResult createConfItems(
 						if (endChar != fractionEndChar &&
 							errno == 0 && *fractionEndChar == '\n')
 						{
-							double half = (double)fraction *
-								pow(0.1, (double)(fractionEndChar - endChar));
+							double half = (double)fraction /
+								pow(10, (double)(fractionEndChar - endChar));
 							item.value.floating = firstChar == '-' ?
 								(double)integer - half : (double)integer + half;
 							item.type = FLOATING_CONF_DATA_TYPE;
