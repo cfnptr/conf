@@ -53,11 +53,11 @@ result &= writeConfNewLine(confWriter);
 
 if (!result)
 {
-    destroyConfReader(confReader);
+    destroyConfWriter(confWriter);
     abort();
 }
 
-destroyConfReader(confReader);
+destroyConfWriter(confWriter);
 ```
 
 ## Configuration example
