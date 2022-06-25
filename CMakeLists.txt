@@ -38,7 +38,7 @@ add_subdirectory(libraries/mpio)
 
 configure_file(
 	cmake/defines.h.in
-	conf/defines.h)
+	include/conf/defines.h)
 
 set(CONF_LINK_LIBRARIES mpio-static)
 
@@ -57,7 +57,7 @@ set_target_properties(conf-static PROPERTIES
 target_link_libraries(conf-static PUBLIC
 	${CONF_LINK_LIBRARIES})
 target_include_directories(conf-static PUBLIC
-	${PROJECT_BINARY_DIR}
+	${PROJECT_BINARY_DIR}/include
 	${PROJECT_SOURCE_DIR}/include)
 
 if (CONF_BUILD_SHARED)
@@ -69,7 +69,7 @@ if (CONF_BUILD_SHARED)
 	target_link_libraries(conf-shared PUBLIC
 		${CONF_LINK_LIBRARIES})
 	target_include_directories(conf-shared PUBLIC
-		${PROJECT_BINARY_DIR}
+		${PROJECT_BINARY_DIR}/include
 		${PROJECT_SOURCE_DIR}/include)
 endif ()
 
