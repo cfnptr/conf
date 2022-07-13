@@ -34,6 +34,7 @@ set(CMAKE_C_STANDARD_REQUIRED TRUE)
 option(CONF_BUILD_SHARED "Build CONF shared library" ON)
 option(CONF_BUILD_TESTS "Build CONF library tests" ON)
 
+set(MPIO_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 add_subdirectory(libraries/mpio)
 
 configure_file(
