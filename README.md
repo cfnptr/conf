@@ -11,53 +11,57 @@ A library providing **configuration** API for file and data reading / writing.
 ## Usage example
 
 ```c
-// ================ Reader ================
-
-ConfReader confReader;
-
-ConfResult confResult = createConfFileReader(
-    "some.conf", &confReader, NULL);
-
-if (confResult != SUCCESS_CONF_RESULT)
-    abort();
-
-const char* value;
-
-bool result = getConfReaderString(
-    confReader, "someKey", &value, NULL);
-
-if (!result)
+void confReaderExample()
 {
+    ConfReader confReader;
+
+    ConfResult confResult = createConfFileReader(
+        "some.conf", &confReader, NULL);
+
+    if (confResult != SUCCESS_CONF_RESULT)
+        abort();
+
+    const char* value;
+
+    bool result = getConfReaderString(
+        confReader, "someKey", &value, NULL);
+
+    if (!result)
+    {
+        destroyConfReader(confReader);
+        abort();
+    }
+
+    printf("someKey: %s", value);
     destroyConfReader(confReader);
-    abort();
 }
 
-printf("someKey: %s", value);
-destroyConfReader(confReader);
+// ================================================
 
-// ================ Writer ================
-
-ConfWriter confWriter;
-
-ConfResult confResult = createConfFileWriter(
-    "some.conf", &confWriter);
-
-if (confResult != SUCCESS_CONF_RESULT)
-    abort();
-
-bool result = writeConfComment(confWriter,
-    "Some key value pair description.");
-result &= writeConfString(confWriter,
-    "someKey", "Some value.", 0);
-result &= writeConfNewLine(confWriter);
-
-if (!result)
+void confWriterExample()
 {
-    destroyConfWriter(confWriter);
-    abort();
-}
+    ConfWriter confWriter;
 
-destroyConfWriter(confWriter);
+    ConfResult confResult = createConfFileWriter(
+        "some.conf", &confWriter);
+
+    if (confResult != SUCCESS_CONF_RESULT)
+        abort();
+
+    bool result = writeConfComment(confWriter,
+        "Some key value pair description.");
+    result &= writeConfString(confWriter,
+        "someKey", "Some value.", 0);
+    result &= writeConfNewLine(confWriter);
+
+    if (!result)
+    {
+        destroyConfWriter(confWriter);
+        abort();
+    }
+
+    destroyConfWriter(confWriter);
+}
 ```
 
 ## Configuration example
