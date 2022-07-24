@@ -51,10 +51,7 @@ set(CONF_SOURCES
 	source/reader.c
 	source/writer.c)
 
-add_library(conf-static STATIC
-	${CONF_SOURCES})
-set_target_properties(conf-static PROPERTIES
-	OUTPUT_NAME "conf")
+add_library(conf-static STATIC ${CONF_SOURCES})
 target_link_libraries(conf-static PUBLIC
 	${CONF_LINK_LIBRARIES})
 target_include_directories(conf-static PUBLIC
@@ -62,8 +59,7 @@ target_include_directories(conf-static PUBLIC
 	${PROJECT_SOURCE_DIR}/include)
 
 if (CONF_BUILD_SHARED)
-	add_library(conf-shared SHARED
-		${CONF_SOURCES})
+	add_library(conf-shared SHARED ${CONF_SOURCES})
 	set_target_properties(conf-shared PROPERTIES
 		OUTPUT_NAME "conf"
 		WINDOWS_EXPORT_ALL_SYMBOLS ON)
