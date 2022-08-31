@@ -20,6 +20,7 @@
 #include <errno.h>
 #include <assert.h>
 #include <string.h>
+#include <stdlib.h>
 
 #if __linux__ || __APPLE__
 #define compareNoCase(a, b, l) strncasecmp(a, b, l)
@@ -56,7 +57,7 @@ struct ConfReader_T
 	size_t itemCount;
 };
 
-static int compareConfItems(
+inline static int compareConfItems(
 	const void* a,
 	const void* b)
 {
@@ -77,8 +78,7 @@ inline static void destroyConfItems(
 	ConfItem* items,
 	size_t itemCount)
 {
-	assert(itemCount == 0 ||
-		(items && itemCount > 0));
+	assert(itemCount == 0 || (items && itemCount > 0));
 
 	for (size_t i = 0; i < itemCount; i++)
 	{
@@ -103,8 +103,7 @@ inline static ConfResult createConfItems(
 	assert(_items);
 	assert(_itemCount);
 
-	ConfItem* items = malloc(
-		sizeof(struct ConfItem));
+	ConfItem* items = malloc(sizeof(struct ConfItem));
 
 	if (!items)
 	{
@@ -156,8 +155,7 @@ inline static ConfResult createConfItems(
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
 
-			memcpy(key, buffer,
-				bufferSize * sizeof(char));
+			memcpy(key, buffer, bufferSize * sizeof(char));
 			key[bufferSize] = '\0';
 
 			item.key = key;
@@ -165,9 +163,7 @@ inline static ConfResult createConfItems(
 			bufferSize = 0;
 			continue;
 		}
-		else if (currentChar == '\n' ||
-			currentChar == EOF ||
-			currentChar == '\0')
+		else if (currentChar == '\n' || currentChar == EOF || currentChar == '\0')
 		{
 			if (item.keySize == 0)
 			{
@@ -224,11 +220,7 @@ inline static ConfResult createConfItems(
 			if (isdigit(firstChar) != 0 || firstChar == '-')
 			{
 				errno = 0;
-
-				int64_t integer = strtoll(
-					buffer,
-					&endChar,
-					10);
+				int64_t integer = strtoll(buffer, &endChar, 10);
 
 				if (buffer != endChar && errno == 0)
 				{
@@ -245,12 +237,9 @@ inline static ConfResult createConfItems(
 						endChar++;
 
 						char* fractionEndChar;
-						errno = 0;
 
-						int64_t fraction = strtoll(
-							endChar,
-							&fractionEndChar,
-							10);
+						errno = 0;
+						int64_t fraction = strtoll(endChar, &fractionEndChar, 10);
 
 						if (endChar != fractionEndChar && errno == 0 && 
 							*fractionEndChar == '\n' && fraction >= 0)
@@ -322,8 +311,7 @@ inline static ConfResult createConfItems(
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
-				memcpy(string, buffer,
-					bufferSize * sizeof(char));
+				memcpy(string, buffer, bufferSize * sizeof(char));
 				string[bufferSize] = '\0';
 
 				item.value.string.value = string;
@@ -335,8 +323,7 @@ inline static ConfResult createConfItems(
 			{
 				itemCapacity *= 2;
 
-				ConfItem* newItems = realloc(
-					items,
+				ConfItem* newItems = realloc(items,
 					itemCapacity * sizeof(struct ConfItem));
 
 				if (!newItems)
@@ -369,12 +356,8 @@ inline static ConfResult createConfItems(
 			{
 				currentChar = getNextChar(handle);
 
-				if (currentChar == '\n' ||
-					currentChar == EOF ||
-					currentChar == '\0')
-				{
+				if (currentChar == '\n' || currentChar == EOF || currentChar == '\0')
 					break;
-				}
 			}
 
 			bufferSize = 0;
@@ -410,6 +393,19 @@ inline static ConfResult createConfItems(
 
 	free(buffer);
 
+	for (size_t i = 0; i < itemCount; i++)
+	{
+		for (size_t j = 0; j < itemCount; j++)
+		{
+			if (i != j && !compareConfItems(&items[i], &items[j]))
+			{
+				destroyConfItems(items, itemCount);
+				if (errorLine) *errorLine = 0;
+				return REPEATING_KEYS_CONF_RESULT;
+			}
+		}
+	}
+
 	qsort(items,
 		itemCount,
 		sizeof(struct ConfItem),
@@ -435,8 +431,7 @@ ConfResult createConfFileReader(
 	assert(filePath);
 	assert(confReader);
 
-	ConfReader confReaderInstance = malloc(
-		sizeof(ConfReader_T));
+	ConfReader confReaderInstance = malloc(sizeof(ConfReader_T));
 
 	if (!confReaderInstance)
 	{
@@ -501,8 +496,7 @@ ConfResult createConfDataReader(
 	assert(confReader);
 	assert(errorLine);
 
-	ConfReader confReaderInstance = malloc(
-		sizeof(ConfReader_T));
+	ConfReader confReaderInstance = malloc(sizeof(ConfReader_T));
 
 	if (!confReaderInstance)
 	{
@@ -537,8 +531,7 @@ ConfResult createConfDataReader(
 	return SUCCESS_CONF_RESULT;
 }
 
-void destroyConfReader(
-	ConfReader confReader)
+void destroyConfReader(ConfReader confReader)
 {
 	if (!confReader)
 		return;

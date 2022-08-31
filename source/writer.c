@@ -17,6 +17,7 @@
 
 #include <math.h>
 #include <assert.h>
+#include <stdlib.h>
 
 struct ConfWriter_T
 {
@@ -30,8 +31,7 @@ ConfResult createConfFileWriter(
 	assert(filePath);
 	assert(confWriter);
 
-	ConfWriter confWriterInstance = malloc(
-		sizeof(ConfWriter_T));
+	ConfWriter confWriterInstance = malloc(sizeof(ConfWriter_T));
 
 	if (!confWriterInstance)
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
@@ -61,21 +61,14 @@ void destroyConfWriter(
 	free(confWriter);
 }
 
-bool writeConfComment(
-	ConfWriter confWriter,
-	const char* comment)
+bool writeConfComment(ConfWriter confWriter, const char* comment)
 {
 	assert(confWriter);
 	assert(comment);
-
-	return fprintf(
-		confWriter->file,
-		"# %s\n",
-		comment) > 0;
+	return fprintf(confWriter->file, "# %s\n", comment) > 0;
 }
 
-bool writeConfNewLine(
-	ConfWriter confWriter)
+bool writeConfNewLine(ConfWriter confWriter)
 {
 	assert(confWriter);
 	return fputc('\n', confWriter->file) == '\n';
@@ -89,11 +82,8 @@ bool writeConfInteger(
 	assert(confWriter);
 	assert(key);
 
-	return fprintf(
-		confWriter->file,
-		"%s=%lld\n",
-		key,
-		(long long int)value) > 0;
+	return fprintf(confWriter->file, "%s=%lld\n", 
+		key, (long long int)value) > 0;
 }
 
 inline static bool getDoubleDigitCount(
@@ -124,24 +114,15 @@ bool writeConfFloating(
 
 	if (value == INFINITY)
 	{
-		return fprintf(
-			confWriter->file,
-			"%s=inf\n",
-			key) > 0;
+		return fprintf( confWriter->file, "%s=inf\n", key) > 0;
 	}
 	else if (value == -INFINITY)
 	{
-		return fprintf(
-			confWriter->file,
-			"%s=-inf\n",
-			key) > 0;
+		return fprintf(confWriter->file, "%s=-inf\n", key) > 0;
 	}
 	else if (isnan(value))
 	{
-		return fprintf(
-			confWriter->file,
-			"%s=nan\n",
-			key) > 0;
+		return fprintf(confWriter->file, "%s=nan\n", key) > 0;
 	}
 	else
 	{
@@ -153,12 +134,8 @@ bool writeConfFloating(
 		if (!result)
 			return false;
 
-		return fprintf(
-			confWriter->file,
-			"%s=%.*f\n",
-			key,
-			count,
-			value) > 0;
+		return fprintf(confWriter->file, 
+			"%s=%.*f\n", key, count, value) > 0;
 	}
 }
 
@@ -171,19 +148,9 @@ bool writeConfBoolean(
 	assert(key);
 
 	if (value)
-	{
-		return fprintf(
-			confWriter->file,
-			"%s=true\n",
-			key) > 0;
-	}
+		return fprintf(confWriter->file, "%s=true\n", key) > 0;
 	else
-	{
-		return fprintf(
-			confWriter->file,
-			"%s=false\n",
-			key) > 0;
-	}
+		return fprintf( confWriter->file, "%s=false\n", key) > 0;
 }
 
 bool writeConfString(
@@ -198,19 +165,11 @@ bool writeConfString(
 
 	if (length == 0)
 	{
-		return fprintf(
-			confWriter->file,
-			"%s=%s\n",
-			key,
-			value) > 0;
+		return fprintf(confWriter->file, "%s=%s\n", key, value) > 0;
 	}
 	else
 	{
-		return fprintf(
-			confWriter->file,
-			"%s=%.*s\n",
-			key,
-			(int)length,
-			value) > 0;
+		return fprintf(confWriter->file, "%s=%.*s\n", 
+			key, (int)length, value) > 0;
 	}
 }

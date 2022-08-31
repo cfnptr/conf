@@ -18,16 +18,15 @@
 #include <math.h>
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>
 
 #define TEST_FILE_NAME "testing-conf.txt"
 
-inline static bool createTestFile(
-	const char* content)
+inline static bool createTestFile(const char* content)
 {
 	assert(content);
 
-	FILE* file = openFile(
-		TEST_FILE_NAME, "w");
+	FILE* file = openFile(TEST_FILE_NAME, "w");
 
 	if (!file)
 	{
@@ -38,9 +37,7 @@ inline static bool createTestFile(
 	size_t contentLength = strlen(content);
 
 	size_t writeResult = fwrite(content,
-		sizeof(char),
-		contentLength,
-		file);
+		sizeof(char), contentLength, file);
 
 	if (writeResult != contentLength)
 	{
@@ -71,15 +68,12 @@ inline static bool testFailedToOpenFile()
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		"not_existing_file.txt",
-		&confReader,
-		&errorLine);
+		"not_existing_file.txt", &confReader, &errorLine);
 
 	if (confResult != FAILED_TO_OPEN_FILE_CONF_RESULT)
 	{
 		printf("testFailedToOpenFile: "
-			"incorrect result. (%d)\n",
-			confResult);
+			"incorrect result. (%d)\n", confResult);
 		return false;
 	}
 
@@ -94,9 +88,7 @@ inline static bool testGoodComment()
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -117,9 +109,7 @@ inline static bool testBadComment()
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != BAD_ITEM_CONF_RESULT)
 	{
@@ -139,9 +129,7 @@ inline static bool testBadKey()
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != BAD_KEY_CONF_RESULT)
 	{
@@ -161,9 +149,7 @@ inline static bool testBadValue()
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != BAD_VALUE_CONF_RESULT)
 	{
@@ -174,9 +160,7 @@ inline static bool testBadValue()
 
 	return removeTestFile();
 }
-inline static bool testInteger(
-	int64_t value,
-	const char* stringValue)
+inline static bool testInteger(int64_t value, const char* stringValue)
 {
 	assert(stringValue);
 
@@ -192,9 +176,7 @@ inline static bool testInteger(
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -207,15 +189,12 @@ inline static bool testInteger(
 	int64_t integer;
 
 	bool result = getConfReaderInteger(
-		confReader,
-		keyName,
-		&integer);
+		confReader, keyName, &integer);
 
 	if (!result)
 	{
 		printf("testInteger: failed to get value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -224,8 +203,7 @@ inline static bool testInteger(
 	{
 		printf("testInteger: incorrect value. "
 			"(reference: %s, result: %lld)\n",
-			stringValue,
-			(long long int)integer);
+			stringValue, (long long int)integer);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -233,9 +211,7 @@ inline static bool testInteger(
 	destroyConfReader(confReader);
 	return removeTestFile();
 }
-inline static bool testFloating(
-	double value,
-	const char* stringValue)
+inline static bool testFloating(double value, const char* stringValue)
 {
 	assert(stringValue);
 
@@ -251,9 +227,7 @@ inline static bool testFloating(
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -266,15 +240,12 @@ inline static bool testFloating(
 	double floating;
 
 	bool result = getConfReaderFloating(
-		confReader,
-		keyName,
-		&floating);
+		confReader, keyName, &floating);
 
 	if (!result)
 	{
 		printf("testFloating: failed to get value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -297,9 +268,7 @@ inline static bool testFloating(
 	destroyConfReader(confReader);
 	return removeTestFile();
 }
-inline static bool testBoolean(
-	double value,
-	const char* stringValue)
+inline static bool testBoolean(double value, const char* stringValue)
 {
 	assert(stringValue);
 
@@ -315,9 +284,7 @@ inline static bool testBoolean(
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -330,15 +297,12 @@ inline static bool testBoolean(
 	bool boolean;
 
 	bool result = getConfReaderBoolean(
-		confReader,
-		keyName,
-		&boolean);
+		confReader, keyName, &boolean);
 
 	if (!result)
 	{
 		printf("testBoolean: failed to get value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -369,9 +333,7 @@ inline static bool testKey(const char* key)
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -384,15 +346,12 @@ inline static bool testKey(const char* key)
 	int64_t integer;
 
 	bool result = getConfReaderInteger(
-		confReader,
-		key,
-		&integer);
+		confReader, key, &integer);
 
 	if (!result)
 	{
 		printf("testKey: failed to get value. "
-			"(key: %s)\n",
-			key);
+			"(key: %s)\n", key);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -409,8 +368,7 @@ inline static bool testKey(const char* key)
 	destroyConfReader(confReader);
 	return removeTestFile();
 }
-inline static bool testString(
-	const char* value)
+inline static bool testString(const char* value)
 {
 	assert(value);
 
@@ -426,9 +384,7 @@ inline static bool testString(
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -441,16 +397,12 @@ inline static bool testString(
 	const char* string;
 
 	bool result = getConfReaderString(
-		confReader,
-		keyName,
-		&string,
-		NULL);
+		confReader, keyName, &string, NULL);
 
 	if (!result)
 	{
 		printf("testString: failed to get value. "
-			"(value: %s)\n",
-			value);
+			"(value: %s)\n", value);
 		destroyConfReader(confReader);
 		return false;
 	}
@@ -470,13 +422,13 @@ inline static bool testString(
 
 static const char* const testConfigString =
 	"# This is test config\n"
-	"#Similar to real \n"
+	"#similar to real \n"
 	"\n"
 	"# Some integer value\n"
 	"integer=123456789\n"
 	"\n"
 	"\n"
-	"# some double value?\n"
+	"# SOME_DOUBLE_VALUE?\n"
 	"\n"
 	"DOUBLE=0.123\n"
 	"Boolean=True\n"
@@ -490,9 +442,7 @@ inline static bool testConfig(ConfReader confReader)
 	int64_t integer;
 
 	bool result = getConfReaderInteger(
-		confReader,
-		"integer",
-		&integer);
+		confReader, "integer", &integer);
 
 	if (!result)
 	{
@@ -512,9 +462,7 @@ inline static bool testConfig(ConfReader confReader)
 	double floating;
 
 	result = getConfReaderFloating(
-		confReader,
-		"DOUBLE",
-		&floating);
+		confReader, "DOUBLE", &floating);
 
 	if (!result)
 	{
@@ -526,17 +474,14 @@ inline static bool testConfig(ConfReader confReader)
 	if (floating != 0.123)
 	{
 		printf("testConfig: incorrect value. "
-			"(reference: 0.123, result: %f)\n",
-			floating);
+			"(reference: 0.123, result: %f)\n", floating);
 		return false;
 	}
 
 	bool boolean;
 
 	result = getConfReaderBoolean(
-		confReader,
-		"Boolean",
-		&boolean);
+		confReader, "Boolean", &boolean);
 
 	if (!result)
 	{
@@ -557,10 +502,7 @@ inline static bool testConfig(ConfReader confReader)
 	uint64_t length;
 
 	result = getConfReaderString(
-		confReader,
-		"string ",
-		&string,
-		&length);
+		confReader, "string ", &string, &length);
 
 	if (!result)
 	{
@@ -595,15 +537,12 @@ inline static bool testFileConfig()
 	size_t errorLine;
 
 	ConfResult confResult = createConfFileReader(
-		TEST_FILE_NAME,
-		&confReader,
-		&errorLine);
+		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testFileConfig: incorrect result. "
-			"(result: %s)\n",
-			confResultToString(confResult));
+			"(result: %s)\n", confResultToString(confResult));
 		return false;
 	}
 
@@ -617,15 +556,12 @@ inline static bool testDataConfig()
 	size_t errorLine;
 
 	ConfResult confResult = createConfDataReader(
-		testConfigString,
-		&confReader,
-		&errorLine);
+		testConfigString, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testDataConfig: incorrect result. "
-			"(result: %s)\n",
-			confResultToString(confResult));
+			"(result: %s)\n", confResultToString(confResult));
 		return false;
 	}
 

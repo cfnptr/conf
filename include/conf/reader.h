@@ -15,7 +15,7 @@
 #pragma once
 #include "conf/defines.h"
 
-#include <stdlib.h>
+#include <stddef.h>
 #include <stdbool.h>
 
 /*
@@ -56,8 +56,7 @@ ConfResult createConfDataReader(
  * Destroy conf reader instance.
  * confReader - conf reader instance or NULL.
  */
-void destroyConfReader(
-	ConfReader confReader);
+void destroyConfReader(ConfReader confReader);
 
 /*
  * Get specified item type.

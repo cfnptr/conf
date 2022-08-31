@@ -18,16 +18,15 @@
 #include <math.h>
 #include <string.h>
 #include <assert.h>
+#include <stdlib.h>
 
 #define TEST_FILE_NAME "testing-conf.txt"
 
-inline static bool compareTestFile(
-	const char* confData)
+inline static bool compareTestFile(const char* confData)
 {
 	assert(confData);
 
-	FILE* file = openFile(
-		TEST_FILE_NAME, "r");
+	FILE* file = openFile(TEST_FILE_NAME, "r");
 
 	if (!file)
 	{
@@ -35,8 +34,7 @@ inline static bool compareTestFile(
 		return false;
 	}
 
-	int result = seekFile(
-		file, 0, SEEK_END);
+	int result = seekFile(file, 0, SEEK_END);
 
 	if (result != 0)
 	{
@@ -54,8 +52,7 @@ inline static bool compareTestFile(
 		return false;
 	}
 
-	result = seekFile(
-		file, 0, SEEK_SET);
+	result = seekFile(file, 0, SEEK_SET);
 
 	if (result != 0)
 	{
@@ -64,8 +61,7 @@ inline static bool compareTestFile(
 		return false;
 	}
 
-	char* data = malloc(
-		sizeof(char) *(fileSize + 1));
+	char* data = malloc(sizeof(char) *(fileSize + 1));
 
 	if (!data)
 	{
@@ -74,12 +70,7 @@ inline static bool compareTestFile(
 		return false;
 	}
 
-	size_t readResult = fread(
-		data,
-		sizeof(char),
-		fileSize,
-		file);
-
+	size_t readResult = fread(data, sizeof(char), fileSize, file);
 	closeFile(file);
 
 	if (readResult == 0)
@@ -119,8 +110,7 @@ inline static bool testComment()
 	ConfWriter confWriter;
 
 	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME,
-		&confWriter);
+		TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -132,9 +122,7 @@ inline static bool testComment()
 
 	const char* comment = "Some conf comment";
 
-	bool result = writeConfComment(
-		confWriter,
-		comment);
+	bool result = writeConfComment(confWriter, comment);
 
 	if (!result)
 	{
@@ -148,30 +136,25 @@ inline static bool testComment()
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-
 	sprintf(buffer, "# %s\n", comment);
 
 	if (!compareTestFile("# Some conf comment\n"))
 	{
 		printf("testComment: incorrect value. "
-			"(comment: %s)\n",
-			comment);
+			"(comment: %s)\n", comment);
 		return false;
 	}
 
 	return removeTestFile();
 }
-inline static bool testInteger(
-	int64_t value,
-	const char* stringValue)
+inline static bool testInteger(int64_t value, const char* stringValue)
 {
 	assert(stringValue);
 
 	ConfWriter confWriter;
 
 	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME,
-		&confWriter);
+		TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -184,15 +167,12 @@ inline static bool testInteger(
 	const char* keyName = "someInteger";
 
 	bool result = writeConfInteger(
-		confWriter,
-		keyName,
-		value);
+		confWriter, keyName, value);
 
 	if (!result)
 	{
 		printf("testInteger: failed to write value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		destroyConfWriter(confWriter);
 		return false;
 	}
@@ -200,30 +180,25 @@ inline static bool testInteger(
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-
 	sprintf(buffer, "%s=%s\n", keyName, stringValue);
 
 	if (!compareTestFile(buffer))
 	{
 		printf("testInteger: incorrect value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		return false;
 	}
 
 	return removeTestFile();
 }
-inline static bool testFloating(
-	double value,
-	const char* stringValue)
+inline static bool testFloating(double value, const char* stringValue)
 {
 	assert(stringValue);
 
 	ConfWriter confWriter;
 
 	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME,
-		&confWriter);
+		TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -236,15 +211,12 @@ inline static bool testFloating(
 	const char* keyName = "someFloating";
 
 	bool result = writeConfFloating(
-		confWriter,
-		keyName,
-		value);
+		confWriter, keyName, value);
 
 	if (!result)
 	{
 		printf("testFloating: failed to write value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		destroyConfWriter(confWriter);
 		return false;
 	}
@@ -252,30 +224,25 @@ inline static bool testFloating(
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-
 	sprintf(buffer, "%s=%s\n", keyName, stringValue);
 
 	if (!compareTestFile(buffer))
 	{
 		printf("testFloating: incorrect value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		return false;
 	}
 
 	return removeTestFile();
 }
-inline static bool testBoolean(
-	bool value,
-	const char* stringValue)
+inline static bool testBoolean(bool value, const char* stringValue)
 {
 	assert(stringValue);
 
 	ConfWriter confWriter;
 
 	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME,
-		&confWriter);
+		TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -288,15 +255,12 @@ inline static bool testBoolean(
 	const char* keyName = "someBoolean";
 
 	bool result = writeConfBoolean(
-		confWriter,
-		keyName,
-		value);
+		confWriter, keyName, value);
 
 	if (!result)
 	{
 		printf("testBoolean: failed to write value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		destroyConfWriter(confWriter);
 		return false;
 	}
@@ -304,29 +268,25 @@ inline static bool testBoolean(
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-
 	sprintf(buffer, "%s=%s\n", keyName, stringValue);
 
 	if (!compareTestFile(buffer))
 	{
 		printf("testBoolean: incorrect value. "
-			"(value: %s)\n",
-			stringValue);
+			"(value: %s)\n", stringValue);
 		return false;
 	}
 
 	return removeTestFile();
 }
-inline static bool testString(
-	const char* value)
+inline static bool testString(const char* value)
 {
 	assert(value);
 
 	ConfWriter confWriter;
 
 	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME,
-		&confWriter);
+		TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -339,16 +299,12 @@ inline static bool testString(
 	const char* keyName = "someString";
 
 	bool result = writeConfString(
-		confWriter,
-		keyName,
-		value,
-		strlen(value));
+		confWriter, keyName, value, strlen(value));
 
 	if (!result)
 	{
 		printf("testString: failed to write value. "
-			"(value: %s)\n",
-			value);
+			"(value: %s)\n", value);
 		destroyConfWriter(confWriter);
 		return false;
 	}
@@ -356,14 +312,12 @@ inline static bool testString(
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-
 	sprintf(buffer, "%s=%s\n", keyName, value);
 
 	if (!compareTestFile(buffer))
 	{
 		printf("testString: incorrect value. "
-			"(value: %s)\n",
-			value);
+			"(value: %s)\n", value);
 		return false;
 	}
 
@@ -374,8 +328,7 @@ inline static bool testConfig()
 	ConfWriter confWriter;
 
 	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME,
-		&confWriter);
+		TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -386,8 +339,7 @@ inline static bool testConfig()
 	}
 
 	bool result = writeConfComment(
-		confWriter,
-		"Conf file test");
+		confWriter, "Conf file test");
 
 	if (!result)
 	{
@@ -398,9 +350,7 @@ inline static bool testConfig()
 	}
 
 	result = writeConfInteger(
-		confWriter,
-		"someInteger",
-		123);
+		confWriter, "someInteger", 123);
 
 	if (!result)
 	{
@@ -420,9 +370,7 @@ inline static bool testConfig()
 	}
 
 	result = writeConfFloating(
-		confWriter,
-		"Floating",
-		1.0);
+		confWriter, "Floating", 1.0);
 
 	if (!result)
 	{
@@ -433,9 +381,7 @@ inline static bool testConfig()
 	}
 
 	result = writeConfBoolean(
-		confWriter,
-		"BOOLEAN",
-		true);
+		confWriter, "BOOLEAN", true);
 
 	if (!result)
 	{
@@ -446,10 +392,7 @@ inline static bool testConfig()
 	}
 
 	result = writeConfString(
-		confWriter,
-		"string ",
-		"Hello world!",
-		0);
+		confWriter, "string ", "Hello world!", 0);
 
 	if (!result)
 	{

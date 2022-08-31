@@ -15,7 +15,7 @@
 #pragma once
 #include "conf/defines.h"
 
-#include <stdlib.h>
+#include <stddef.h>
 #include <stdbool.h>
 
 /*
@@ -51,9 +51,7 @@ void destroyConfWriter(ConfWriter confWriter);
  * confWriter - conf writer instance.
  * comment - comment string value.
  */
-bool writeConfComment(
-	ConfWriter confWriter,
-	const char* comment);
+bool writeConfComment(ConfWriter confWriter, const char* comment);
 
 /*
  * Write new line to the file.
@@ -61,8 +59,7 @@ bool writeConfComment(
  *
  * confWriter - conf writer instance.
  */
-bool writeConfNewLine(
-	ConfWriter confWriter);
+bool writeConfNewLine(ConfWriter confWriter);
 
 /*
  * Write specified item to the file.

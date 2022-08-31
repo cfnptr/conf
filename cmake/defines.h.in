@@ -32,7 +32,8 @@ typedef enum ConfResult_T
 	BAD_KEY_CONF_RESULT = 3,
 	BAD_VALUE_CONF_RESULT = 4,
 	BAD_ITEM_CONF_RESULT = 5,
-	CONF_RESULT_COUNT = 6,
+	REPEATING_KEYS_CONF_RESULT = 6,
+	CONF_RESULT_COUNT = 7,
 } ConfResult_T;
 /*
  * CONF result type.
@@ -65,6 +66,7 @@ static const char* const confResultStrings[CONF_RESULT_COUNT] = {
 	"Bad key",
 	"Bad value",
 	"Bad item",
+	"Repeating keys",
 };
 
 /*
