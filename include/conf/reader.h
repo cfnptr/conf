@@ -35,22 +35,18 @@ typedef ConfReader_T* ConfReader;
  * confReader - pointer to the conf reader instance.
  * errorLine - pointer to the error line or NULL.
  */
-ConfResult createConfFileReader(
-	const char* filePath,
-	ConfReader* confReader,
-	size_t* errorLine);
+ConfResult createConfFileReader(const char* filePath,
+	ConfReader* confReader, size_t* errorLine);
 /*
  * Create a new conf data reader instance.
  * Returns operation Conf result.
  *
  * data - conf data string.
  * confReader - pointer to the conf reader instance.
- * errorLine - pointer to the error line index.
+ * errorLine - pointer to the error line or NULL.
  */
-ConfResult createConfDataReader(
-	const char* data,
-	ConfReader* confReader,
-	size_t* errorLine);
+ConfResult createConfDataReader(const char* data,
+	ConfReader* confReader, size_t* errorLine);
 
 /*
  * Destroy conf reader instance.
@@ -63,64 +59,53 @@ void destroyConfReader(ConfReader confReader);
  * Returns true if item is found.
  *
  * confReader - conf reader instance.
- * key - string item search key.
- * type - pointer to the type value.
+ * key - item search key string.
+ * type - pointer to the value type.
  */
-bool getConfReaderType(
-	ConfReader confReader,
-	const char* key,
-	ConfDataType* type);
+bool getConfReaderType(ConfReader confReader,
+	const char* key, ConfDataType* type);
 
 /*
  * Get specified item integer value by key.
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
- * key - string item search key.
- * value - pointer to the value.
+ * key - item search key string.
+ * value - pointer to the integer value.
  */
-bool getConfReaderInteger(
-	ConfReader confReader,
-	const char* key,
-	int64_t* value);
+bool getConfReaderInteger(ConfReader confReader,
+	const char* key, int64_t* value);
 
 /*
  * Get specified item floating value by key.
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
- * key - string item search key.
- * value - pointer to the value.
+ * key - item search key string.
+ * value - pointer to the floating value.
  */
-bool getConfReaderFloating(
-	ConfReader confReader,
-	const char* key,
-	double* value);
+bool getConfReaderFloating(ConfReader confReader,
+	const char* key, double* value);
 
 /*
  * Get specified item boolean value by key.
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
- * key - string item search key.
- * value - pointer to the value.
+ * key - item search key string.
+ * value - pointer to the boolean value.
  */
-bool getConfReaderBoolean(
-	ConfReader confReader,
-	const char* key,
-	bool* value);
+bool getConfReaderBoolean(ConfReader confReader,
+	const char* key, bool* value);
 
 /*
  * Get specified item string value by key.
  * Returns true if item is found and correct.
  *
  * confReader - conf reader instance.
- * key - string item search key.
- * value - pointer to the value.
+ * key - item search key string.
+ * value - pointer to the string value.
  * length - pointer to the value length or NULL.
  */
-bool getConfReaderString(
-	ConfReader confReader,
-	const char* key,
-	const char** value,
-	uint64_t* length);
+bool getConfReaderString(ConfReader confReader,
+	const char* key, const char** value, uint64_t* length);

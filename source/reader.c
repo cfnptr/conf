@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -57,54 +57,39 @@ struct ConfReader_T
 	size_t itemCount;
 };
 
-inline static int compareConfItems(
-	const void* a,
-	const void* b)
+inline static int compareConfItems(const void* a, const void* b)
 {
 	// NOTE: a and b should not be NULL!
 	// Skipping here assertions for debug build speed.
-
 	const ConfItem* itemA = a;
 	const ConfItem* itemB = b;
-
 	if (itemA->keySize != itemB->keySize)
 		return itemA->keySize < itemB->keySize ? -1 : 1;
-
-	return memcmp(itemA->key, itemB->key,
-		itemA->keySize * sizeof(char));
+	return memcmp(itemA->key, itemB->key, itemA->keySize * sizeof(char));
 }
 
-inline static void destroyConfItems(
-	ConfItem* items,
-	size_t itemCount)
+inline static void destroyConfItems(ConfItem* items, size_t itemCount)
 {
 	assert(itemCount == 0 || (items && itemCount > 0));
 
 	for (size_t i = 0; i < itemCount; i++)
 	{
 		ConfItem item = items[i];
-
 		if (item.type == STRING_CONF_DATA_TYPE)
 			free(item.value.string.value);
-
 		free(item.key);
 	}
 
 	free(items);
 }
-inline static ConfResult createConfItems(
-	int(*getNextChar)(void*),
-	void* handle,
-	ConfItem** _items,
-	size_t* _itemCount,
-	size_t* errorLine)
+inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
+	ConfItem** _items, size_t* _itemCount, size_t* errorLine)
 {
 	assert(getNextChar);
 	assert(_items);
 	assert(_itemCount);
 
 	ConfItem* items = malloc(sizeof(struct ConfItem));
-
 	if (!items)
 	{
 		if (errorLine) *errorLine = 0;
@@ -115,7 +100,6 @@ inline static ConfResult createConfItems(
 	size_t itemCapacity = 1;
 
 	char* buffer = malloc(sizeof(char));
-
 	if (!buffer)
 	{
 		free(items);
@@ -123,34 +107,27 @@ inline static ConfResult createConfItems(
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 	}
 
-	size_t bufferSize = 0;
-	size_t bufferCapacity = 1;
-	size_t lineIndex = 0;
-
+	size_t bufferSize = 0, bufferCapacity = 1, lineIndex = 0;
+	
 	ConfItem item;
-
 	memset(&item, 0, sizeof(struct ConfItem));
 
 	while (true)
 	{
 		int currentChar = getNextChar(handle);
-
 		if (currentChar == '=' && item.keySize == 0)
 		{
 			if (bufferSize == 0)
 			{
-				free(buffer);
-				destroyConfItems(items, itemCount);
+				free(buffer); destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;
 				return BAD_KEY_CONF_RESULT;
 			}
 
 			char* key = malloc((bufferSize + 1) * sizeof(char));
-
 			if (!key)
 			{
-				free(buffer);
-				destroyConfItems(items, itemCount);
+				free(buffer); destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
@@ -175,8 +152,7 @@ inline static ConfResult createConfItems(
 					return BAD_ITEM_CONF_RESULT;
 				}
 
-				if (currentChar == EOF || currentChar == '\0')
-					break;
+				if (currentChar == EOF || currentChar == '\0') break;
 
 				bufferSize = 0;
 				lineIndex++;
@@ -185,8 +161,7 @@ inline static ConfResult createConfItems(
 
 			if (bufferSize == 0)
 			{
-				free(item.key);
-				free(buffer);
+				free(item.key); free(buffer);
 				destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;
 				return BAD_VALUE_CONF_RESULT;
@@ -225,7 +200,6 @@ inline static ConfResult createConfItems(
 				if (buffer != endChar && errno == 0)
 				{
 					char end = *endChar;
-
 					if (end == '\n')
 					{
 						item.value.integer = integer;
@@ -236,9 +210,8 @@ inline static ConfResult createConfItems(
 					{
 						endChar++;
 
-						char* fractionEndChar;
-
 						errno = 0;
+						char* fractionEndChar;
 						int64_t fraction = strtoll(endChar, &fractionEndChar, 10);
 
 						if (endChar != fractionEndChar && errno == 0 && 
@@ -301,11 +274,9 @@ inline static ConfResult createConfItems(
 			if (!converted)
 			{
 				char* string = malloc((bufferSize + 1) * sizeof(char));
-
 				if (!string)
 				{
-					free(item.key);
-					free(buffer);
+					free(item.key); free(buffer);
 					destroyConfItems(items, itemCount);
 					if (errorLine) *errorLine = lineIndex + 1;
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
@@ -330,8 +301,7 @@ inline static ConfResult createConfItems(
 				{
 					if (item.type == STRING_CONF_DATA_TYPE)
 						free(item.value.string.value);
-					free(item.key);
-					free(buffer);
+					free(item.key); free(buffer);
 					destroyConfItems(items, itemCount);
 					if (errorLine) *errorLine = lineIndex + 1;
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
@@ -341,9 +311,7 @@ inline static ConfResult createConfItems(
 			}
 
 			items[itemCount++] = item;
-
-			if (currentChar == EOF || currentChar == '\0')
-				break;
+			if (currentChar == EOF || currentChar == '\0') break;
 
 			item.keySize = 0;
 			bufferSize = 0;
@@ -355,9 +323,8 @@ inline static ConfResult createConfItems(
 			while(true)
 			{
 				currentChar = getNextChar(handle);
-
-				if (currentChar == '\n' || currentChar == EOF || currentChar == '\0')
-					break;
+				if (currentChar == '\n' || currentChar == EOF ||
+					currentChar == '\0') break;
 			}
 
 			bufferSize = 0;
@@ -379,8 +346,7 @@ inline static ConfResult createConfItems(
 			if (!newBuffer)
 			{
 				if (item.keySize > 0) free(item.key);
-				free(buffer);
-				destroyConfItems(items, itemCount);
+				free(buffer); destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
@@ -406,10 +372,7 @@ inline static ConfResult createConfItems(
 		}
 	}
 
-	qsort(items,
-		itemCount,
-		sizeof(struct ConfItem),
-		compareConfItems);
+	qsort(items, itemCount, sizeof(struct ConfItem), compareConfItems);
 
 	*_items = items;
 	*_itemCount = itemCount;
@@ -420,19 +383,15 @@ static int onNextFileChar(void* handle)
 {
 	// NOTE: handle should not be NULL!
 	// Skipping here assertion for debug build speed.
-
 	return getc(handle);
 }
-ConfResult createConfFileReader(
-	const char* filePath,
-	ConfReader* confReader,
-	size_t* errorLine)
+ConfResult createConfFileReader(const char* filePath,
+	ConfReader* confReader, size_t* errorLine)
 {
 	assert(filePath);
 	assert(confReader);
 
 	ConfReader confReaderInstance = malloc(sizeof(ConfReader_T));
-
 	if (!confReaderInstance)
 	{
 		if (errorLine) *errorLine = 0;
@@ -440,7 +399,6 @@ ConfResult createConfFileReader(
 	}
 
 	FILE* file = openFile(filePath, "r");
-
 	if (!file)
 	{
 		free(confReaderInstance);
@@ -451,13 +409,8 @@ ConfResult createConfFileReader(
 	ConfItem* items;
 	size_t itemCount;
 
-	ConfResult result = createConfItems(
-		onNextFileChar,
-		file,
-		&items,
-		&itemCount,
-		errorLine);
-
+	ConfResult result = createConfItems(onNextFileChar,
+		file, &items, &itemCount, errorLine);
 	closeFile(file);
 
 	if (result != SUCCESS_CONF_RESULT)
@@ -468,7 +421,6 @@ ConfResult createConfFileReader(
 
 	confReaderInstance->items = items;
 	confReaderInstance->itemCount = itemCount;
-
 	*confReader = confReaderInstance;
 	if (errorLine) *errorLine = 0;
 	return SUCCESS_CONF_RESULT;
@@ -483,21 +435,17 @@ static int onNextDataChar(void* handle)
 {
 	// NOTE: handle should not be NULL!
 	// Skipping here assertion for debug build speed.
-
 	ConfReaderIterator* iterator = handle;
 	return iterator->data[iterator->index++];
 }
-ConfResult createConfDataReader(
-	const char* data,
-	ConfReader* confReader,
-	size_t* errorLine)
+ConfResult createConfDataReader(const char* data,
+	ConfReader* confReader, size_t* errorLine)
 {
 	assert(data);
 	assert(confReader);
 	assert(errorLine);
 
 	ConfReader confReaderInstance = malloc(sizeof(ConfReader_T));
-
 	if (!confReaderInstance)
 	{
 		*errorLine = 0;
@@ -511,12 +459,8 @@ ConfResult createConfDataReader(
 	ConfItem* items;
 	size_t itemCount;
 
-	ConfResult result = createConfItems(
-		onNextDataChar,
-		&iterator,
-		&items,
-		&itemCount,
-		errorLine);
+	ConfResult result = createConfItems(onNextDataChar,
+		&iterator, &items, &itemCount, errorLine);
 
 	if (result != SUCCESS_CONF_RESULT)
 	{
@@ -526,26 +470,19 @@ ConfResult createConfDataReader(
 
 	confReaderInstance->items = items;
 	confReaderInstance->itemCount = itemCount;
-
 	*confReader = confReaderInstance;
 	return SUCCESS_CONF_RESULT;
 }
 
 void destroyConfReader(ConfReader confReader)
 {
-	if (!confReader)
-		return;
-
-	destroyConfItems(
-		confReader->items,
-		confReader->itemCount);
+	if (!confReader) return;
+	destroyConfItems(confReader->items, confReader->itemCount);
 	free(confReader);
 }
 
-bool getConfReaderType(
-	ConfReader confReader,
-	const char* key,
-	ConfDataType* type)
+bool getConfReaderType(ConfReader confReader,
+	const char* key, ConfDataType* type)
 {
 	assert(confReader);
 	assert(key);
@@ -555,24 +492,17 @@ bool getConfReaderType(
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(
-		&item,
-		confReader->items,
-		confReader->itemCount,
-		sizeof(struct ConfItem),
-		compareConfItems);
-
-	if (!foundItem)
-		return false;
+	ConfItem* foundItem = bsearch(&item,
+		confReader->items, confReader->itemCount,
+		sizeof(struct ConfItem), compareConfItems);
+	if (!foundItem) return false;
 
 	*type = foundItem->type;
 	return true;
 }
 
-bool getConfReaderInteger(
-	ConfReader confReader,
-	const char* key,
-	int64_t* value)
+bool getConfReaderInteger(ConfReader confReader,
+	const char* key, int64_t* value)
 {
 	assert(confReader);
 	assert(key);
@@ -582,12 +512,9 @@ bool getConfReaderInteger(
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(
-		&item,
-		confReader->items,
-		confReader->itemCount,
-		sizeof(struct ConfItem),
-		compareConfItems);
+	ConfItem* foundItem = bsearch(&item,
+		confReader->items, confReader->itemCount,
+		sizeof(struct ConfItem), compareConfItems);
 
 	if (!foundItem || foundItem->type != INTEGER_CONF_DATA_TYPE)
 		return false;
@@ -596,10 +523,8 @@ bool getConfReaderInteger(
 	return true;
 }
 
-bool getConfReaderFloating(
-	ConfReader confReader,
-	const char* key,
-	double* value)
+bool getConfReaderFloating(ConfReader confReader,
+	const char* key, double* value)
 {
 	assert(confReader);
 	assert(key);
@@ -609,12 +534,9 @@ bool getConfReaderFloating(
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(
-		&item,
-		confReader->items,
-		confReader->itemCount,
-		sizeof(struct ConfItem),
-		compareConfItems);
+	ConfItem* foundItem = bsearch(&item,
+		confReader->items, confReader->itemCount,
+		sizeof(struct ConfItem), compareConfItems);
 
 	if (!foundItem || foundItem->type != FLOATING_CONF_DATA_TYPE)
 		return false;
@@ -623,10 +545,8 @@ bool getConfReaderFloating(
 	return true;
 }
 
-bool getConfReaderBoolean(
-	ConfReader confReader,
-	const char* key,
-	bool* value)
+bool getConfReaderBoolean(ConfReader confReader,
+	const char* key, bool* value)
 {
 	assert(confReader);
 	assert(key);
@@ -636,12 +556,9 @@ bool getConfReaderBoolean(
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(
-		&item,
-		confReader->items,
-		confReader->itemCount,
-		sizeof(struct ConfItem),
-		compareConfItems);
+	ConfItem* foundItem = bsearch(&item,
+		confReader->items, confReader->itemCount,
+		sizeof(struct ConfItem), compareConfItems);
 
 	if (!foundItem || foundItem->type != BOOLEAN_CONF_DATA_TYPE)
 		return false;
@@ -650,11 +567,8 @@ bool getConfReaderBoolean(
 	return true;
 }
 
-bool getConfReaderString(
-	ConfReader confReader,
-	const char* key,
-	const char** value,
-	uint64_t* length)
+bool getConfReaderString(ConfReader confReader,
+	const char* key, const char** value, uint64_t* length)
 {
 	assert(confReader);
 	assert(key);
@@ -664,12 +578,9 @@ bool getConfReaderString(
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(
-		&item,
-		confReader->items,
-		confReader->itemCount,
-		sizeof(struct ConfItem),
-		compareConfItems);
+	ConfItem* foundItem = bsearch(&item,
+		confReader->items, confReader->itemCount,
+		sizeof(struct ConfItem), compareConfItems);
 
 	if (!foundItem || foundItem->type != STRING_CONF_DATA_TYPE)
 		return false;

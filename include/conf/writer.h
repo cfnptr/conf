@@ -35,8 +35,7 @@ typedef ConfWriter_T* ConfWriter;
  * confWriter - pointer to the conf writer instance.
  */
 ConfResult createConfFileWriter(
-	const char* filePath,
-	ConfWriter* confWriter);
+	const char* filePath, ConfWriter* confWriter);
 
 /*
  * Destroy conf writer instance.
@@ -45,11 +44,11 @@ ConfResult createConfFileWriter(
 void destroyConfWriter(ConfWriter confWriter);
 
 /*
- * Write specified comment to the file.
+ * Write specified comment string to the file.
  * Returns true on success.
  *
  * confWriter - conf writer instance.
- * comment - comment string value.
+ * comment - comment value string.
  */
 bool writeConfComment(ConfWriter confWriter, const char* comment);
 
@@ -62,55 +61,46 @@ bool writeConfComment(ConfWriter confWriter, const char* comment);
 bool writeConfNewLine(ConfWriter confWriter);
 
 /*
- * Write specified item to the file.
+ * Write specified integer item to the file.
  * Returns true on success.
  *
  * confWriter - conf writer instance.
- * key - string item key.
+ * key - item key string.
  * value - integer item value.
  */
-bool writeConfInteger(
-	ConfWriter confWriter,
-	const char* key,
-	int64_t value);
+bool writeConfInteger(ConfWriter confWriter,
+	const char* key, int64_t value);
 
 /*
- * Write specified item to the file.
+ * Write specified floating item to the file.
  * Returns true on success.
  *
  * confWriter - conf writer instance.
- * key - string item key.
+ * key - item key string.
  * value - floating item value.
  */
-bool writeConfFloating(
-	ConfWriter confWriter,
-	const char* key,
-	double value);
+bool writeConfFloating(ConfWriter confWriter,
+	const char* key, double value);
 
 /*
- * Write specified item to the file.
+ * Write specified boolean item to the file.
  * Returns true on success.
  *
  * confWriter - conf writer instance.
- * key - string item key.
+ * key - item key string.
  * value - boolean item value.
  */
-bool writeConfBoolean(
-	ConfWriter confWriter,
-	const char* key,
-	bool value);
+bool writeConfBoolean(ConfWriter confWriter,
+	const char* key, bool value);
 
 /*
- * Write specified item to the file.
+ * Write specified string item to the file.
  * Returns true on success.
  *
  * confWriter - conf writer instance.
- * key - string item key.
+ * key - item key string.
  * value - string item value.
- * length - string length. (0 = detect)
+ * length - string item length. (0 = detect)
  */
-bool writeConfString(
-	ConfWriter confWriter,
-	const char* key,
-	const char* value,
-	size_t length);
+bool writeConfString(ConfWriter confWriter,
+	const char* key, const char* value, size_t length);

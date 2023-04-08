@@ -1,4 +1,4 @@
-# Copyright 2021-2022 Nikita Fediuchin. All rights reserved.
+# Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,19 +14,17 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-if (${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
+if(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
 	message(FATAL_ERROR "Prevented in-tree build")
-endif ()
+endif()
 
-if (TARGET conf-static)
+if(TARGET conf-static)
 	return()
-endif ()
+endif()
 
-project(conf
-	VERSION 1.3.2
+project(conf VERSION 1.4.0 LANGUAGES C
 	DESCRIPTION "Simple and fast configuration file library"
-	HOMEPAGE_URL "https://github.com/cfnptr/conf"
-	LANGUAGES C)
+	HOMEPAGE_URL "https://github.com/cfnptr/conf")
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED TRUE)
@@ -37,40 +35,32 @@ option(CONF_BUILD_TESTS "Build CONF library tests" ON)
 set(MPIO_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 add_subdirectory(libraries/mpio)
 
-configure_file(
-	cmake/defines.h.in
-	include/conf/defines.h)
+configure_file(cmake/defines.h.in include/conf/defines.h)
 
 set(CONF_LINK_LIBRARIES mpio-static)
-
-if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	list(APPEND CONF_LINK_LIBRARIES m)
-endif ()
+endif()
 
-set(CONF_SOURCES
-	source/reader.c
-	source/writer.c)
+set(CONF_SOURCES source/reader.c source/writer.c)
 
 add_library(conf-static STATIC ${CONF_SOURCES})
-target_link_libraries(conf-static PUBLIC
-	${CONF_LINK_LIBRARIES})
-target_include_directories(conf-static PUBLIC
-	${PROJECT_BINARY_DIR}/include
-	${PROJECT_SOURCE_DIR}/include)
+target_link_libraries(conf-static PUBLIC ${CONF_LINK_LIBRARIES})
 
-if (CONF_BUILD_SHARED)
+target_include_directories(conf-static PUBLIC
+	${PROJECT_BINARY_DIR}/include ${PROJECT_SOURCE_DIR}/include
+	${PROJECT_SOURCE_DIR}/wrappers/cpp)
+
+if(CONF_BUILD_SHARED)
 	add_library(conf-shared SHARED ${CONF_SOURCES})
 	set_target_properties(conf-shared PROPERTIES
-		OUTPUT_NAME "conf"
-		WINDOWS_EXPORT_ALL_SYMBOLS ON)
-	target_link_libraries(conf-shared PUBLIC
-		${CONF_LINK_LIBRARIES})
+		OUTPUT_NAME "conf" WINDOWS_EXPORT_ALL_SYMBOLS ON)
+	target_link_libraries(conf-shared PUBLIC ${CONF_LINK_LIBRARIES})
 	target_include_directories(conf-shared PUBLIC
-		${PROJECT_BINARY_DIR}/include
-		${PROJECT_SOURCE_DIR}/include)
-endif ()
+		${PROJECT_BINARY_DIR}/include ${PROJECT_SOURCE_DIR}/include)
+endif()
 
-if (CONF_BUILD_TESTS)
+if(CONF_BUILD_TESTS)
 	enable_testing()
 
 	add_executable(TestConfReader tests/test_reader.c)
@@ -80,4 +70,4 @@ if (CONF_BUILD_TESTS)
 	add_executable(TestConfWrite tests/test_writer.c)
 	target_link_libraries(TestConfWrite PUBLIC conf-static)
 	add_test(NAME TestConfWrite COMMAND TestConfWrite)
-endif ()
+endif()

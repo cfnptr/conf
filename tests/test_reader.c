@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ inline static bool createTestFile(const char* content)
 	assert(content);
 
 	FILE* file = openFile(TEST_FILE_NAME, "w");
-
 	if (!file)
 	{
 		printf("Failed to open test file.\n");
@@ -35,7 +34,6 @@ inline static bool createTestFile(const char* content)
 	}
 
 	size_t contentLength = strlen(content);
-
 	size_t writeResult = fwrite(content,
 		sizeof(char), contentLength, file);
 
@@ -168,9 +166,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	char content[256];
 
 	sprintf(content, "%s=%s", keyName, stringValue);
-
-	if (!createTestFile(content))
-		return false;
+	if (!createTestFile(content)) return false;
 
 	ConfReader confReader;
 	size_t errorLine;
@@ -187,9 +183,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	}
 
 	int64_t integer;
-
-	bool result = getConfReaderInteger(
-		confReader, keyName, &integer);
+	bool result = getConfReaderInteger(confReader, keyName, &integer);
 
 	if (!result)
 	{
@@ -238,9 +232,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	}
 
 	double floating;
-
-	bool result = getConfReaderFloating(
-		confReader, keyName, &floating);
+	bool result = getConfReaderFloating(confReader, keyName, &floating);
 
 	if (!result)
 	{
@@ -276,9 +268,7 @@ inline static bool testBoolean(double value, const char* stringValue)
 	char content[256];
 
 	sprintf(content, "%s=%s", keyName, stringValue);
-
-	if (!createTestFile(content))
-		return false;
+	if (!createTestFile(content)) return false;
 
 	ConfReader confReader;
 	size_t errorLine;
@@ -295,9 +285,7 @@ inline static bool testBoolean(double value, const char* stringValue)
 	}
 
 	bool boolean;
-
-	bool result = getConfReaderBoolean(
-		confReader, keyName, &boolean);
+	bool result = getConfReaderBoolean(confReader, keyName, &boolean);
 
 	if (!result)
 	{
@@ -325,9 +313,7 @@ inline static bool testKey(const char* key)
 
 	char content[256];
 	sprintf(content, "%s=123", key);
-
-	if (!createTestFile(content))
-		return false;
+	if (!createTestFile(content)) return false;
 
 	ConfReader confReader;
 	size_t errorLine;
@@ -376,9 +362,7 @@ inline static bool testString(const char* value)
 	char content[256];
 
 	sprintf(content, "%s=%s", keyName, value);
-
-	if (!createTestFile(content))
-		return false;
+	if (!createTestFile(content)) return false;
 
 	ConfReader confReader;
 	size_t errorLine;
@@ -395,9 +379,7 @@ inline static bool testString(const char* value)
 	}
 
 	const char* string;
-
-	bool result = getConfReaderString(
-		confReader, keyName, &string, NULL);
+	bool result = getConfReaderString(confReader, keyName, &string, NULL);
 
 	if (!result)
 	{
@@ -440,9 +422,7 @@ inline static bool testConfig(ConfReader confReader)
 	assert(confReader);
 
 	int64_t integer;
-
-	bool result = getConfReaderInteger(
-		confReader, "integer", &integer);
+	bool result = getConfReaderInteger(confReader, "integer", &integer);
 
 	if (!result)
 	{
@@ -460,9 +440,7 @@ inline static bool testConfig(ConfReader confReader)
 	}
 
 	double floating;
-
-	result = getConfReaderFloating(
-		confReader, "DOUBLE", &floating);
+	result = getConfReaderFloating(confReader, "DOUBLE", &floating);
 
 	if (!result)
 	{
@@ -479,9 +457,7 @@ inline static bool testConfig(ConfReader confReader)
 	}
 
 	bool boolean;
-
-	result = getConfReaderBoolean(
-		confReader, "Boolean", &boolean);
+	result = getConfReaderBoolean(confReader, "Boolean", &boolean);
 
 	if (!result)
 	{
@@ -500,9 +476,7 @@ inline static bool testConfig(ConfReader confReader)
 
 	const char* string;
 	uint64_t length;
-
-	result = getConfReaderString(
-		confReader, "string ", &string, &length);
+	result = getConfReaderString(confReader, "string ", &string, &length);
 
 	if (!result)
 	{
@@ -630,7 +604,7 @@ int main()
 	result &= testString("\tTab symbol test");
 	result &= testString("looksLikeKey");
 	result &= testString("PLEASE DON'T SCREAM");
-	result &= testString("!@#$%^&*()_+-{}[]:|\";'\\<>?,./");
+	result &= testString("!@#$%%^&*()_+-{}[]:|\";'\\<>?,./");
 	result &= testFileConfig();
 	result &= testDataConfig();
 	return result ? EXIT_SUCCESS : EXIT_FAILURE;

@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ inline static bool compareTestFile(const char* confData)
 	assert(confData);
 
 	FILE* file = openFile(TEST_FILE_NAME, "r");
-
 	if (!file)
 	{
 		printf("Failed to open test file.\n");
@@ -35,7 +34,6 @@ inline static bool compareTestFile(const char* confData)
 	}
 
 	int result = seekFile(file, 0, SEEK_END);
-
 	if (result != 0)
 	{
 		printf("Failed to seek test file end.\n");
@@ -44,7 +42,6 @@ inline static bool compareTestFile(const char* confData)
 	}
 
 	size_t fileSize = tellFile(file);
-
 	if (fileSize == 0)
 	{
 		printf("Zero size test file.\n");
@@ -53,7 +50,6 @@ inline static bool compareTestFile(const char* confData)
 	}
 
 	result = seekFile(file, 0, SEEK_SET);
-
 	if (result != 0)
 	{
 		printf("Failed to seek test file start.\n");
@@ -62,7 +58,6 @@ inline static bool compareTestFile(const char* confData)
 	}
 
 	char* data = malloc(sizeof(char) *(fileSize + 1));
-
 	if (!data)
 	{
 		printf("Failed to allocate read buffer.\n");
@@ -108,10 +103,7 @@ inline static bool removeTestFile()
 inline static bool testComment()
 {
 	ConfWriter confWriter;
-
-	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME, &confWriter);
-
+	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testComment: "
@@ -121,14 +113,11 @@ inline static bool testComment()
 	}
 
 	const char* comment = "Some conf comment";
-
 	bool result = writeConfComment(confWriter, comment);
-
 	if (!result)
 	{
 		printf("testComment: failed to write value. "
-			"(comment: %s)\n",
-			comment);
+			"(comment: %s)\n", comment);
 		destroyConfWriter(confWriter);
 		return false;
 	}
@@ -152,10 +141,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	assert(stringValue);
 
 	ConfWriter confWriter;
-
-	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME, &confWriter);
-
+	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testInteger: incorrect result. "
@@ -165,10 +151,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	}
 
 	const char* keyName = "someInteger";
-
-	bool result = writeConfInteger(
-		confWriter, keyName, value);
-
+	bool result = writeConfInteger(confWriter, keyName, value);
 	if (!result)
 	{
 		printf("testInteger: failed to write value. "
@@ -196,10 +179,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	assert(stringValue);
 
 	ConfWriter confWriter;
-
-	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME, &confWriter);
-
+	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testFloating: incorrect result. "
@@ -209,10 +189,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	}
 
 	const char* keyName = "someFloating";
-
-	bool result = writeConfFloating(
-		confWriter, keyName, value);
-
+	bool result = writeConfFloating(confWriter, keyName, value);
 	if (!result)
 	{
 		printf("testFloating: failed to write value. "
@@ -240,10 +217,7 @@ inline static bool testBoolean(bool value, const char* stringValue)
 	assert(stringValue);
 
 	ConfWriter confWriter;
-
-	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME, &confWriter);
-
+	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testBoolean: incorrect result. "
@@ -253,10 +227,7 @@ inline static bool testBoolean(bool value, const char* stringValue)
 	}
 
 	const char* keyName = "someBoolean";
-
-	bool result = writeConfBoolean(
-		confWriter, keyName, value);
-
+	bool result = writeConfBoolean(confWriter, keyName, value);
 	if (!result)
 	{
 		printf("testBoolean: failed to write value. "
@@ -284,9 +255,7 @@ inline static bool testString(const char* value)
 	assert(value);
 
 	ConfWriter confWriter;
-
-	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME, &confWriter);
+	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -326,9 +295,7 @@ inline static bool testString(const char* value)
 inline static bool testConfig()
 {
 	ConfWriter confWriter;
-
-	ConfResult confResult = createConfFileWriter(
-		TEST_FILE_NAME, &confWriter);
+	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -338,9 +305,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	bool result = writeConfComment(
-		confWriter, "Conf file test");
-
+	bool result = writeConfComment(confWriter, "Conf file test");
 	if (!result)
 	{
 		printf("testConfig: failed to write comment. "
@@ -349,9 +314,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	result = writeConfInteger(
-		confWriter, "someInteger", 123);
-
+	result = writeConfInteger(confWriter, "someInteger", 123);
 	if (!result)
 	{
 		printf("testConfig: failed to write value. "
@@ -361,7 +324,6 @@ inline static bool testConfig()
 	}
 
 	result = writeConfNewLine(confWriter);
-
 	if (!result)
 	{
 		printf("testConfig: failed to write new line.\n");
@@ -369,9 +331,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	result = writeConfFloating(
-		confWriter, "Floating", 1.0);
-
+	result = writeConfFloating(confWriter, "Floating", 1.0);
 	if (!result)
 	{
 		printf("testConfig: failed to write value. "
@@ -380,9 +340,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	result = writeConfBoolean(
-		confWriter, "BOOLEAN", true);
-
+	result = writeConfBoolean(confWriter, "BOOLEAN", true);
 	if (!result)
 	{
 		printf("testConfig: failed to write value. "
@@ -391,9 +349,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	result = writeConfString(
-		confWriter, "string ", "Hello world!", 0);
-
+	result = writeConfString(confWriter, "string ", "Hello world!", 0);
 	if (!result)
 	{
 		printf("testConfig: failed to write value. "
@@ -463,7 +419,7 @@ int main()
 	result &= testString("\tTab symbol test");
 	result &= testString("looksLikeKey");
 	result &= testString("PLEASE DON'T SCREAM");
-	result &= testString("!@#$%^&*()_+-{}[]:|\";'\\<>?,./");
+	result &= testString("!@#$%%^&*()_+-{}[]:|\";'\\<>?,./");
 	result &= testConfig();
 	return result ? EXIT_SUCCESS : EXIT_FAILURE;
 }

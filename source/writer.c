@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,20 +24,16 @@ struct ConfWriter_T
 	FILE* file;
 };
 
-ConfResult createConfFileWriter(
-	const char* filePath,
-	ConfWriter* confWriter)
+ConfResult createConfFileWriter(const char* filePath, ConfWriter* confWriter)
 {
 	assert(filePath);
 	assert(confWriter);
 
 	ConfWriter confWriterInstance = malloc(sizeof(ConfWriter_T));
-
 	if (!confWriterInstance)
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 
 	FILE* file = openFile(filePath, "w");
-
 	if (!file)
 	{
 		free(confWriterInstance);
@@ -45,19 +41,14 @@ ConfResult createConfFileWriter(
 	}
 
 	confWriterInstance->file = file;
-
 	*confWriter = confWriterInstance;
 	return SUCCESS_CONF_RESULT;
 }
 
-void destroyConfWriter(
-	ConfWriter confWriter)
+void destroyConfWriter(ConfWriter confWriter)
 {
-	if (!confWriter)
-		return;
-
-	if (confWriter->file)
-		closeFile(confWriter->file);
+	if (!confWriter) return;
+	if (confWriter->file) closeFile(confWriter->file);
 	free(confWriter);
 }
 
@@ -74,21 +65,16 @@ bool writeConfNewLine(ConfWriter confWriter)
 	return fputc('\n', confWriter->file) == '\n';
 }
 
-bool writeConfInteger(
-	ConfWriter confWriter,
-	const char* key,
-	int64_t value)
+bool writeConfInteger(ConfWriter confWriter,
+	const char* key, int64_t value)
 {
 	assert(confWriter);
 	assert(key);
-
 	return fprintf(confWriter->file, "%s=%lld\n", 
 		key, (long long int)value) > 0;
 }
 
-inline static bool getDoubleDigitCount(
-	double value,
-	uint8_t* count)
+inline static bool getDoubleDigitCount(double value, uint8_t* count)
 {
 	uint8_t digitCount = 0;
 
@@ -96,18 +82,14 @@ inline static bool getDoubleDigitCount(
 	{
 		value = value * 10.0;
 		digitCount++;
-
-		if (digitCount == UINT8_MAX)
-			return false;
+		if (digitCount == UINT8_MAX) return false;
 	}
 
 	*count = digitCount > 0 ? digitCount : 1;
 	return true;
 }
-bool writeConfFloating(
-	ConfWriter confWriter,
-	const char* key,
-	double value)
+bool writeConfFloating(ConfWriter confWriter,
+	const char* key, double value)
 {
 	assert(confWriter);
 	assert(key);
@@ -127,37 +109,25 @@ bool writeConfFloating(
 	else
 	{
 		uint8_t count;
-
-		bool result = getDoubleDigitCount(
-			value, &count);
-
-		if (!result)
-			return false;
+		bool result = getDoubleDigitCount( value, &count);
+		if (!result) return false;
 
 		return fprintf(confWriter->file, 
 			"%s=%.*f\n", key, count, value) > 0;
 	}
 }
 
-bool writeConfBoolean(
-	ConfWriter confWriter,
-	const char* key,
-	bool value)
+bool writeConfBoolean(ConfWriter confWriter,
+	const char* key, bool value)
 {
 	assert(confWriter);
 	assert(key);
-
-	if (value)
-		return fprintf(confWriter->file, "%s=true\n", key) > 0;
-	else
-		return fprintf( confWriter->file, "%s=false\n", key) > 0;
+	if (value) return fprintf(confWriter->file, "%s=true\n", key) > 0;
+	else return fprintf( confWriter->file, "%s=false\n", key) > 0;
 }
 
-bool writeConfString(
-	ConfWriter confWriter,
-	const char* key,
-	const char* value,
-	size_t length)
+bool writeConfString(ConfWriter confWriter,
+	const char* key, const char* value, size_t length)
 {
 	assert(confWriter);
 	assert(key);
