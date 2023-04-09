@@ -140,10 +140,11 @@ public:
 	 *
 	 * key - item key string.
 	 * value - floating item value.
+	 * precision - floating value precision. (0 = detect)
 	 */
-	void write(string_view key, double value)
+	void write(string_view key, double value, uint8_t precision = 0)
 	{
-		auto result = writeConfFloating(instance, key.data(), value);
+		auto result = writeConfFloating(instance, key.data(), value, precision);
 		if (!result) throw runtime_error("Failed to write");
 	}
 	/*
@@ -152,8 +153,12 @@ public:
 	 *
 	 * key - item key string.
 	 * value - integer item value.
+	 * precision - floating value precision. (0 = detect)
 	 */
-	void write(string_view key, float value) { write(key, (double)value); }
+	void write(string_view key, float value, uint8_t precision = 0)
+	{
+		write(key, (double)value, precision);
+	}
 
 	/*
 	 * Write specified boolean item to the file.

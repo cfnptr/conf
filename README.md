@@ -7,6 +7,7 @@ A library providing **configuration** API for file and data reading / writing.
 * Simple configuration syntax (similar to .ini)
 * Automatic variable parsing (int, float, bool)
 * Built-in configuration syntax validation
+* Modern C++ wrapper.
 
 ## Usage example
 

@@ -90,6 +90,108 @@ public:
 	{
 		return getConfReaderInteger(instance, key.data(), &value);
 	}
+	/*
+	 * Get specified item integer value by key.
+	 * Returns true if item is found and correct.
+	 *
+	 * key - item search key string.
+	 * value - reference to the integer value.
+	 */
+	bool get(string_view key, int32_t& value)
+	{
+		int64_t v; auto result = get(key, v);
+		if (result)
+		{
+			value = (int32_t)v;
+			return true;
+		}
+		return false;
+	}
+	/*
+	 * Get specified item integer value by key.
+	 * Returns true if item is found and correct.
+	 *
+	 * key - item search key string.
+	 * value - reference to the integer value.
+	 */
+	bool get(string_view key, uint32_t& value)
+	{
+		int64_t v; auto result = get(key, v);
+		if (result)
+		{
+			value = (uint32_t)v;
+			return true;
+		}
+		return false;
+	}
+	/*
+	 * Get specified item integer value by key.
+	 * Returns true if item is found and correct.
+	 *
+	 * key - item search key string.
+	 * value - reference to the integer value.
+	 */
+	bool get(string_view key, int16_t& value)
+	{
+		int64_t v; auto result = get(key, v);
+		if (result)
+		{
+			value = (int16_t)v;
+			return true;
+		}
+		return false;
+	}
+	/*
+	 * Get specified item integer value by key.
+	 * Returns true if item is found and correct.
+	 *
+	 * key - item search key string.
+	 * value - reference to the integer value.
+	 */
+	bool get(string_view key, uint16_t& value)
+	{
+		int64_t v; auto result = get(key, v);
+		if (result)
+		{
+			value = (uint16_t)v;
+			return true;
+		}
+		return false;
+	}
+	/*
+	 * Get specified item integer value by key.
+	 * Returns true if item is found and correct.
+	 *
+	 * key - item search key string.
+	 * value - reference to the integer value.
+	 */
+	bool get(string_view key, int8_t& value)
+	{
+		int64_t v; auto result = get(key, v);
+		if (result)
+		{
+			value = (int8_t)v;
+			return true;
+		}
+		return false;
+	}
+	/*
+	 * Get specified item integer value by key.
+	 * Returns true if item is found and correct.
+	 *
+	 * key - item search key string.
+	 * value - reference to the integer value.
+	 */
+	bool get(string_view key, uint8_t& value)
+	{
+		int64_t v; auto result = get(key, v);
+		if (result)
+		{
+			value = (uint8_t)v;
+			return true;
+		}
+		return false;
+	}
 
 	/*
 	 * Get specified item floating value by key.
@@ -101,6 +203,23 @@ public:
 	bool get(string_view key, double& value)
 	{
 		return getConfReaderFloating(instance, key.data(), &value);
+	}
+	/*
+	 * Get specified item floating value by key.
+	 * Returns true if item is found and correct.
+	 *
+	 * key - item search key string.
+	 * value - reference to the floating value.
+	 */
+	bool get(string_view key, float& value)
+	{
+		double v; auto result = get(key, v);
+		if (result)
+		{
+			value = (float)v;
+			return true;
+		}
+		return false;
 	}
 
 	/*

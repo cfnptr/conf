@@ -89,7 +89,7 @@ inline static bool getDoubleDigitCount(double value, uint8_t* count)
 	return true;
 }
 bool writeConfFloating(ConfWriter confWriter,
-	const char* key, double value)
+	const char* key, double value, uint8_t precision)
 {
 	assert(confWriter);
 	assert(key);
@@ -108,12 +108,15 @@ bool writeConfFloating(ConfWriter confWriter,
 	}
 	else
 	{
-		uint8_t count;
-		bool result = getDoubleDigitCount( value, &count);
+		uint8_t digitCount;
+		bool result = getDoubleDigitCount(value, &digitCount);
 		if (!result) return false;
 
+		if (precision > 0 && precision < digitCount)
+			digitCount = precision;
+
 		return fprintf(confWriter->file, 
-			"%s=%.*f\n", key, count, value) > 0;
+			"%s=%.*f\n", key, digitCount, value) > 0;
 	}
 }
 

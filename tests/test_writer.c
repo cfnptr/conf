@@ -189,7 +189,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	}
 
 	const char* keyName = "someFloating";
-	bool result = writeConfFloating(confWriter, keyName, value);
+	bool result = writeConfFloating(confWriter, keyName, value, 0);
 	if (!result)
 	{
 		printf("testFloating: failed to write value. "
@@ -331,7 +331,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	result = writeConfFloating(confWriter, "Floating", 1.0);
+	result = writeConfFloating(confWriter, "Floating", 1.0, 0);
 	if (!result)
 	{
 		printf("testConfig: failed to write value. "

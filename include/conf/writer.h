@@ -78,9 +78,10 @@ bool writeConfInteger(ConfWriter confWriter,
  * confWriter - conf writer instance.
  * key - item key string.
  * value - floating item value.
+ * precision - floating value precision. (0 = detect)
  */
 bool writeConfFloating(ConfWriter confWriter,
-	const char* key, double value);
+	const char* key, double value, uint8_t precision);
 
 /*
  * Write specified boolean item to the file.
