@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #pragma once
+#include <string>
 #include <exception>
 #include <string_view>
 
@@ -40,9 +41,9 @@ public:
 	 *
 	 * filePath - file path string.
 	 */
-	Writer(string_view filePath)
+	Writer(const string& filePath)
 	{
-		auto result = createConfFileWriter(filePath.data(), &instance);
+		auto result = createConfFileWriter(filePath.c_str(), &instance);
 		if (result != SUCCESS_CONF_RESULT)
 			throw runtime_error(confResultToString(result));
 	}
@@ -57,9 +58,9 @@ public:
 	 *
 	 * comment - comment value string.
 	 */
-	void writeComment(string_view comment)
+	void writeComment(const string& comment)
 	{
-		auto result = writeConfComment(instance, comment.data());
+		auto result = writeConfComment(instance, comment.c_str());
 		if (!result) throw runtime_error("Failed to write");
 	}
 
@@ -80,9 +81,9 @@ public:
 	 * key - item key string.
 	 * value - integer item value.
 	 */
-	void write(string_view key, int64_t value)
+	void write(const string& key, int64_t value)
 	{
-		auto result = writeConfInteger(instance, key.data(), value);
+		auto result = writeConfInteger(instance, key.c_str(), value);
 		if (!result) throw runtime_error("Failed to write");
 	}
 	/*
@@ -92,7 +93,7 @@ public:
 	 * key - item key string.
 	 * value - integer item value.
 	 */
-	void write(string_view key, int32_t value) { write(key, (int64_t)value); }
+	void write(const string& key, int32_t value) { write(key, (int64_t)value); }
 	/*
 	 * Write specified integer item to the file.
 	 * Throws runtime exception on failure.
@@ -100,7 +101,7 @@ public:
 	 * key - item key string.
 	 * value - integer item value.
 	 */
-	void write(string_view key, uint32_t value) { write(key, (int64_t)value); }
+	void write(const string& key, uint32_t value) { write(key, (int64_t)value); }
 	/*
 	 * Write specified integer item to the file.
 	 * Throws runtime exception on failure.
@@ -108,7 +109,7 @@ public:
 	 * key - item key string.
 	 * value - integer item value.
 	 */
-	void write(string_view key, int16_t value) { write(key, (int64_t)value); }
+	void write(const string& key, int16_t value) { write(key, (int64_t)value); }
 	/*
 	 * Write specified integer item to the file.
 	 * Throws runtime exception on failure.
@@ -116,7 +117,7 @@ public:
 	 * key - item key string.
 	 * value - integer item value.
 	 */
-	void write(string_view key, uint16_t value) { write(key, (int64_t)value); }
+	void write(const string& key, uint16_t value) { write(key, (int64_t)value); }
 	/*
 	 * Write specified integer item to the file.
 	 * Throws runtime exception on failure.
@@ -124,7 +125,7 @@ public:
 	 * key - item key string.
 	 * value - integer item value.
 	 */
-	void write(string_view key, int8_t value) { write(key, (int64_t)value); }
+	void write(const string& key, int8_t value) { write(key, (int64_t)value); }
 	/*
 	 * Write specified integer item to the file.
 	 * Throws runtime exception on failure.
@@ -132,7 +133,7 @@ public:
 	 * key - item key string.
 	 * value - integer item value.
 	 */
-	void write(string_view key, uint8_t value) { write(key, (int64_t)value); }
+	void write(const string& key, uint8_t value) { write(key, (int64_t)value); }
 
 	/*
 	 * Write specified floating item to the file.
@@ -142,7 +143,7 @@ public:
 	 * value - floating item value.
 	 * precision - floating value precision. (0 = detect)
 	 */
-	void write(string_view key, double value, uint8_t precision = 0)
+	void write(const string& key, double value, uint8_t precision = 0)
 	{
 		auto result = writeConfFloating(instance, key.data(), value, precision);
 		if (!result) throw runtime_error("Failed to write");
@@ -155,7 +156,7 @@ public:
 	 * value - integer item value.
 	 * precision - floating value precision. (0 = detect)
 	 */
-	void write(string_view key, float value, uint8_t precision = 0)
+	void write(const string& key, float value, uint8_t precision = 0)
 	{
 		write(key, (double)value, precision);
 	}
@@ -167,9 +168,9 @@ public:
 	 * key - item key string.
 	 * value - boolean item value.
 	 */
-	void write(string_view key, bool value)
+	void write(const string& key, bool value)
 	{
-		auto result = writeConfBoolean(instance, key.data(), value);
+		auto result = writeConfBoolean(instance, key.c_str(), value);
 		if (!result) throw runtime_error("Failed to write");
 	}
 
@@ -180,9 +181,9 @@ public:
 	 * key - item key string.
 	 * value - string item value.
 	 */
-	void write(string_view key, string_view value)
+	void write(const string& key, string_view value)
 	{
-		auto result = writeConfString(instance, key.data(),
+		auto result = writeConfString(instance, key.c_str(),
 			value.data(), value.size());
 		if (!result) throw runtime_error("Failed to write");
 	}

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #pragma once
+#include <string>
 #include <exception>
 #include <string_view>
 
@@ -41,10 +42,10 @@ public:
 	 * filePath - conf file path string.
 	 * errorLine - pointer to the error line or NULL.
 	 */
-	Reader(string_view filePath, size_t* errorLine = nullptr)
+	Reader(const string& filePath, size_t* errorLine = nullptr)
 	{
 		auto result = createConfFileReader(
-			filePath.data(), &instance, errorLine);
+			filePath.c_str(), &instance, errorLine);
 		if (result != SUCCESS_CONF_RESULT)
 			throw runtime_error(confResultToString(result));
 	}
@@ -74,9 +75,9 @@ public:
 	 * key - string item search key.
 	 * type - reference to the value type.
 	 */
-	bool getType(string_view key, ConfDataType& type) const
+	bool getType(const string& key, ConfDataType& type) const
 	{
-		return getConfReaderType(instance, key.data(), &type);
+		return getConfReaderType(instance, key.c_str(), &type);
 	}
 
 	/*
@@ -86,9 +87,9 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(string_view key, int64_t& value)
+	bool get(const string& key, int64_t& value)
 	{
-		return getConfReaderInteger(instance, key.data(), &value);
+		return getConfReaderInteger(instance, key.c_str(), &value);
 	}
 	/*
 	 * Get specified item integer value by key.
@@ -97,7 +98,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(string_view key, int32_t& value)
+	bool get(const string& key, int32_t& value)
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -114,7 +115,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(string_view key, uint32_t& value)
+	bool get(const string& key, uint32_t& value)
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -131,7 +132,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(string_view key, int16_t& value)
+	bool get(const string& key, int16_t& value)
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -148,7 +149,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(string_view key, uint16_t& value)
+	bool get(const string& key, uint16_t& value)
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -165,7 +166,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(string_view key, int8_t& value)
+	bool get(const string& key, int8_t& value)
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -182,7 +183,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(string_view key, uint8_t& value)
+	bool get(const string& key, uint8_t& value)
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -200,9 +201,9 @@ public:
 	 * key - item search key string.
 	 * value - reference to the floating value.
 	 */
-	bool get(string_view key, double& value)
+	bool get(const string& key, double& value)
 	{
-		return getConfReaderFloating(instance, key.data(), &value);
+		return getConfReaderFloating(instance, key.c_str(), &value);
 	}
 	/*
 	 * Get specified item floating value by key.
@@ -211,7 +212,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the floating value.
 	 */
-	bool get(string_view key, float& value)
+	bool get(const string& key, float& value)
 	{
 		double v; auto result = get(key, v);
 		if (result)
@@ -229,9 +230,9 @@ public:
 	 * key - item search key string.
 	 * value - reference to the boolean value.
 	 */
-	bool get(string_view key, bool& value)
+	bool get(const string& key, bool& value)
 	{
-		return getConfReaderBoolean(instance, key.data(), &value);
+		return getConfReaderBoolean(instance, key.c_str(), &value);
 	}
 
 	/*
@@ -241,14 +242,14 @@ public:
 	 * key - item search key string.
 	 * value - reference to the string value.
 	 */
-	bool get(string_view key, string_view& value)
+	bool get(const string& key, string_view& value)
 	{
-		uint64_t length; const char* string;
+		uint64_t length; const char* _string;
 		auto result = getConfReaderString(instance,
-			key.data(), &string, &length);
+			key.data(), &_string, &length);
 		if (result)
 		{
-			value = string_view(string, (size_t)length);
+			value = string_view(_string, (size_t)length);
 			return true;
 		}
 		return false;
