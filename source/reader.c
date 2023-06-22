@@ -70,7 +70,7 @@ inline static int compareConfItems(const void* a, const void* b)
 
 inline static void destroyConfItems(ConfItem* items, size_t itemCount)
 {
-	assert(itemCount == 0 || (items && itemCount > 0));
+	assert(itemCount == 0 || (items != NULL && itemCount > 0));
 
 	for (size_t i = 0; i < itemCount; i++)
 	{
@@ -85,9 +85,9 @@ inline static void destroyConfItems(ConfItem* items, size_t itemCount)
 inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 	ConfItem** _items, size_t* _itemCount, size_t* errorLine)
 {
-	assert(getNextChar);
-	assert(_items);
-	assert(_itemCount);
+	assert(getNextChar != NULL);
+	assert(_items != NULL);
+	assert(_itemCount != NULL);
 
 	ConfItem* items = malloc(sizeof(struct ConfItem));
 	if (!items)
@@ -388,8 +388,8 @@ static int onNextFileChar(void* handle)
 ConfResult createConfFileReader(const char* filePath,
 	ConfReader* confReader, size_t* errorLine)
 {
-	assert(filePath);
-	assert(confReader);
+	assert(filePath != NULL);
+	assert(confReader != NULL);
 
 	ConfReader confReaderInstance = malloc(sizeof(ConfReader_T));
 	if (!confReaderInstance)
@@ -441,9 +441,9 @@ static int onNextDataChar(void* handle)
 ConfResult createConfDataReader(const char* data,
 	ConfReader* confReader, size_t* errorLine)
 {
-	assert(data);
-	assert(confReader);
-	assert(errorLine);
+	assert(data != NULL);
+	assert(confReader != NULL);
+	assert(errorLine != NULL);
 
 	ConfReader confReaderInstance = malloc(sizeof(ConfReader_T));
 	if (!confReaderInstance)
@@ -484,9 +484,9 @@ void destroyConfReader(ConfReader confReader)
 bool getConfReaderType(ConfReader confReader,
 	const char* key, ConfDataType* type)
 {
-	assert(confReader);
-	assert(key);
-	assert(type);
+	assert(confReader != NULL);
+	assert(key != NULL);
+	assert(type != NULL);
 
 	ConfItem item;
 	item.key = (char*)key;
@@ -504,9 +504,9 @@ bool getConfReaderType(ConfReader confReader,
 bool getConfReaderInteger(ConfReader confReader,
 	const char* key, int64_t* value)
 {
-	assert(confReader);
-	assert(key);
-	assert(value);
+	assert(confReader != NULL);
+	assert(key != NULL);
+	assert(value != NULL);
 
 	ConfItem item;
 	item.key = (char*)key;
@@ -526,9 +526,9 @@ bool getConfReaderInteger(ConfReader confReader,
 bool getConfReaderFloating(ConfReader confReader,
 	const char* key, double* value)
 {
-	assert(confReader);
-	assert(key);
-	assert(value);
+	assert(confReader != NULL);
+	assert(key != NULL);
+	assert(value != NULL);
 
 	ConfItem item;
 	item.key = (char*)key;
@@ -548,9 +548,9 @@ bool getConfReaderFloating(ConfReader confReader,
 bool getConfReaderBoolean(ConfReader confReader,
 	const char* key, bool* value)
 {
-	assert(confReader);
-	assert(key);
-	assert(value);
+	assert(confReader != NULL);
+	assert(key != NULL);
+	assert(value != NULL);
 
 	ConfItem item;
 	item.key = (char*)key;
@@ -570,9 +570,9 @@ bool getConfReaderBoolean(ConfReader confReader,
 bool getConfReaderString(ConfReader confReader,
 	const char* key, const char** value, uint64_t* length)
 {
-	assert(confReader);
-	assert(key);
-	assert(value);
+	assert(confReader != NULL);
+	assert(key != NULL);
+	assert(value != NULL);
 
 	ConfItem item;
 	item.key = (char*)key;
