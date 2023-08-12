@@ -501,7 +501,7 @@ bool getConfReaderType(ConfReader confReader,
 	return true;
 }
 
-bool getConfReaderInteger(ConfReader confReader,
+bool getConfReaderInt(ConfReader confReader,
 	const char* key, int64_t* value)
 {
 	assert(confReader != NULL);
@@ -523,7 +523,7 @@ bool getConfReaderInteger(ConfReader confReader,
 	return true;
 }
 
-bool getConfReaderFloating(ConfReader confReader,
+bool getConfReaderFloat(ConfReader confReader,
 	const char* key, double* value)
 {
 	assert(confReader != NULL);
@@ -545,7 +545,7 @@ bool getConfReaderFloating(ConfReader confReader,
 	return true;
 }
 
-bool getConfReaderBoolean(ConfReader confReader,
+bool getConfReaderBool(ConfReader confReader,
 	const char* key, bool* value)
 {
 	assert(confReader != NULL);

@@ -15,6 +15,7 @@
 #pragma once
 #include <string>
 #include <exception>
+#include <filesystem>
 #include <string_view>
 
 extern "C"
@@ -41,9 +42,10 @@ public:
 	 *
 	 * filePath - file path string.
 	 */
-	Writer(const string& filePath)
+	Writer(const filesystem::path& filePath)
 	{
-		auto result = createConfFileWriter(filePath.c_str(), &instance);
+		auto pathString = filePath.generic_string();
+		auto result = createConfFileWriter(pathString.c_str(), &instance);
 		if (result != SUCCESS_CONF_RESULT)
 			throw runtime_error(confResultToString(result));
 	}
@@ -83,7 +85,7 @@ public:
 	 */
 	void write(const string& key, int64_t value)
 	{
-		auto result = writeConfInteger(instance, key.c_str(), value);
+		auto result = writeConfInt(instance, key.c_str(), value);
 		if (!result) throw runtime_error("Failed to write");
 	}
 	/*
@@ -145,7 +147,7 @@ public:
 	 */
 	void write(const string& key, double value, uint8_t precision = 0)
 	{
-		auto result = writeConfFloating(instance, key.data(), value, precision);
+		auto result = writeConfFloat(instance, key.data(), value, precision);
 		if (!result) throw runtime_error("Failed to write");
 	}
 	/*
@@ -170,7 +172,7 @@ public:
 	 */
 	void write(const string& key, bool value)
 	{
-		auto result = writeConfBoolean(instance, key.c_str(), value);
+		auto result = writeConfBool(instance, key.c_str(), value);
 		if (!result) throw runtime_error("Failed to write");
 	}
 

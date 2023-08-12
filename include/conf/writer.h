@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ bool writeConfNewLine(ConfWriter confWriter);
  * key - item key string.
  * value - integer item value.
  */
-bool writeConfInteger(ConfWriter confWriter,
+bool writeConfInt(ConfWriter confWriter,
 	const char* key, int64_t value);
 
 /*
@@ -80,7 +80,7 @@ bool writeConfInteger(ConfWriter confWriter,
  * value - floating item value.
  * precision - floating value precision. (0 = detect)
  */
-bool writeConfFloating(ConfWriter confWriter,
+bool writeConfFloat(ConfWriter confWriter,
 	const char* key, double value, uint8_t precision);
 
 /*
@@ -91,7 +91,7 @@ bool writeConfFloating(ConfWriter confWriter,
  * key - item key string.
  * value - boolean item value.
  */
-bool writeConfBoolean(ConfWriter confWriter,
+bool writeConfBool(ConfWriter confWriter,
 	const char* key, bool value);
 
 /*

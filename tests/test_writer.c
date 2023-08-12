@@ -151,7 +151,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	}
 
 	const char* keyName = "someInteger";
-	bool result = writeConfInteger(confWriter, keyName, value);
+	bool result = writeConfInt(confWriter, keyName, value);
 	if (!result)
 	{
 		printf("testInteger: failed to write value. "
@@ -189,7 +189,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	}
 
 	const char* keyName = "someFloating";
-	bool result = writeConfFloating(confWriter, keyName, value, 0);
+	bool result = writeConfFloat(confWriter, keyName, value, 0);
 	if (!result)
 	{
 		printf("testFloating: failed to write value. "
@@ -227,7 +227,7 @@ inline static bool testBoolean(bool value, const char* stringValue)
 	}
 
 	const char* keyName = "someBoolean";
-	bool result = writeConfBoolean(confWriter, keyName, value);
+	bool result = writeConfBool(confWriter, keyName, value);
 	if (!result)
 	{
 		printf("testBoolean: failed to write value. "
@@ -314,7 +314,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	result = writeConfInteger(confWriter, "someInteger", 123);
+	result = writeConfInt(confWriter, "someInteger", 123);
 	if (!result)
 	{
 		printf("testConfig: failed to write value. "
@@ -331,7 +331,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	result = writeConfFloating(confWriter, "Floating", 1.0, 0);
+	result = writeConfFloat(confWriter, "Floating", 1.0, 0);
 	if (!result)
 	{
 		printf("testConfig: failed to write value. "
@@ -340,7 +340,7 @@ inline static bool testConfig()
 		return false;
 	}
 
-	result = writeConfBoolean(confWriter, "BOOLEAN", true);
+	result = writeConfBool(confWriter, "BOOLEAN", true);
 	if (!result)
 	{
 		printf("testConfig: failed to write value. "

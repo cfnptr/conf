@@ -1,71 +1,38 @@
 # CONF ![CI](https://github.com/cfnptr/conf/actions/workflows/cmake.yml/badge.svg)
 
-A library providing **configuration** API for file and data reading / writing.
+A library providing API for **configuration** file reading and writing.
 
 ## Features
 
 * Simple configuration syntax (similar to .ini)
-* Automatic variable parsing (int, float, bool)
+* Automatic variable parsing (int, float, bool, string)
 * Built-in configuration syntax validation
-* Modern C++ wrapper.
+* C and C++ implementations
 
 ## Usage example
 
-```c
+```c++
 void confReaderExample()
 {
-    ConfReader confReader;
+    conf::Reader confReader("settings.txt");
 
-    ConfResult confResult = createConfFileReader(
-        "some.conf", &confReader, NULL);
-
-    if (confResult != SUCCESS_CONF_RESULT)
-        abort();
-
-    const char* value;
-
-    bool result = getConfReaderString(
-        confReader, "someKey", &value, NULL);
-
-    if (!result)
+    int32 someValue;
+    if (confReader.get("someValue", someValue))
     {
-        destroyConfReader(confReader);
-        abort();
+       // do something...
     }
-
-    printf("someKey: %s", value);
-    destroyConfReader(confReader);
 }
-
-// ================================================
 
 void confWriterExample()
 {
-    ConfWriter confWriter;
-
-    ConfResult confResult = createConfFileWriter(
-        "some.conf", &confWriter);
-
-    if (confResult != SUCCESS_CONF_RESULT)
-        abort();
-
-    bool result = writeConfComment(confWriter,
-        "Some key value pair description.");
-    result &= writeConfString(confWriter,
-        "someKey", "Some value.", 0);
-    result &= writeConfNewLine(confWriter);
-
-    if (!result)
-    {
-        destroyConfWriter(confWriter);
-        abort();
-    }
-
-    destroyConfWriter(confWriter);
+    conf::Writer confWriter("settings.txt");
+	confWriter.writeComment("Settings file (v1.0.0)");
+	confWriter.writeNewLine();
+    confWriter.write("someValue", 1337);
 }
 ```
 
-## Configuration example
+## Configuration file example
 
 ```
 # Conf comment syntax example
@@ -95,6 +62,7 @@ Not recommended key example?= Yes :)
 ## Build requirements
 
 * C99 compiler
+* C++17 compiler (optional)
 * [Git 2.30+](https://git-scm.com/)
 * [CMake 3.16+](https://cmake.org/)
 

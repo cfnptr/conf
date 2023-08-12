@@ -183,7 +183,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	}
 
 	int64_t integer;
-	bool result = getConfReaderInteger(confReader, keyName, &integer);
+	bool result = getConfReaderInt(confReader, keyName, &integer);
 
 	if (!result)
 	{
@@ -232,7 +232,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	}
 
 	double floating;
-	bool result = getConfReaderFloating(confReader, keyName, &floating);
+	bool result = getConfReaderFloat(confReader, keyName, &floating);
 
 	if (!result)
 	{
@@ -285,7 +285,7 @@ inline static bool testBoolean(double value, const char* stringValue)
 	}
 
 	bool boolean;
-	bool result = getConfReaderBoolean(confReader, keyName, &boolean);
+	bool result = getConfReaderBool(confReader, keyName, &boolean);
 
 	if (!result)
 	{
@@ -331,7 +331,7 @@ inline static bool testKey(const char* key)
 
 	int64_t integer;
 
-	bool result = getConfReaderInteger(
+	bool result = getConfReaderInt(
 		confReader, key, &integer);
 
 	if (!result)
@@ -422,7 +422,7 @@ inline static bool testConfig(ConfReader confReader)
 	assert(confReader);
 
 	int64_t integer;
-	bool result = getConfReaderInteger(confReader, "integer", &integer);
+	bool result = getConfReaderInt(confReader, "integer", &integer);
 
 	if (!result)
 	{
@@ -440,7 +440,7 @@ inline static bool testConfig(ConfReader confReader)
 	}
 
 	double floating;
-	result = getConfReaderFloating(confReader, "DOUBLE", &floating);
+	result = getConfReaderFloatconfReader, "DOUBLE", &floating);
 
 	if (!result)
 	{
@@ -457,7 +457,7 @@ inline static bool testConfig(ConfReader confReader)
 	}
 
 	bool boolean;
-	result = getConfReaderBoolean(confReader, "Boolean", &boolean);
+	result = getConfReaderBool(confReader, "Boolean", &boolean);
 
 	if (!result)
 	{

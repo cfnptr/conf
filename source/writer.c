@@ -65,7 +65,7 @@ bool writeConfNewLine(ConfWriter confWriter)
 	return fputc('\n', confWriter->file) == '\n';
 }
 
-bool writeConfInteger(ConfWriter confWriter,
+bool writeConfInt(ConfWriter confWriter,
 	const char* key, int64_t value)
 {
 	assert(confWriter);
@@ -88,7 +88,7 @@ inline static bool getDoubleDigitCount(double value, uint8_t* count)
 	*count = digitCount > 0 ? digitCount : 1;
 	return true;
 }
-bool writeConfFloating(ConfWriter confWriter,
+bool writeConfFloat(ConfWriter confWriter,
 	const char* key, double value, uint8_t precision)
 {
 	assert(confWriter);
@@ -120,7 +120,7 @@ bool writeConfFloating(ConfWriter confWriter,
 	}
 }
 
-bool writeConfBoolean(ConfWriter confWriter,
+bool writeConfBool(ConfWriter confWriter,
 	const char* key, bool value)
 {
 	assert(confWriter);

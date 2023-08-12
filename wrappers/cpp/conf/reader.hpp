@@ -15,6 +15,7 @@
 #pragma once
 #include <string>
 #include <exception>
+#include <filesystem>
 #include <string_view>
 
 extern "C"
@@ -42,10 +43,11 @@ public:
 	 * filePath - conf file path string.
 	 * errorLine - pointer to the error line or NULL.
 	 */
-	Reader(const string& filePath, size_t* errorLine = nullptr)
+	Reader(const filesystem::path& filePath, size_t* errorLine = nullptr)
 	{
+		auto string = filePath.generic_string();
 		auto result = createConfFileReader(
-			filePath.c_str(), &instance, errorLine);
+			string.c_str(), &instance, errorLine);
 		if (result != SUCCESS_CONF_RESULT)
 			throw runtime_error(confResultToString(result));
 	}
@@ -89,7 +91,7 @@ public:
 	 */
 	bool get(const string& key, int64_t& value)
 	{
-		return getConfReaderInteger(instance, key.c_str(), &value);
+		return getConfReaderInt(instance, key.c_str(), &value);
 	}
 	/*
 	 * Get specified item integer value by key.
@@ -203,7 +205,7 @@ public:
 	 */
 	bool get(const string& key, double& value)
 	{
-		return getConfReaderFloating(instance, key.c_str(), &value);
+		return getConfReaderFloat(instance, key.c_str(), &value);
 	}
 	/*
 	 * Get specified item floating value by key.
@@ -232,7 +234,7 @@ public:
 	 */
 	bool get(const string& key, bool& value)
 	{
-		return getConfReaderBoolean(instance, key.c_str(), &value);
+		return getConfReaderBool(instance, key.c_str(), &value);
 	}
 
 	/*

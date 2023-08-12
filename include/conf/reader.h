@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ bool getConfReaderType(ConfReader confReader,
  * key - item search key string.
  * value - pointer to the integer value.
  */
-bool getConfReaderInteger(ConfReader confReader,
+bool getConfReaderInt(ConfReader confReader,
 	const char* key, int64_t* value);
 
 /*
@@ -84,7 +84,7 @@ bool getConfReaderInteger(ConfReader confReader,
  * key - item search key string.
  * value - pointer to the floating value.
  */
-bool getConfReaderFloating(ConfReader confReader,
+bool getConfReaderFloat(ConfReader confReader,
 	const char* key, double* value);
 
 /*
@@ -95,7 +95,7 @@ bool getConfReaderFloating(ConfReader confReader,
  * key - item search key string.
  * value - pointer to the boolean value.
  */
-bool getConfReaderBoolean(ConfReader confReader,
+bool getConfReaderBool(ConfReader confReader,
 	const char* key, bool* value);
 
 /*
