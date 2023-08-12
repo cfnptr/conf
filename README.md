@@ -16,7 +16,7 @@ void confReaderExample()
 {
     conf::Reader confReader("settings.txt");
 
-    int32 someValue;
+    int someValue;
     if (confReader.get("someValue", someValue))
     {
        // do something...

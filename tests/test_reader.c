@@ -440,7 +440,7 @@ inline static bool testConfig(ConfReader confReader)
 	}
 
 	double floating;
-	result = getConfReaderFloatconfReader, "DOUBLE", &floating);
+	result = getConfReaderFloat(confReader, "DOUBLE", &floating);
 
 	if (!result)
 	{
