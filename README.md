@@ -26,8 +26,8 @@ void confReaderExample()
 void confWriterExample()
 {
     conf::Writer confWriter("settings.txt");
-	confWriter.writeComment("Settings file (v1.0.0)");
-	confWriter.writeNewLine();
+    confWriter.writeComment("Settings file (v1.0.0)");
+    confWriter.writeNewLine();
     confWriter.write("someValue", 1337);
 }
 ```
