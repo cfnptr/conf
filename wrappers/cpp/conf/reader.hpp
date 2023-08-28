@@ -50,8 +50,8 @@ public:
 			string.c_str(), &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
 		{
-			throw runtime_error(confResultToString(result) +
-				(" at line " + to_string(errorLine)));
+			throw runtime_error(confResultToString(result) + (" at line " + 
+				to_string(errorLine) + ", path: " + filePath.generic_string()));
 		}
 	}
 	/*

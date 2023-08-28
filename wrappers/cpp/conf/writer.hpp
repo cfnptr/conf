@@ -47,7 +47,10 @@ public:
 		auto pathString = filePath.generic_string();
 		auto result = createConfFileWriter(pathString.c_str(), &instance);
 		if (result != SUCCESS_CONF_RESULT)
-			throw runtime_error(confResultToString(result));
+		{
+			throw runtime_error(confResultToString(result) +
+				(", path:" + filePath.generic_string()));
+		}
 	}
 	/*
 	 * Destroy conf writer instance.
@@ -63,7 +66,7 @@ public:
 	void writeComment(const string& comment)
 	{
 		auto result = writeConfComment(instance, comment.c_str());
-		if (!result) throw runtime_error("Failed to write");
+		if (!result) throw runtime_error("Failed to write a comment");
 	}
 
 	/*
@@ -73,7 +76,7 @@ public:
 	void writeNewLine()
 	{
 		auto result = writeConfNewLine(instance);
-		if (!result) throw runtime_error("Failed to write");
+		if (!result) throw runtime_error("Failed to write a new line");
 	}
 
 	/*
@@ -86,7 +89,7 @@ public:
 	void write(const string& key, int64_t value)
 	{
 		auto result = writeConfInt(instance, key.c_str(), value);
-		if (!result) throw runtime_error("Failed to write");
+		if (!result) throw runtime_error("Failed to write an item");
 	}
 	/*
 	 * Write specified integer item to the file.
@@ -148,7 +151,7 @@ public:
 	void write(const string& key, double value, uint8_t precision = 0)
 	{
 		auto result = writeConfFloat(instance, key.data(), value, precision);
-		if (!result) throw runtime_error("Failed to write");
+		if (!result) throw runtime_error("Failed to write an item");
 	}
 	/*
 	 * Write specified floating item to the file.
@@ -173,7 +176,7 @@ public:
 	void write(const string& key, bool value)
 	{
 		auto result = writeConfBool(instance, key.c_str(), value);
-		if (!result) throw runtime_error("Failed to write");
+		if (!result) throw runtime_error("Failed to write an item");
 	}
 
 	/*
@@ -187,7 +190,7 @@ public:
 	{
 		auto result = writeConfString(instance, key.c_str(),
 			value.data(), value.size());
-		if (!result) throw runtime_error("Failed to write");
+		if (!result) throw runtime_error("Failed to write an item");
 	}
 };
 
