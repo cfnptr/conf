@@ -536,7 +536,8 @@ inline static bool testConfig(ConfReader confReader)
 	{
 		printf("testConfig: incorrect value length. "
 			"(reference: %llu, result: %llu)\n",
-			(uint64_t)strlen("Hello world!"), length);
+			(long long unsigned int)strlen("Hello world!"),
+			(long long unsigned int)length);
 		return false;
 	}
 

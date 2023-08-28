@@ -117,7 +117,7 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 		int currentChar = getNextChar(handle);
 		if (currentChar == '=' && item.keySize == 0)
 		{
-			if (bufferSize == 0 || buffer[bufferSize - 1] != ' ')
+			if (bufferSize <= 1 || buffer[bufferSize - 1] != ' ')
 			{
 				free(buffer); destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;

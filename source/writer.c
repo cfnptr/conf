@@ -70,7 +70,7 @@ bool writeConfInt(ConfWriter confWriter,
 {
 	assert(confWriter);
 	assert(key);
-	return fprintf(confWriter->file, "%s=%lld\n", 
+	return fprintf(confWriter->file, "%s = %lld\n", 
 		key, (long long int)value) > 0;
 }
 
@@ -96,15 +96,15 @@ bool writeConfFloat(ConfWriter confWriter,
 
 	if (value == INFINITY)
 	{
-		return fprintf( confWriter->file, "%s=inf\n", key) > 0;
+		return fprintf( confWriter->file, "%s = inf\n", key) > 0;
 	}
 	else if (value == -INFINITY)
 	{
-		return fprintf(confWriter->file, "%s=-inf\n", key) > 0;
+		return fprintf(confWriter->file, "%s = -inf\n", key) > 0;
 	}
 	else if (isnan(value))
 	{
-		return fprintf(confWriter->file, "%s=nan\n", key) > 0;
+		return fprintf(confWriter->file, "%s = nan\n", key) > 0;
 	}
 	else
 	{
@@ -116,7 +116,7 @@ bool writeConfFloat(ConfWriter confWriter,
 			digitCount = precision;
 
 		return fprintf(confWriter->file, 
-			"%s=%.*f\n", key, digitCount, value) > 0;
+			"%s = %.*f\n", key, digitCount, value) > 0;
 	}
 }
 
@@ -125,8 +125,8 @@ bool writeConfBool(ConfWriter confWriter,
 {
 	assert(confWriter);
 	assert(key);
-	if (value) return fprintf(confWriter->file, "%s=true\n", key) > 0;
-	else return fprintf( confWriter->file, "%s=false\n", key) > 0;
+	if (value) return fprintf(confWriter->file, "%s = true\n", key) > 0;
+	else return fprintf( confWriter->file, "%s = false\n", key) > 0;
 }
 
 bool writeConfString(ConfWriter confWriter,
@@ -138,11 +138,11 @@ bool writeConfString(ConfWriter confWriter,
 
 	if (length == 0)
 	{
-		return fprintf(confWriter->file, "%s=%s\n", key, value) > 0;
+		return fprintf(confWriter->file, "%s = %s\n", key, value) > 0;
 	}
 	else
 	{
-		return fprintf(confWriter->file, "%s=%.*s\n", 
+		return fprintf(confWriter->file, "%s = %.*s\n", 
 			key, (int)length, value) > 0;
 	}
 }
