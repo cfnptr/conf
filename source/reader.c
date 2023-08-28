@@ -117,14 +117,14 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 		int currentChar = getNextChar(handle);
 		if (currentChar == '=' && item.keySize == 0)
 		{
-			if (bufferSize == 0)
+			if (bufferSize == 0 || buffer[bufferSize - 1] != ' ')
 			{
 				free(buffer); destroyConfItems(items, itemCount);
 				if (errorLine) *errorLine = lineIndex + 1;
 				return BAD_KEY_CONF_RESULT;
 			}
 
-			char* key = malloc((bufferSize + 1) * sizeof(char));
+			char* key = malloc(bufferSize * sizeof(char));
 			if (!key)
 			{
 				free(buffer); destroyConfItems(items, itemCount);
@@ -132,6 +132,7 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
 
+			bufferSize--;
 			memcpy(key, buffer, bufferSize * sizeof(char));
 			key[bufferSize] = '\0';
 
@@ -159,7 +160,7 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 				continue;
 			}
 
-			if (bufferSize == 0)
+			if (bufferSize <= 1 || buffer[0] != ' ')
 			{
 				free(item.key); free(buffer);
 				destroyConfItems(items, itemCount);
@@ -187,7 +188,9 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 			}
 
 			buffer[bufferSize] = '\n';
-			char firstChar = buffer[0];
+			char* bufferValue = buffer + 1;
+			size_t bufferValueSize = bufferSize - 1;
+			char firstChar = bufferValue[0];
 
 			bool converted = false;
 			char* endChar = NULL;
@@ -195,9 +198,9 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 			if (isdigit(firstChar) != 0 || firstChar == '-')
 			{
 				errno = 0;
-				int64_t integer = strtoll(buffer, &endChar, 10);
+				int64_t integer = strtoll(bufferValue, &endChar, 10);
 
-				if (buffer != endChar && errno == 0)
+				if (bufferValue != endChar && errno == 0)
 				{
 					char end = *endChar;
 					if (end == '\n')
@@ -230,39 +233,39 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 
 			if (!converted)
 			{
-				if (bufferSize >= 5)
+				if (bufferValueSize >= 5)
 				{
-					if (compareNoCase(buffer, "false", 5) == 0)
+					if (compareNoCase(bufferValue, "false", 5) == 0)
 					{
 						item.value.boolean = false;
 						item.type = BOOLEAN_CONF_DATA_TYPE;
 						converted = true;
 					}
 				}
-				else if (bufferSize >= 4)
+				else if (bufferValueSize >= 4)
 				{
-					if (compareNoCase(buffer, "true", 4) == 0)
+					if (compareNoCase(bufferValue, "true", 4) == 0)
 					{
 						item.value.boolean = true;
 						item.type = BOOLEAN_CONF_DATA_TYPE;
 						converted = true;
 					}
-					else if (compareNoCase(buffer, "-inf", 4) == 0)
+					else if (compareNoCase(bufferValue, "-inf", 4) == 0)
 					{
 						item.value.floating = -INFINITY;
 						item.type = FLOATING_CONF_DATA_TYPE;
 						converted = true;
 					}
 				}
-				else if (bufferSize >= 3)
+				else if (bufferValueSize >= 3)
 				{
-					if (compareNoCase(buffer, "inf", 3) == 0)
+					if (compareNoCase(bufferValue, "inf", 3) == 0)
 					{
 						item.value.floating = INFINITY;
 						item.type = FLOATING_CONF_DATA_TYPE;
 						converted = true;
 					}
-					else if (compareNoCase(buffer, "nan", 3) == 0)
+					else if (compareNoCase(bufferValue, "nan", 3) == 0)
 					{
 						item.value.floating = NAN;
 						item.type = FLOATING_CONF_DATA_TYPE;
@@ -273,7 +276,7 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 
 			if (!converted)
 			{
-				char* string = malloc((bufferSize + 1) * sizeof(char));
+				char* string = malloc(bufferSize * sizeof(char));
 				if (!string)
 				{
 					free(item.key); free(buffer);
@@ -282,11 +285,11 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
-				memcpy(string, buffer, bufferSize * sizeof(char));
-				string[bufferSize] = '\0';
+				memcpy(string, bufferValue, bufferValueSize * sizeof(char));
+				string[bufferValueSize] = '\0';
 
 				item.value.string.value = string;
-				item.value.string.length = bufferSize;
+				item.value.string.length = bufferValueSize;
 				item.type = STRING_CONF_DATA_TYPE;
 			}
 
@@ -327,7 +330,6 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 					currentChar == '\0') break;
 			}
 
-			bufferSize = 0;
 			lineIndex++;
 			continue;
 		}

@@ -163,7 +163,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-	sprintf(buffer, "%s=%s\n", keyName, stringValue);
+	sprintf(buffer, "%s = %s\n", keyName, stringValue);
 
 	if (!compareTestFile(buffer))
 	{
@@ -201,7 +201,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-	sprintf(buffer, "%s=%s\n", keyName, stringValue);
+	sprintf(buffer, "%s = %s\n", keyName, stringValue);
 
 	if (!compareTestFile(buffer))
 	{
@@ -239,7 +239,7 @@ inline static bool testBoolean(bool value, const char* stringValue)
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-	sprintf(buffer, "%s=%s\n", keyName, stringValue);
+	sprintf(buffer, "%s = %s\n", keyName, stringValue);
 
 	if (!compareTestFile(buffer))
 	{
@@ -281,7 +281,7 @@ inline static bool testString(const char* value)
 	destroyConfWriter(confWriter);
 
 	char buffer[256];
-	sprintf(buffer, "%s=%s\n", keyName, value);
+	sprintf(buffer, "%s = %s\n", keyName, value);
 
 	if (!compareTestFile(buffer))
 	{
@@ -362,11 +362,11 @@ inline static bool testConfig()
 
 	result = compareTestFile(
 		"# Conf file test\n"
-		"someInteger=123\n"
+		"someInteger = 123\n"
 		"\n"
-		"Floating=1.0\n"
-		"BOOLEAN=true\n"
-		"string =Hello world!\n");
+		"Floating = 1.0\n"
+		"BOOLEAN = true\n"
+		"string  = Hello world!\n");
 
 	if (!result)
 	{

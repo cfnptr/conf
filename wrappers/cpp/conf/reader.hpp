@@ -41,29 +41,35 @@ public:
 	 * Throws runtime exception on failure.
 	 *
 	 * filePath - conf file path string.
-	 * errorLine - pointer to the error line or NULL.
 	 */
-	Reader(const filesystem::path& filePath, size_t* errorLine = nullptr)
+	Reader(const filesystem::path& filePath)
 	{
+		size_t errorLine = 0;
 		auto string = filePath.generic_string();
 		auto result = createConfFileReader(
-			string.c_str(), &instance, errorLine);
+			string.c_str(), &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
-			throw runtime_error(confResultToString(result));
+		{
+			throw runtime_error(confResultToString(result) +
+				(" at line " + to_string(errorLine)));
+		}
 	}
 	/*
 	 * Create a new conf data reader instance.
 	 * Throws runtime exception on failure.
 	 *
 	 * data - conf data string.
-	 * errorLine - pointer to the error line or NULL.
 	 */
-	Reader(const char* data, size_t* errorLine = nullptr)
+	Reader(const char* data)
 	{
+		size_t errorLine = 0;
 		auto result = createConfDataReader(
-			data, &instance, errorLine);
+			data, &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
-			throw runtime_error(confResultToString(result));
+		{
+			throw runtime_error(confResultToString(result) +
+				(" at line " + to_string(errorLine)));
+		}
 	}
 	/*
 	 * Destroy conf reader instance.
