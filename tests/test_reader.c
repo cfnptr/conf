@@ -570,7 +570,7 @@ inline static bool testDataConfig()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createFileConfReader(
+	ConfResult confResult = createDataConfReader(
 		testConfigString, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
