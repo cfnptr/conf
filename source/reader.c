@@ -387,7 +387,7 @@ static int onNextFileChar(void* handle)
 	// Skipping here assertion for debug build speed.
 	return getc(handle);
 }
-ConfResult createConfFileReader(const char* filePath,
+ConfResult createFileConfReader(const char* filePath,
 	ConfReader* confReader, size_t* errorLine)
 {
 	assert(filePath != NULL);
@@ -440,7 +440,7 @@ static int onNextDataChar(void* handle)
 	ConfReaderIterator* iterator = handle;
 	return iterator->data[iterator->index++];
 }
-ConfResult createConfDataReader(const char* data,
+ConfResult createDataConfReader(const char* data,
 	ConfReader* confReader, size_t* errorLine)
 {
 	assert(data != NULL);

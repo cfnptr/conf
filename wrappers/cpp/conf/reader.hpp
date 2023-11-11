@@ -46,7 +46,7 @@ public:
 	{
 		size_t errorLine = 0;
 		auto string = filePath.generic_string();
-		auto result = createConfFileReader(
+		auto result = createFileConfReader(
 			string.c_str(), &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
 		{
@@ -63,7 +63,7 @@ public:
 	Reader(const char* data)
 	{
 		size_t errorLine = 0;
-		auto result = createConfDataReader(
+		auto result = createDataConfReader(
 			data, &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
 		{

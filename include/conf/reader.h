@@ -35,7 +35,7 @@ typedef ConfReader_T* ConfReader;
  * confReader - pointer to the conf reader instance.
  * errorLine - pointer to the error line or NULL.
  */
-ConfResult createConfFileReader(const char* filePath,
+ConfResult createFileConfReader(const char* filePath,
 	ConfReader* confReader, size_t* errorLine);
 /*
  * Create a new conf data reader instance.
@@ -45,7 +45,7 @@ ConfResult createConfFileReader(const char* filePath,
  * confReader - pointer to the conf reader instance.
  * errorLine - pointer to the error line or NULL.
  */
-ConfResult createConfDataReader(const char* data,
+ConfResult createDataConfReader(const char* data,
 	ConfReader* confReader, size_t* errorLine);
 
 /*

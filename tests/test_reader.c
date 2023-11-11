@@ -65,7 +65,7 @@ inline static bool testFailedToOpenFile()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		"not_existing_file.txt", &confReader, &errorLine);
 
 	if (confResult != FAILED_TO_OPEN_FILE_CONF_RESULT)
@@ -85,7 +85,7 @@ inline static bool testGoodComment()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
@@ -106,7 +106,7 @@ inline static bool testBadComment()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != BAD_ITEM_CONF_RESULT)
@@ -126,7 +126,7 @@ inline static bool testBadKey()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != BAD_KEY_CONF_RESULT)
@@ -146,7 +146,7 @@ inline static bool testBadValue()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != BAD_VALUE_CONF_RESULT)
@@ -166,7 +166,7 @@ inline static bool testBadKeySpacing()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != BAD_KEY_CONF_RESULT)
@@ -186,7 +186,7 @@ inline static bool testBadValueSpacing()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != BAD_VALUE_CONF_RESULT)
@@ -211,7 +211,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
@@ -260,7 +260,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
@@ -313,7 +313,7 @@ inline static bool testBoolean(double value, const char* stringValue)
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
@@ -358,7 +358,7 @@ inline static bool testKey(const char* key)
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
@@ -407,7 +407,7 @@ inline static bool testString(const char* value)
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
@@ -551,7 +551,7 @@ inline static bool testFileConfig()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfFileReader(
+	ConfResult confResult = createFileConfReader(
 		TEST_FILE_NAME, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)
@@ -570,7 +570,7 @@ inline static bool testDataConfig()
 	ConfReader confReader;
 	size_t errorLine;
 
-	ConfResult confResult = createConfDataReader(
+	ConfResult confResult = createFileConfReader(
 		testConfigString, &confReader, &errorLine);
 
 	if (confResult != SUCCESS_CONF_RESULT)

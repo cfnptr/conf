@@ -45,7 +45,7 @@ public:
 	Writer(const filesystem::path& filePath)
 	{
 		auto pathString = filePath.generic_string();
-		auto result = createConfFileWriter(pathString.c_str(), &instance);
+		auto result = createFileConfWriter(pathString.c_str(), &instance);
 		if (result != SUCCESS_CONF_RESULT)
 		{
 			throw runtime_error(confResultToString(result) +

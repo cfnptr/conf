@@ -103,7 +103,7 @@ inline static bool removeTestFile()
 inline static bool testComment()
 {
 	ConfWriter confWriter;
-	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
+	ConfResult confResult = createFileConfWriter(TEST_FILE_NAME, &confWriter);
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testComment: "
@@ -141,7 +141,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	assert(stringValue);
 
 	ConfWriter confWriter;
-	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
+	ConfResult confResult = createFileConfWriter(TEST_FILE_NAME, &confWriter);
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testInteger: incorrect result. "
@@ -179,7 +179,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	assert(stringValue);
 
 	ConfWriter confWriter;
-	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
+	ConfResult confResult = createFileConfWriter(TEST_FILE_NAME, &confWriter);
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testFloating: incorrect result. "
@@ -217,7 +217,7 @@ inline static bool testBoolean(bool value, const char* stringValue)
 	assert(stringValue);
 
 	ConfWriter confWriter;
-	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
+	ConfResult confResult = createFileConfWriter(TEST_FILE_NAME, &confWriter);
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
 		printf("testBoolean: incorrect result. "
@@ -255,7 +255,7 @@ inline static bool testString(const char* value)
 	assert(value);
 
 	ConfWriter confWriter;
-	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
+	ConfResult confResult = createFileConfWriter(TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{
@@ -295,7 +295,7 @@ inline static bool testString(const char* value)
 inline static bool testConfig()
 {
 	ConfWriter confWriter;
-	ConfResult confResult = createConfFileWriter(TEST_FILE_NAME, &confWriter);
+	ConfResult confResult = createFileConfWriter(TEST_FILE_NAME, &confWriter);
 
 	if (confResult != SUCCESS_CONF_RESULT)
 	{

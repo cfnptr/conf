@@ -34,7 +34,7 @@ typedef ConfWriter_T* ConfWriter;
  * filePath - file path string.
  * confWriter - pointer to the conf writer instance.
  */
-ConfResult createConfFileWriter(
+ConfResult createFileConfWriter(
 	const char* filePath, ConfWriter* confWriter);
 
 /*

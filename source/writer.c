@@ -24,7 +24,7 @@ struct ConfWriter_T
 	FILE* file;
 };
 
-ConfResult createConfFileWriter(const char* filePath, ConfWriter* confWriter)
+ConfResult createFileConfWriter(const char* filePath, ConfWriter* confWriter)
 {
 	assert(filePath);
 	assert(confWriter);
