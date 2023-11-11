@@ -29,8 +29,8 @@ project(conf VERSION 1.4.0 LANGUAGES C
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED TRUE)
 
-option(CONF_BUILD_SHARED "Build CONF shared library" ON)
-option(CONF_BUILD_TESTS "Build CONF library tests" ON)
+option(CONF_BUILD_SHARED "Build Conf shared library" ON)
+option(CONF_BUILD_TESTS "Build Conf library tests" ON)
 
 set(MPIO_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 add_subdirectory(libraries/mpio)
