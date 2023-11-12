@@ -23,7 +23,8 @@ if(TARGET conf-static)
 endif()
 
 project(conf VERSION 1.4.0 LANGUAGES C
-	DESCRIPTION "Simple and fast configuration file library"
+	DESCRIPTION "Simple and fast multi-platform \
+ 		configuration file library (similar to .ini) "
 	HOMEPAGE_URL "https://github.com/cfnptr/conf")
 
 set(CMAKE_C_STANDARD 99)
