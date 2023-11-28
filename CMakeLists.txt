@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-if(${CMAKE_SOURCE_DIR} MATCHES ${CMAKE_BINARY_DIR})
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
 	message(FATAL_ERROR "Prevented in-tree build")
 endif()
 
@@ -39,7 +39,7 @@ add_subdirectory(libraries/mpio)
 configure_file(cmake/defines.h.in include/conf/defines.h)
 
 set(CONF_LINK_LIBRARIES mpio-static)
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 	list(APPEND CONF_LINK_LIBRARIES m)
 endif()
 
