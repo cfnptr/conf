@@ -38,27 +38,25 @@ add_subdirectory(libraries/mpio)
 
 configure_file(cmake/defines.h.in include/conf/defines.h)
 
-set(CONF_LINK_LIBRARIES mpio-static)
+set(CONF_LINK_LIBS mpio-static)
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	list(APPEND CONF_LINK_LIBRARIES m)
+	list(APPEND CONF_LINK_LIBS m)
 endif()
 
 set(CONF_SOURCES source/reader.c source/writer.c)
+set(CONF_INCLUDE_DIRS ${PROJECT_BINARY_DIR}/include
+	${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/wrappers/cpp)
 
 add_library(conf-static STATIC ${CONF_SOURCES})
-target_link_libraries(conf-static PUBLIC ${CONF_LINK_LIBRARIES})
-
-target_include_directories(conf-static PUBLIC
-	${PROJECT_BINARY_DIR}/include ${PROJECT_SOURCE_DIR}/include
-	${PROJECT_SOURCE_DIR}/wrappers/cpp)
+target_link_libraries(conf-static PUBLIC ${CONF_LINK_LIBS})
+target_include_directories(conf-static PUBLIC ${CONF_INCLUDE_DIRS})
 
 if(CONF_BUILD_SHARED)
 	add_library(conf-shared SHARED ${CONF_SOURCES})
 	set_target_properties(conf-shared PROPERTIES
 		OUTPUT_NAME "conf" WINDOWS_EXPORT_ALL_SYMBOLS ON)
-	target_link_libraries(conf-shared PUBLIC ${CONF_LINK_LIBRARIES})
-	target_include_directories(conf-shared PUBLIC
-		${PROJECT_BINARY_DIR}/include ${PROJECT_SOURCE_DIR}/include)
+	target_link_libraries(conf-shared PUBLIC ${CONF_LINK_LIBS})
+	target_include_directories(conf-shared PUBLIC ${CONF_INCLUDE_DIRS})
 endif()
 
 if(CONF_BUILD_TESTS)

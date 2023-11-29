@@ -83,7 +83,7 @@ public:
 	 * key - string item search key.
 	 * type - reference to the value type.
 	 */
-	bool getType(const string& key, ConfDataType& type) const
+	bool getType(const string& key, ConfDataType& type) const noexcept
 	{
 		return getConfReaderType(instance, key.c_str(), &type);
 	}
@@ -95,7 +95,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(const string& key, int64_t& value)
+	bool get(const string& key, int64_t& value) const noexcept
 	{
 		return getConfReaderInt(instance, key.c_str(), &value);
 	}
@@ -106,7 +106,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(const string& key, int32_t& value)
+	bool get(const string& key, int32_t& value) const noexcept
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -123,7 +123,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(const string& key, uint32_t& value)
+	bool get(const string& key, uint32_t& value) const noexcept
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -140,7 +140,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(const string& key, int16_t& value)
+	bool get(const string& key, int16_t& value) const noexcept
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -157,7 +157,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(const string& key, uint16_t& value)
+	bool get(const string& key, uint16_t& value) const noexcept
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -174,7 +174,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(const string& key, int8_t& value)
+	bool get(const string& key, int8_t& value) const noexcept
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -191,7 +191,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the integer value.
 	 */
-	bool get(const string& key, uint8_t& value)
+	bool get(const string& key, uint8_t& value) const noexcept
 	{
 		int64_t v; auto result = get(key, v);
 		if (result)
@@ -209,7 +209,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the floating value.
 	 */
-	bool get(const string& key, double& value)
+	bool get(const string& key, double& value) const noexcept
 	{
 		return getConfReaderFloat(instance, key.c_str(), &value);
 	}
@@ -220,7 +220,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the floating value.
 	 */
-	bool get(const string& key, float& value)
+	bool get(const string& key, float& value) const noexcept
 	{
 		double v; auto result = get(key, v);
 		if (result)
@@ -238,7 +238,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the boolean value.
 	 */
-	bool get(const string& key, bool& value)
+	bool get(const string& key, bool& value) const noexcept
 	{
 		return getConfReaderBool(instance, key.c_str(), &value);
 	}
@@ -250,7 +250,7 @@ public:
 	 * key - item search key string.
 	 * value - reference to the string value.
 	 */
-	bool get(const string& key, string_view& value)
+	bool get(const string& key, string_view& value) const noexcept
 	{
 		uint64_t length; const char* _string;
 		auto result = getConfReaderString(instance,
