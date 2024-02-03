@@ -1,4 +1,4 @@
-// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2024 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,100 +12,132 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Conf file reader.
+ * 
+ * @details
+ * Used to read Conf files. Reads all data from a file and 
+ * organizes it into a list optimized for fast retrieval of values by key.
+ **********************************************************************************************************************/
+
 #pragma once
-#include "conf/defines.h"
+#include "conf/common.h"
 
 #include <stddef.h>
 #include <stdbool.h>
 
-/*
- * Conf reader structure.
+/**
+ * @brief Conf reader structure.
  */
 typedef struct ConfReader_T ConfReader_T;
-/*
- * Conf reader instance.
+/**
+ * @brief Conf reader instance.
  */
 typedef ConfReader_T* ConfReader;
 
-/*
- * Create a new conf file reader instance.
- * Returns operation Conf result.
+/**
+ * @brief Creates a new Conf file reader instance.
+ * @details The main function for reading Conf files.
+ * @note You should destroy created Conf instance manually.
  *
- * filePath - conf file path string.
- * confReader - pointer to the conf reader instance.
- * errorLine - pointer to the error line or NULL.
+ * @param[in] filePath target Conf file path string
+ * @param[out] confReader pointer to the Conf reader instance
+ * @param[out] errorLine pointer to the error line or NULL
+ * 
+ * @return The @ref ConfResult code and writes reader instance on success.
+ * 
+ * @retval SUCCESS_CONF_RESULT on success
+ * @retval FAILED_TO_ALLOCATE_CONF_RESULT if out of memory
+ * @retval FAILED_TO_OPEN_FILE_CONF_RESULT if file doesn't exist
+ * @retval BAD_KEY_CONF_RESULT if config has invalid key
+ * @retval BAD_VALUE_CONF_RESULT if config has invalid value
+ * @retval BAD_ITEM_CONF_RESULT if config has invalid key / value pair
+ * @retval REPEATING_KEYS_CONF_RESULT if config has duplicate keys
  */
-ConfResult createFileConfReader(const char* filePath,
-	ConfReader* confReader, size_t* errorLine);
-/*
- * Create a new conf data reader instance.
- * Returns operation Conf result.
- *
- * data - conf data string.
- * confReader - pointer to the conf reader instance.
- * errorLine - pointer to the error line or NULL.
- */
-ConfResult createDataConfReader(const char* data,
-	ConfReader* confReader, size_t* errorLine);
+ConfResult createFileConfReader(const char* filePath, ConfReader* confReader, size_t* errorLine);
 
-/*
- * Destroy conf reader instance.
- * confReader - conf reader instance or NULL.
+/**
+ * @brief Create a new Conf data reader instance.
+ * @details The main function for reading Conf data from strings.
+ * @note You should destroy created Conf instance manually.
+ *
+ * @param[in] data target Conf data string
+ * @param[out] confReader pointer to the Conf reader instance
+ * @param[out] errorLine pointer to the error line or NULL
+ * 
+ * @return The @ref ConfResult code and writes reader instance on success.
+ * 
+ * @retval SUCCESS_CONF_RESULT on success
+ * @retval FAILED_TO_ALLOCATE_CONF_RESULT if out of memory
+ * @retval FAILED_TO_OPEN_FILE_CONF_RESULT if file doesn't exist
+ * @retval BAD_KEY_CONF_RESULT if config has invalid key
+ * @retval BAD_VALUE_CONF_RESULT if config has invalid value
+ * @retval BAD_ITEM_CONF_RESULT if config has invalid key / value pair
+ * @retval REPEATING_KEYS_CONF_RESULT if config has duplicate keys
+ */
+ConfResult createDataConfReader(const char* data, ConfReader* confReader, size_t* errorLine);
+
+/**
+ * @brief Destroys Conf reader instance.
+ * @param confReader conf reader instance or NULL
  */
 void destroyConfReader(ConfReader confReader);
 
-/*
- * Get specified item type.
- * Returns true if item is found.
- *
- * confReader - conf reader instance.
- * key - item search key string.
- * type - pointer to the value type.
+/***********************************************************************************************************************
+ * @brief Returns the type of value by key.
+ * @details Useful if we are reading a config we don't know anything about.
+ * 
+ * @param confReader conf reader instance
+ * @param[in] key target item key string
+ * @param[out] type pointer to the value type
+ * 
+ * @return True on succes, false if item is not found.
  */
-bool getConfReaderType(ConfReader confReader,
-	const char* key, ConfDataType* type);
+bool getConfReaderType(ConfReader confReader, const char* key, ConfDataType* type);
 
-/*
- * Get specified item integer value by key.
- * Returns true if item is found and correct.
+/**
+ * @brief Returns the integer value by key.
  *
- * confReader - conf reader instance.
- * key - item search key string.
- * value - pointer to the integer value.
+ * @param confReader conf reader instance
+ * @param[in] key target item key string
+ * @param[out] value pointer to the integer value
+ * 
+ * @return True on succes, false if item is not found or has a different type.
  */
-bool getConfReaderInt(ConfReader confReader,
-	const char* key, int64_t* value);
+bool getConfReaderInt(ConfReader confReader, const char* key, int64_t* value);
 
-/*
- * Get specified item floating value by key.
- * Returns true if item is found and correct.
+/**
+ * @brief Returns the floating value by key.
  *
- * confReader - conf reader instance.
- * key - item search key string.
- * value - pointer to the floating value.
+ * @param confReader conf reader instance
+ * @param[in] key target item key string
+ * @param[out] value pointer to the floating value
+ * 
+ * @return True on succes, false if item is not found or has a different type.
  */
-bool getConfReaderFloat(ConfReader confReader,
-	const char* key, double* value);
+bool getConfReaderFloat(ConfReader confReader, const char* key, double* value);
 
-/*
- * Get specified item boolean value by key.
- * Returns true if item is found and correct.
+/**
+ * @brief Returns the boolean value by key.
  *
- * confReader - conf reader instance.
- * key - item search key string.
- * value - pointer to the boolean value.
+ * @param confReader conf reader instance
+ * @param[in] key target item key string
+ * @param[out] value pointer to the boolean value
+ * 
+ * @return True on succes, false if item is not found or has a different type.
  */
-bool getConfReaderBool(ConfReader confReader,
-	const char* key, bool* value);
+bool getConfReaderBool(ConfReader confReader, const char* key, bool* value);
 
-/*
- * Get specified item string value by key.
- * Returns true if item is found and correct.
+/**
+ * @brief Returns the string value by key.
+ * @warning Yous should not free the returned string.
  *
- * confReader - conf reader instance.
- * key - item search key string.
- * value - pointer to the string value.
- * length - pointer to the value length or NULL.
+ * @param confReader conf reader instance
+ * @param[in] key target item key string
+ * @param[out] value pointer to the string value
+ * @param[out] length pointer to the string length or NULL
+ * 
+ * @return True on succes, false if item is not found or has a different type.
  */
-bool getConfReaderString(ConfReader confReader,
-	const char* key, const char** value, uint64_t* length);
+bool getConfReaderString(ConfReader confReader, const char* key, const char** value, uint64_t* length);

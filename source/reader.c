@@ -1,4 +1,4 @@
-// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2024 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -387,8 +387,7 @@ static int onNextFileChar(void* handle)
 	// Skipping here assertion for debug build speed.
 	return getc(handle);
 }
-ConfResult createFileConfReader(const char* filePath,
-	ConfReader* confReader, size_t* errorLine)
+ConfResult createFileConfReader(const char* filePath, ConfReader* confReader, size_t* errorLine)
 {
 	assert(filePath != NULL);
 	assert(confReader != NULL);
@@ -440,8 +439,7 @@ static int onNextDataChar(void* handle)
 	ConfReaderIterator* iterator = handle;
 	return iterator->data[iterator->index++];
 }
-ConfResult createDataConfReader(const char* data,
-	ConfReader* confReader, size_t* errorLine)
+ConfResult createDataConfReader(const char* data, ConfReader* confReader, size_t* errorLine)
 {
 	assert(data != NULL);
 	assert(confReader != NULL);
@@ -483,8 +481,7 @@ void destroyConfReader(ConfReader confReader)
 	free(confReader);
 }
 
-bool getConfReaderType(ConfReader confReader,
-	const char* key, ConfDataType* type)
+bool getConfReaderType(ConfReader confReader, const char* key, ConfDataType* type)
 {
 	assert(confReader != NULL);
 	assert(key != NULL);
@@ -494,17 +491,15 @@ bool getConfReaderType(ConfReader confReader,
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(&item,
-		confReader->items, confReader->itemCount,
-		sizeof(struct ConfItem), compareConfItems);
+	ConfItem* foundItem = bsearch(&item, confReader->items,
+		confReader->itemCount, sizeof(struct ConfItem), compareConfItems);
 	if (!foundItem) return false;
 
 	*type = foundItem->type;
 	return true;
 }
 
-bool getConfReaderInt(ConfReader confReader,
-	const char* key, int64_t* value)
+bool getConfReaderInt(ConfReader confReader, const char* key, int64_t* value)
 {
 	assert(confReader != NULL);
 	assert(key != NULL);
@@ -514,9 +509,8 @@ bool getConfReaderInt(ConfReader confReader,
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(&item,
-		confReader->items, confReader->itemCount,
-		sizeof(struct ConfItem), compareConfItems);
+	ConfItem* foundItem = bsearch(&item, confReader->items,
+		confReader->itemCount, sizeof(struct ConfItem), compareConfItems);
 
 	if (!foundItem || foundItem->type != INTEGER_CONF_DATA_TYPE)
 		return false;
@@ -525,8 +519,7 @@ bool getConfReaderInt(ConfReader confReader,
 	return true;
 }
 
-bool getConfReaderFloat(ConfReader confReader,
-	const char* key, double* value)
+bool getConfReaderFloat(ConfReader confReader, const char* key, double* value)
 {
 	assert(confReader != NULL);
 	assert(key != NULL);
@@ -536,9 +529,8 @@ bool getConfReaderFloat(ConfReader confReader,
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(&item,
-		confReader->items, confReader->itemCount,
-		sizeof(struct ConfItem), compareConfItems);
+	ConfItem* foundItem = bsearch(&item, confReader->items,
+		confReader->itemCount, sizeof(struct ConfItem), compareConfItems);
 
 	if (!foundItem || foundItem->type != FLOATING_CONF_DATA_TYPE)
 		return false;
@@ -547,8 +539,7 @@ bool getConfReaderFloat(ConfReader confReader,
 	return true;
 }
 
-bool getConfReaderBool(ConfReader confReader,
-	const char* key, bool* value)
+bool getConfReaderBool(ConfReader confReader, const char* key, bool* value)
 {
 	assert(confReader != NULL);
 	assert(key != NULL);
@@ -558,9 +549,8 @@ bool getConfReaderBool(ConfReader confReader,
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(&item,
-		confReader->items, confReader->itemCount,
-		sizeof(struct ConfItem), compareConfItems);
+	ConfItem* foundItem = bsearch(&item, confReader->items,
+		confReader->itemCount, sizeof(struct ConfItem), compareConfItems);
 
 	if (!foundItem || foundItem->type != BOOLEAN_CONF_DATA_TYPE)
 		return false;
@@ -569,8 +559,7 @@ bool getConfReaderBool(ConfReader confReader,
 	return true;
 }
 
-bool getConfReaderString(ConfReader confReader,
-	const char* key, const char** value, uint64_t* length)
+bool getConfReaderString(ConfReader confReader, const char* key, const char** value, uint64_t* length)
 {
 	assert(confReader != NULL);
 	assert(key != NULL);
@@ -580,9 +569,8 @@ bool getConfReaderString(ConfReader confReader,
 	item.key = (char*)key;
 	item.keySize = strlen(key);
 
-	ConfItem* foundItem = bsearch(&item,
-		confReader->items, confReader->itemCount,
-		sizeof(struct ConfItem), compareConfItems);
+	ConfItem* foundItem = bsearch(&item, confReader->items,
+		confReader->itemCount, sizeof(struct ConfItem), compareConfItems);
 
 	if (!foundItem || foundItem->type != STRING_CONF_DATA_TYPE)
 		return false;

@@ -1,4 +1,4 @@
-# Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
+# Copyright 2021-2024 Nikita Fediuchin. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ option(CONF_BUILD_SHARED "Build Conf shared library" ON)
 option(CONF_BUILD_TESTS "Build Conf library tests" ON)
 
 set(MPIO_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(MPIO_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 add_subdirectory(libraries/mpio)
 
 configure_file(cmake/defines.h.in include/conf/defines.h)

@@ -1,4 +1,4 @@
-// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2024 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,96 +12,109 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/***********************************************************************************************************************
+ * @file
+ * @brief Conf file writer.
+ * 
+ * @details
+ * Used to write Conf files. It opens a new file stream and writes the key / value pairs to it. 
+ * After destroying the Conf writer instance, it closes the file stream.
+ **********************************************************************************************************************/
+
 #pragma once
-#include "conf/defines.h"
+#include "conf/common.h"
 
 #include <stddef.h>
 #include <stdbool.h>
 
-/*
- * Conf writer structure.
+/**
+ * @brief Conf writer structure.
  */
 typedef struct ConfWriter_T ConfWriter_T;
-/*
- * Conf writer instance.
+/**
+ * @brief Conf writer instance.
  */
 typedef ConfWriter_T* ConfWriter;
 
-/*
- * Create a new conf file writer instance.
- * Returns operation Conf result.
+/**
+ * @brief Creates a new Conf file writer instance.
+ * @details The main function for writing Conf files.
+ * @note You should destroy created Conf instance manually.
  *
- * filePath - file path string.
- * confWriter - pointer to the conf writer instance.
+ * @param[in] filePath target file path string
+ * @param[out] confWriter pointer to the Conf writer instance
+ * 
+ * @return The @ref ConfResult code and writes reader instance on success.
+ * 
+ * @retval SUCCESS_CONF_RESULT on success
+ * @retval FAILED_TO_ALLOCATE_CONF_RESULT if out of memory
+ * @retval FAILED_TO_OPEN_FILE_CONF_RESULT if failed to create a new file
  */
-ConfResult createFileConfWriter(
-	const char* filePath, ConfWriter* confWriter);
+ConfResult createFileConfWriter(const char* filePath, ConfWriter* confWriter);
 
-/*
- * Destroy conf writer instance.
- * confWriter - conf writer instance or NULL.
+/**
+ * @brief Destroys Conf writer instance.
+ * @param confWriter conf writer instance or NULL
  */
 void destroyConfWriter(ConfWriter confWriter);
 
-/*
- * Write specified comment string to the file.
- * Returns true on success.
+/***********************************************************************************************************************
+ * @brief Writes a comment to the config.
  *
- * confWriter - conf writer instance.
- * comment - comment value string.
+ * @param confWriter conf writer instance
+ * @param[in] comment target comment string
  */
 bool writeConfComment(ConfWriter confWriter, const char* comment);
 
-/*
- * Write new line to the file.
- * Returns true on success.
- *
- * confWriter - conf writer instance.
+/**
+ * @brief Writes a new line to the config. ('\\n')
+ * @param confWriter conf writer instance
+ * @return True on success, otherwise false.
  */
 bool writeConfNewLine(ConfWriter confWriter);
 
-/*
- * Write specified integer item to the file.
- * Returns true on success.
+/**
+ * @brief Writes an integer value to the config.
  *
- * confWriter - conf writer instance.
- * key - item key string.
- * value - integer item value.
+ * @param confWriter conf writer instance
+ * @param[in] key target item key string
+ * @param value integer item value
+ * 
+ * @return True on success, otherwise false.
  */
-bool writeConfInt(ConfWriter confWriter,
-	const char* key, int64_t value);
+bool writeConfInt(ConfWriter confWriter, const char* key, int64_t value);
 
-/*
- * Write specified floating item to the file.
- * Returns true on success.
+/**
+ * @brief Writes a floating value to the config.
  *
- * confWriter - conf writer instance.
- * key - item key string.
- * value - floating item value.
- * precision - floating value precision. (0 = detect)
+ * @param confWriter conf writer instance
+ * @param[in] key target item key string
+ * @param value floating item value
+ * @param precission number of digits after the decimal point, or 0 (auto detect)
+ * 
+ * @return True on success, otherwise false.
  */
-bool writeConfFloat(ConfWriter confWriter,
-	const char* key, double value, uint8_t precision);
+bool writeConfFloat(ConfWriter confWriter, const char* key, double value, uint8_t precision);
 
-/*
- * Write specified boolean item to the file.
- * Returns true on success.
+/**
+ * @brief Writes a boolean value to the config.
  *
- * confWriter - conf writer instance.
- * key - item key string.
- * value - boolean item value.
+ * @param confWriter conf writer instance
+ * @param[in] key target item key string
+ * @param value boolean item value
+ * 
+ * @return True on success, otherwise false.
  */
-bool writeConfBool(ConfWriter confWriter,
-	const char* key, bool value);
+bool writeConfBool(ConfWriter confWriter, const char* key, bool value);
 
-/*
- * Write specified string item to the file.
- * Returns true on success.
+/**
+ * @brief Writes a string value to the config.
  *
- * confWriter - conf writer instance.
- * key - item key string.
- * value - string item value.
- * length - string item length. (0 = detect)
+ * @param confWriter conf writer instance
+ * @param[in] key target item key string
+ * @param[in] value string item value
+ * @param lenght string value length, or 0 (auto detect)
+ * 
+ * @return True on success, otherwise false.
  */
-bool writeConfString(ConfWriter confWriter,
-	const char* key, const char* value, size_t length);
+bool writeConfString(ConfWriter confWriter, const char* key, const char* value, size_t length);

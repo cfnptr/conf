@@ -1,6 +1,8 @@
-# CONF ![CI](https://github.com/cfnptr/conf/actions/workflows/cmake.yml/badge.svg)
+# Conf
 
-A library providing API for **configuration** file reading and writing.
+A [library](https://github.com/cfnptr/conf) providing API for **configuration** file reading and writing.
+
+See the [documentation](https://cfnptr.github.io/conf).
 
 ## Features
 
@@ -11,24 +13,55 @@ A library providing API for **configuration** file reading and writing.
 
 ## Usage example
 
-```c++
-void confReaderExample()
+```cpp
+void confReaderExampleCPP()
 {
     conf::Reader confReader("settings.txt");
 
-    int someValue;
+    int64_t someValue = 0;
     if (confReader.get("someValue", someValue))
     {
-       // do something...
+       // use value...
     }
 }
 
-void confWriterExample()
+void confWriterExampleCPP()
 {
     conf::Writer confWriter("settings.txt");
     confWriter.writeComment("Settings file (v1.0.0)");
     confWriter.writeNewLine();
     confWriter.write("someValue", 1337);
+}
+```
+
+```c
+void confReaderExampleC()
+{
+    ConfReader confReader = NULL;
+    ConfResult confResult = createFileConfReader("settings.txt", &confReader, NULL);
+    if (confResult != SUCCESS_CONF_RESULT) abort();
+
+	int64_t someValue = 0;
+	if (getConfReaderInt(confReader, "someValue", &someValue))
+	{
+		// use value...
+	}
+
+	destroyConfReader(confReader);
+}
+
+void confWriterExampleC()
+{
+    ConfWriter confWriter = NULL;
+    ConfResult confResult = createFileConfWriter("settings.txt", &confWriter);
+    if (confResult != SUCCESS_CONF_RESULT) abort();
+
+    bool writeResult = writeConfComment(confWriter, "Settings file (v1.0.0)");
+    writeResult |= writeConfNewLine(confWriter);
+    writeResult |= writeConfInt(confWriter, "someValue", 1337);
+    if (!writeResult) abort();
+
+    destroyConfWriter(confReader);
 }
 ```
 
@@ -55,9 +88,9 @@ Not recommended key example?  = Yes :)
 
 ## Supported operating systems
 
-* Ubuntu
-* MacOS
 * Windows
+* macOS
+* Ubuntu (Linux)
 
 ## Build requirements
 
@@ -66,18 +99,25 @@ Not recommended key example?  = Yes :)
 * [Git 2.30+](https://git-scm.com/)
 * [CMake 3.16+](https://cmake.org/)
 
+Use building [instructions](BUILDING.md) to install all required tools and libraries.
+
 ### CMake options
 
-| Name                | Description                | Default value |
-|---------------------|----------------------------|---------------|
-| CONF_BUILD_SHARED   | Build CONF shared library  | `ON`          |
-| CONF_BUILD_TESTS    | Build CONF library tests   | `ON`          |
+| Name              | Description               | Default value |
+|-------------------|---------------------------|---------------|
+| CONF_BUILD_SHARED | Build CONF shared library | `ON`          |
+| CONF_BUILD_TESTS  | Build CONF library tests  | `ON`          |
 
 ## Cloning
 
 ```
 git clone --recursive https://github.com/cfnptr/conf
 ```
+
+## Building ![CI](https://github.com/cfnptr/pack/actions/workflows/cmake.yml/badge.svg)
+
+* Windows: ```./scripts/build-release.bat```
+* macOS / Ubuntu: ```./scripts/build-release.sh```
 
 ## Third-party
 

@@ -1,4 +1,4 @@
-// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2024 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -65,13 +65,11 @@ bool writeConfNewLine(ConfWriter confWriter)
 	return fputc('\n', confWriter->file) == '\n';
 }
 
-bool writeConfInt(ConfWriter confWriter,
-	const char* key, int64_t value)
+bool writeConfInt(ConfWriter confWriter, const char* key, int64_t value)
 {
 	assert(confWriter);
 	assert(key);
-	return fprintf(confWriter->file, "%s = %lld\n", 
-		key, (long long int)value) > 0;
+	return fprintf(confWriter->file, "%s = %lld\n", key, (long long int)value) > 0;
 }
 
 inline static bool getDoubleDigitCount(double value, uint8_t* count)
@@ -88,8 +86,7 @@ inline static bool getDoubleDigitCount(double value, uint8_t* count)
 	*count = digitCount > 0 ? digitCount : 1;
 	return true;
 }
-bool writeConfFloat(ConfWriter confWriter,
-	const char* key, double value, uint8_t precision)
+bool writeConfFloat(ConfWriter confWriter, const char* key, double value, uint8_t precision)
 {
 	assert(confWriter);
 	assert(key);
@@ -115,13 +112,11 @@ bool writeConfFloat(ConfWriter confWriter,
 		if (precision > 0 && precision < digitCount)
 			digitCount = precision;
 
-		return fprintf(confWriter->file, 
-			"%s = %.*f\n", key, digitCount, value) > 0;
+		return fprintf(confWriter->file, "%s = %.*f\n", key, digitCount, value) > 0;
 	}
 }
 
-bool writeConfBool(ConfWriter confWriter,
-	const char* key, bool value)
+bool writeConfBool(ConfWriter confWriter, const char* key, bool value)
 {
 	assert(confWriter);
 	assert(key);
@@ -129,20 +124,14 @@ bool writeConfBool(ConfWriter confWriter,
 	else return fprintf( confWriter->file, "%s = false\n", key) > 0;
 }
 
-bool writeConfString(ConfWriter confWriter,
-	const char* key, const char* value, size_t length)
+bool writeConfString(ConfWriter confWriter, const char* key, const char* value, size_t length)
 {
 	assert(confWriter);
 	assert(key);
 	assert(value);
 
 	if (length == 0)
-	{
 		return fprintf(confWriter->file, "%s = %s\n", key, value) > 0;
-	}
 	else
-	{
-		return fprintf(confWriter->file, "%s = %.*s\n", 
-			key, (int)length, value) > 0;
-	}
+		return fprintf(confWriter->file, "%s = %.*s\n", key, (int)length, value) > 0;
 }

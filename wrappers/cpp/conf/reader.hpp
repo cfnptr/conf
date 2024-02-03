@@ -1,4 +1,4 @@
-// Copyright 2021-2023 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2024 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,6 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+/***********************************************************************************************************************
+ * @file
+ * @brief Conf file reader.
+ * @details See the @ref reader.h
+ **********************************************************************************************************************/
 
 #pragma once
 #include <string>
@@ -28,83 +34,92 @@ namespace conf
 
 using namespace std;
 
-/*
- * Conf reader instance handle.
+/***********************************************************************************************************************
+ * @brief Conf reader instance handle.
+ * @details See the @ref reader.h
  */
 class Reader final
 {
 private:
 	ConfReader instance = nullptr;
 public:
-	/*
-	 * Create a new conf file reader instance.
-	 * Throws runtime exception on failure.
-	 *
-	 * filePath - conf file path string.
+	/**
+	 * @brief Creates a new Conf file reader instance.
+	 * @details See the @ref createFileConfReader().
+	 * @param[in] filePath target Conf file path string
+	 * @throw runtime_error with a @ref ConfResult string on failure.
 	 */
 	Reader(const filesystem::path& filePath)
 	{
 		size_t errorLine = 0;
 		auto string = filePath.generic_string();
-		auto result = createFileConfReader(
-			string.c_str(), &instance, &errorLine);
+		auto result = createFileConfReader(string.c_str(), &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
 		{
 			throw runtime_error(confResultToString(result) + (" at line " + 
 				to_string(errorLine) + ", path: " + filePath.generic_string()));
 		}
 	}
-	/*
-	 * Create a new conf data reader instance.
-	 * Throws runtime exception on failure.
-	 *
-	 * data - conf data string.
+
+	/**
+	 * @brief Creates a new Conf data reader instance.
+	 * @details See the @ref createDataConfReader().
+	 * @param[in] data target Conf data string
+	 * @throw runtime_error with a @ref ConfResult string on failure.
 	 */
 	Reader(const char* data)
 	{
 		size_t errorLine = 0;
-		auto result = createDataConfReader(
-			data, &instance, &errorLine);
+		auto result = createDataConfReader(data, &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
 		{
 			throw runtime_error(confResultToString(result) +
 				(" at line " + to_string(errorLine)));
 		}
 	}
-	/*
-	 * Destroy conf reader instance.
+
+	/**
+	 * @brief Destroys Conf reader instance.
+	 * @details See the @ref destroyConfReader().
 	 */
 	~Reader() { destroyConfReader(instance); }
 
-	/*
-	 * Get specified item type.
-	 * Returns true if item is found.
-	 *
-	 * key - string item search key.
-	 * type - reference to the value type.
+	/***********************************************************************************************************************
+	 * @brief Returns the type of value by key.
+	 * @details See the @ref getConfReaderType().
+	 * 
+	 * @param[in] key target item key string
+	 * @param[out] type reference to the value type
+	 * 
+	 * @return True on succes, false if item is not found.
 	 */
 	bool getType(const string& key, ConfDataType& type) const noexcept
 	{
 		return getConfReaderType(instance, key.c_str(), &type);
 	}
 
-	/*
-	 * Get specified item integer value by key.
-	 * Returns true if item is found and correct.
+	/**
+	 * @brief Returns the integer value by key. (int64)
+	 * @details See the @ref getConfReaderInt().
 	 *
-	 * key - item search key string.
-	 * value - reference to the integer value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the integer value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, int64_t& value) const noexcept
 	{
 		return getConfReaderInt(instance, key.c_str(), &value);
 	}
-	/*
-	 * Get specified item integer value by key.
-	 * Returns true if item is found and correct.
+
+	/**
+	 * @brief Returns the integer value by key. (int32)
+	 * @details See the @ref getConfReaderInt().
 	 *
-	 * key - item search key string.
-	 * value - reference to the integer value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the integer value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, int32_t& value) const noexcept
 	{
@@ -116,12 +131,15 @@ public:
 		}
 		return false;
 	}
-	/*
-	 * Get specified item integer value by key.
-	 * Returns true if item is found and correct.
+
+	/**
+	 * @brief Returns the integer value by key. (uint32)
+	 * @details See the @ref getConfReaderInt().
 	 *
-	 * key - item search key string.
-	 * value - reference to the integer value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the integer value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, uint32_t& value) const noexcept
 	{
@@ -133,12 +151,15 @@ public:
 		}
 		return false;
 	}
-	/*
-	 * Get specified item integer value by key.
-	 * Returns true if item is found and correct.
+
+	/**
+	 * @brief Returns the integer value by key. (int16)
+	 * @details See the @ref getConfReaderInt().
 	 *
-	 * key - item search key string.
-	 * value - reference to the integer value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the integer value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, int16_t& value) const noexcept
 	{
@@ -150,12 +171,15 @@ public:
 		}
 		return false;
 	}
-	/*
-	 * Get specified item integer value by key.
-	 * Returns true if item is found and correct.
+
+	/**
+	 * @brief Returns the integer value by key. (uint16)
+	 * @details See the @ref getConfReaderInt().
 	 *
-	 * key - item search key string.
-	 * value - reference to the integer value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the integer value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, uint16_t& value) const noexcept
 	{
@@ -167,12 +191,15 @@ public:
 		}
 		return false;
 	}
-	/*
-	 * Get specified item integer value by key.
-	 * Returns true if item is found and correct.
+	
+	/**
+	 * @brief Returns the integer value by key. (int8)
+	 * @details See the @ref getConfReaderInt().
 	 *
-	 * key - item search key string.
-	 * value - reference to the integer value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the integer value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, int8_t& value) const noexcept
 	{
@@ -184,12 +211,15 @@ public:
 		}
 		return false;
 	}
-	/*
-	 * Get specified item integer value by key.
-	 * Returns true if item is found and correct.
+
+	/**
+	 * @brief Returns the integer value by key. (uint8)
+	 * @details See the @ref getConfReaderInt().
 	 *
-	 * key - item search key string.
-	 * value - reference to the integer value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the integer value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, uint8_t& value) const noexcept
 	{
@@ -202,23 +232,28 @@ public:
 		return false;
 	}
 
-	/*
-	 * Get specified item floating value by key.
-	 * Returns true if item is found and correct.
+	/**
+	 * @brief Returns the floating value by key. (double)
+	 * @details See the @ref getConfReaderFloat().
 	 *
-	 * key - item search key string.
-	 * value - reference to the floating value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the floating value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, double& value) const noexcept
 	{
 		return getConfReaderFloat(instance, key.c_str(), &value);
 	}
-	/*
-	 * Get specified item floating value by key.
-	 * Returns true if item is found and correct.
+
+	/**
+	 * @brief Returns the floating value by key. (float)
+	 * @details See the @ref getConfReaderFloat().
 	 *
-	 * key - item search key string.
-	 * value - reference to the floating value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the floating value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, float& value) const noexcept
 	{
@@ -231,24 +266,28 @@ public:
 		return false;
 	}
 
-	/*
-	 * Get specified item boolean value by key.
-	 * Returns true if item is found and correct.
+	/**
+	 * @brief Returns the boolean value by key.
+	 * @details See the @ref getConfReaderBool().
 	 *
-	 * key - item search key string.
-	 * value - reference to the boolean value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the boolean value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, bool& value) const noexcept
 	{
 		return getConfReaderBool(instance, key.c_str(), &value);
 	}
 
-	/*
-	 * Get specified item string value by key.
-	 * Returns true if item is found and correct.
+	/**
+	 * @brief Returns the string value by key.
+	 * @details See the @ref getConfReaderString().
 	 *
-	 * key - item search key string.
-	 * value - reference to the string value.
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the string value
+	 * 
+	 * @return True on succes, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, string_view& value) const noexcept
 	{
