@@ -92,7 +92,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 	ConfItem* items = malloc(sizeof(struct ConfItem));
 	if (!items)
 	{
-		if (errorLine) *errorLine = 0;
+		if (errorLine)
+			*errorLine = 0;
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 	}
 
@@ -103,7 +104,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 	if (!buffer)
 	{
 		free(items);
-		if (errorLine) *errorLine = 0;
+		if (errorLine)
+			*errorLine = 0;
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 	}
 
@@ -120,7 +122,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 			if (bufferSize <= 1 || buffer[bufferSize - 1] != ' ')
 			{
 				free(buffer); destroyConfItems(items, itemCount);
-				if (errorLine) *errorLine = lineIndex + 1;
+				if (errorLine)
+					*errorLine = lineIndex + 1;
 				return BAD_KEY_CONF_RESULT;
 			}
 
@@ -128,7 +131,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 			if (!key)
 			{
 				free(buffer); destroyConfItems(items, itemCount);
-				if (errorLine) *errorLine = lineIndex + 1;
+				if (errorLine)
+					*errorLine = lineIndex + 1;
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
 
@@ -149,7 +153,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 				{
 					free(buffer);
 					destroyConfItems(items, itemCount);
-					if (errorLine) *errorLine = lineIndex + 1;
+					if (errorLine)
+						*errorLine = lineIndex + 1;
 					return BAD_ITEM_CONF_RESULT;
 				}
 
@@ -164,7 +169,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 			{
 				free(item.key); free(buffer);
 				destroyConfItems(items, itemCount);
-				if (errorLine) *errorLine = lineIndex + 1;
+				if (errorLine)
+					*errorLine = lineIndex + 1;
 				return BAD_VALUE_CONF_RESULT;
 			}
 
@@ -180,7 +186,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 					free(item.key);
 					free(buffer);
 					destroyConfItems(items, itemCount);
-					if (errorLine) *errorLine = lineIndex + 1;
+					if (errorLine)
+						*errorLine = lineIndex + 1;
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
@@ -281,7 +288,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 				{
 					free(item.key); free(buffer);
 					destroyConfItems(items, itemCount);
-					if (errorLine) *errorLine = lineIndex + 1;
+					if (errorLine)
+						*errorLine = lineIndex + 1;
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
@@ -306,7 +314,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 						free(item.value.string.value);
 					free(item.key); free(buffer);
 					destroyConfItems(items, itemCount);
-					if (errorLine) *errorLine = lineIndex + 1;
+					if (errorLine)
+						*errorLine = lineIndex + 1;
 					return FAILED_TO_ALLOCATE_CONF_RESULT;
 				}
 
@@ -314,7 +323,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 			}
 
 			items[itemCount++] = item;
-			if (currentChar == EOF || currentChar == '\0') break;
+			if (currentChar == EOF || currentChar == '\0')
+				break;
 
 			item.keySize = 0;
 			bufferSize = 0;
@@ -326,8 +336,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 			while(true)
 			{
 				currentChar = getNextChar(handle);
-				if (currentChar == '\n' || currentChar == EOF ||
-					currentChar == '\0') break;
+				if (currentChar == '\n' || currentChar == EOF || currentChar == '\0')
+					break;
 			}
 
 			lineIndex++;
@@ -347,9 +357,11 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 
 			if (!newBuffer)
 			{
-				if (item.keySize > 0) free(item.key);
+				if (item.keySize > 0)
+					free(item.key);
 				free(buffer); destroyConfItems(items, itemCount);
-				if (errorLine) *errorLine = lineIndex + 1;
+				if (errorLine)
+					*errorLine = lineIndex + 1;
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
 
@@ -368,7 +380,8 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 			if (i != j && !compareConfItems(&items[i], &items[j]))
 			{
 				destroyConfItems(items, itemCount);
-				if (errorLine) *errorLine = 0;
+				if (errorLine)
+					*errorLine = 0;
 				return REPEATING_KEYS_CONF_RESULT;
 			}
 		}
@@ -395,7 +408,8 @@ ConfResult createFileConfReader(const char* filePath, ConfReader* confReader, si
 	ConfReader confReaderInstance = malloc(sizeof(ConfReader_T));
 	if (!confReaderInstance)
 	{
-		if (errorLine) *errorLine = 0;
+		if (errorLine)
+			*errorLine = 0;
 		return FAILED_TO_ALLOCATE_CONF_RESULT;
 	}
 
@@ -403,7 +417,8 @@ ConfResult createFileConfReader(const char* filePath, ConfReader* confReader, si
 	if (!file)
 	{
 		free(confReaderInstance);
-		if (errorLine) *errorLine = 0;
+		if (errorLine)
+			*errorLine = 0;
 		return FAILED_TO_OPEN_FILE_CONF_RESULT;
 	}
 
@@ -423,7 +438,8 @@ ConfResult createFileConfReader(const char* filePath, ConfReader* confReader, si
 	confReaderInstance->items = items;
 	confReaderInstance->itemCount = itemCount;
 	*confReader = confReaderInstance;
-	if (errorLine) *errorLine = 0;
+	if (errorLine)
+		*errorLine = 0;
 	return SUCCESS_CONF_RESULT;
 }
 
@@ -476,7 +492,8 @@ ConfResult createDataConfReader(const char* data, ConfReader* confReader, size_t
 
 void destroyConfReader(ConfReader confReader)
 {
-	if (!confReader) return;
+	if (!confReader)
+		return;
 	destroyConfItems(confReader->items, confReader->itemCount);
 	free(confReader);
 }
@@ -493,7 +510,8 @@ bool getConfReaderType(ConfReader confReader, const char* key, ConfDataType* typ
 
 	ConfItem* foundItem = bsearch(&item, confReader->items,
 		confReader->itemCount, sizeof(struct ConfItem), compareConfItems);
-	if (!foundItem) return false;
+	if (!foundItem)
+		return false;
 
 	*type = foundItem->type;
 	return true;
@@ -576,6 +594,7 @@ bool getConfReaderString(ConfReader confReader, const char* key, const char** va
 		return false;
 
 	*value = foundItem->value.string.value;
-	if (length) *length = foundItem->value.string.length;
+	if (length)
+		*length = foundItem->value.string.length;
 	return true;
 }

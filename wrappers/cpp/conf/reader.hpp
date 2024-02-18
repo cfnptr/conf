@@ -123,8 +123,8 @@ public:
 	 */
 	bool get(const string& key, int32_t& value) const noexcept
 	{
-		int64_t v; auto result = get(key, v);
-		if (result)
+		int64_t v;
+		if (get(key, v))
 		{
 			value = (int32_t)v;
 			return true;
@@ -143,8 +143,8 @@ public:
 	 */
 	bool get(const string& key, uint32_t& value) const noexcept
 	{
-		int64_t v; auto result = get(key, v);
-		if (result)
+		int64_t v;
+		if (get(key, v))
 		{
 			value = (uint32_t)v;
 			return true;
@@ -163,8 +163,8 @@ public:
 	 */
 	bool get(const string& key, int16_t& value) const noexcept
 	{
-		int64_t v; auto result = get(key, v);
-		if (result)
+		int64_t v;
+		if (get(key, v))
 		{
 			value = (int16_t)v;
 			return true;
@@ -183,8 +183,8 @@ public:
 	 */
 	bool get(const string& key, uint16_t& value) const noexcept
 	{
-		int64_t v; auto result = get(key, v);
-		if (result)
+		int64_t v;
+		if (get(key, v))
 		{
 			value = (uint16_t)v;
 			return true;
@@ -203,8 +203,8 @@ public:
 	 */
 	bool get(const string& key, int8_t& value) const noexcept
 	{
-		int64_t v; auto result = get(key, v);
-		if (result)
+		int64_t v;
+		if (get(key, v))
 		{
 			value = (int8_t)v;
 			return true;
@@ -223,8 +223,8 @@ public:
 	 */
 	bool get(const string& key, uint8_t& value) const noexcept
 	{
-		int64_t v; auto result = get(key, v);
-		if (result)
+		int64_t v;
+		if (get(key, v))
 		{
 			value = (uint8_t)v;
 			return true;
@@ -257,8 +257,8 @@ public:
 	 */
 	bool get(const string& key, float& value) const noexcept
 	{
-		double v; auto result = get(key, v);
-		if (result)
+		double v;
+		if (get(key, v))
 		{
 			value = (float)v;
 			return true;
@@ -292,9 +292,7 @@ public:
 	bool get(const string& key, string_view& value) const noexcept
 	{
 		uint64_t length; const char* _string;
-		auto result = getConfReaderString(instance,
-			key.data(), &_string, &length);
-		if (result)
+		if (getConfReaderString(instance, key.data(), &_string, &length))
 		{
 			value = string_view(_string, (size_t)length);
 			return true;

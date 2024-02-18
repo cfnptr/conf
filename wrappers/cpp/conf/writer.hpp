@@ -74,8 +74,8 @@ public:
 	 */
 	void writeComment(const string& comment)
 	{
-		auto result = writeConfComment(instance, comment.c_str());
-		if (!result) throw runtime_error("Failed to write a comment");
+		if (!writeConfComment(instance, comment.c_str()))
+			throw runtime_error("Failed to write a comment");
 	}
 
 	/**
@@ -85,8 +85,8 @@ public:
 	 */
 	void writeNewLine()
 	{
-		auto result = writeConfNewLine(instance);
-		if (!result) throw runtime_error("Failed to write a new line");
+		if (!writeConfNewLine(instance))
+			throw runtime_error("Failed to write a new line");
 	}
 
 	/**
@@ -100,8 +100,8 @@ public:
 	 */
 	void write(const string& key, int64_t value)
 	{
-		auto result = writeConfInt(instance, key.c_str(), value);
-		if (!result) throw runtime_error("Failed to write a integer item");
+		if (!writeConfInt(instance, key.c_str(), value))
+			throw runtime_error("Failed to write a integer item");
 	}
 
 	/**
@@ -182,8 +182,8 @@ public:
 	 */
 	void write(const string& key, double value, uint8_t precision = 0)
 	{
-		auto result = writeConfFloat(instance, key.data(), value, precision);
-		if (!result) throw runtime_error("Failed to write a floating item");
+		if (!writeConfFloat(instance, key.data(), value, precision))
+			throw runtime_error("Failed to write a floating item");
 	}
 
 	/**
@@ -212,8 +212,8 @@ public:
 	 */
 	void write(const string& key, bool value)
 	{
-		auto result = writeConfBool(instance, key.c_str(), value);
-		if (!result) throw runtime_error("Failed to write a boolean item");
+		if (!writeConfBool(instance, key.c_str(), value))
+			throw runtime_error("Failed to write a boolean item");
 	}
 
 	/**
@@ -227,9 +227,8 @@ public:
 	 */
 	void write(const string& key, string_view value)
 	{
-		auto result = writeConfString(instance, key.c_str(),
-			value.data(), value.size());
-		if (!result) throw runtime_error("Failed to write a string item");
+		if (!writeConfString(instance, key.c_str(), value.data(), value.size()))
+			throw runtime_error("Failed to write a string item");
 	}
 };
 

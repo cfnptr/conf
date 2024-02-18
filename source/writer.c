@@ -47,8 +47,10 @@ ConfResult createFileConfWriter(const char* filePath, ConfWriter* confWriter)
 
 void destroyConfWriter(ConfWriter confWriter)
 {
-	if (!confWriter) return;
-	if (confWriter->file) closeFile(confWriter->file);
+	if (!confWriter)
+		return;
+	if (confWriter->file)
+		closeFile(confWriter->file);
 	free(confWriter);
 }
 
@@ -80,7 +82,8 @@ inline static bool getDoubleDigitCount(double value, uint8_t* count)
 	{
 		value = value * 10.0;
 		digitCount++;
-		if (digitCount == UINT8_MAX) return false;
+		if (digitCount == UINT8_MAX)
+			return false;
 	}
 
 	*count = digitCount > 0 ? digitCount : 1;
@@ -106,8 +109,8 @@ bool writeConfFloat(ConfWriter confWriter, const char* key, double value, uint8_
 	else
 	{
 		uint8_t digitCount;
-		bool result = getDoubleDigitCount(value, &digitCount);
-		if (!result) return false;
+		if (!getDoubleDigitCount(value, &digitCount))
+			return false;
 
 		if (precision > 0 && precision < digitCount)
 			digitCount = precision;
@@ -120,8 +123,11 @@ bool writeConfBool(ConfWriter confWriter, const char* key, bool value)
 {
 	assert(confWriter);
 	assert(key);
-	if (value) return fprintf(confWriter->file, "%s = true\n", key) > 0;
-	else return fprintf( confWriter->file, "%s = false\n", key) > 0;
+	
+	if (value)
+		return fprintf(confWriter->file, "%s = true\n", key) > 0;
+	else
+		return fprintf( confWriter->file, "%s = false\n", key) > 0;
 }
 
 bool writeConfString(ConfWriter confWriter, const char* key, const char* value, size_t length)
