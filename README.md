@@ -105,8 +105,15 @@ Use building [instructions](BUILDING.md) to install all required tools and libra
 
 | Name              | Description               | Default value |
 |-------------------|---------------------------|---------------|
-| CONF_BUILD_SHARED | Build CONF shared library | `ON`          |
-| CONF_BUILD_TESTS  | Build CONF library tests  | `ON`          |
+| CONF_BUILD_SHARED | Build Conf shared library | `ON`          |
+| CONF_BUILD_TESTS  | Build Conf library tests  | `ON`          |
+
+### CMake targets
+
+| Name        | Description          | Windows | macOS    | Linux |
+|-------------|----------------------|---------|----------|-------|
+| conf-static | Static Conf library  | `.lib`  | `.a`     | `.a`  |
+| conf-shared | Dynamic Conf library | `.dll`  | `.dylib` | `.so` |
 
 ## Cloning
 
