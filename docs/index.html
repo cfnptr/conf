@@ -168,9 +168,19 @@ CMake options</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Name   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Default value    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">CONF_BUILD_SHARED   </td><td class="markdownTableBodyNone">Build CONF shared library   </td><td class="markdownTableBodyNone"><code>ON</code>    </td></tr>
+<td class="markdownTableBodyNone">CONF_BUILD_SHARED   </td><td class="markdownTableBodyNone">Build Conf shared library   </td><td class="markdownTableBodyNone"><code>ON</code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">CONF_BUILD_TESTS   </td><td class="markdownTableBodyNone">Build CONF library tests   </td><td class="markdownTableBodyNone"><code>ON</code>   </td></tr>
+<td class="markdownTableBodyNone">CONF_BUILD_TESTS   </td><td class="markdownTableBodyNone">Build Conf library tests   </td><td class="markdownTableBodyNone"><code>ON</code>   </td></tr>
+</table>
+<h2><a class="anchor" id="cmake-targets"></a>
+CMake targets</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Name   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Windows   </th><th class="markdownTableHeadNone">macOS   </th><th class="markdownTableHeadNone">Linux    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">conf-static   </td><td class="markdownTableBodyNone">Static Conf library   </td><td class="markdownTableBodyNone"><code>.lib</code>   </td><td class="markdownTableBodyNone"><code>.a</code>   </td><td class="markdownTableBodyNone"><code>.a</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">conf-shared   </td><td class="markdownTableBodyNone">Dynamic Conf library   </td><td class="markdownTableBodyNone"><code>.dll</code>   </td><td class="markdownTableBodyNone"><code>.dylib</code>   </td><td class="markdownTableBodyNone"><code>.so</code>   </td></tr>
 </table>
 <h1><a class="anchor" id="cloning"></a>
 Cloning</h1>
@@ -193,7 +203,7 @@ Third-party</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Feb 3 2024 for Conf by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+    <li class="footer">Generated on Sat Apr 13 2024 for Conf by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>
 </body>
