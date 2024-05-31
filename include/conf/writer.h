@@ -90,7 +90,7 @@ bool writeConfInt(ConfWriter confWriter, const char* key, int64_t value);
  * @param confWriter conf writer instance
  * @param[in] key target item key string
  * @param value floating item value
- * @param precission number of digits after the decimal point, or 0 (auto detect)
+ * @param precision number of digits after the decimal point, or 0 (auto detect)
  * 
  * @return True on success, otherwise false.
  */
@@ -113,7 +113,7 @@ bool writeConfBool(ConfWriter confWriter, const char* key, bool value);
  * @param confWriter conf writer instance
  * @param[in] key target item key string
  * @param[in] value string item value
- * @param lenght string value length, or 0 (auto detect)
+ * @param length string value length, or 0 (auto detect)
  * 
  * @return True on success, otherwise false.
  */

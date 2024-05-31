@@ -41,13 +41,13 @@ void confReaderExampleC()
     ConfResult confResult = createFileConfReader("settings.txt", &confReader, NULL);
     if (confResult != SUCCESS_CONF_RESULT) abort();
 
-	int64_t someValue = 0;
-	if (getConfReaderInt(confReader, "someValue", &someValue))
-	{
-		// use value...
-	}
+    int64_t someValue = 0;
+    if (getConfReaderInt(confReader, "someValue", &someValue))
+    {
+        // use value...
+    }
 
-	destroyConfReader(confReader);
+    destroyConfReader(confReader);
 }
 
 void confWriterExampleC()

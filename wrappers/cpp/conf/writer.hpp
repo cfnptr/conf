@@ -176,7 +176,7 @@ public:
 	 *
 	 * @param[in] key target item key string
 	 * @param value floating item value
-	 * @param precission number of digits after the decimal point, or 0 (auto detect).
+	 * @param precision number of digits after the decimal point, or 0 (auto detect).
 	 * 
 	 * @throw runtime_error on a failure.
 	 */
@@ -192,7 +192,7 @@ public:
 	 *
 	 * @param[in] key target item key string
 	 * @param value floating item value
-	 * @param precission number of digits after the decimal point, or 0 (auto detect).
+	 * @param precision number of digits after the decimal point, or 0 (auto detect).
 	 * 
 	 * @throw runtime_error on a failure.
 	 */
