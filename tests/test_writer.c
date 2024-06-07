@@ -57,7 +57,7 @@ inline static bool compareTestFile(const char* confData)
 		return false;
 	}
 
-	char* data = malloc(sizeof(char) *(fileSize + 1));
+	char* data = malloc(sizeof(char) * (fileSize + 1));
 	if (!data)
 	{
 		printf("Failed to allocate read buffer.\n");
@@ -419,7 +419,7 @@ int main()
 	result &= testString("\tTab symbol test");
 	result &= testString("looksLikeKey");
 	result &= testString("PLEASE DON'T SCREAM");
-	result &= testString("!@#$%%^&*()_+-{}[]:|\";'\\<>?,./");
+	result &= testString("!@#$%%^&*()_+-={}[]:|\";'\\<>?,./");
 	result &= testConfig();
 	return result ? EXIT_SUCCESS : EXIT_FAILURE;
 }

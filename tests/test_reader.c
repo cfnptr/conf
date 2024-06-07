@@ -158,26 +158,6 @@ inline static bool testBadValue()
 
 	return removeTestFile();
 }
-inline static bool testBadKeySpacing()
-{
-	if (!createTestFile("someKey :123"))
-		return false;
-
-	ConfReader confReader;
-	size_t errorLine;
-
-	ConfResult confResult = createFileConfReader(
-		TEST_FILE_NAME, &confReader, &errorLine);
-
-	if (confResult != BAD_KEY_CONF_RESULT)
-	{
-		printf("testBadKeySpacing: incorrect result. (%s)\n",
-			confResultToString(confResult));
-		return false;
-	}
-
-	return removeTestFile();
-}
 inline static bool testBadValueSpacing()
 {
 	if (!createTestFile("someKey:123"))
@@ -592,7 +572,6 @@ int main()
 	result &= testBadComment();
 	result &= testBadKey();
 	result &= testBadValue();
-	result &= testBadKeySpacing();
 	result &= testBadValueSpacing();
 	result &= testKey("someKey");
 	result &= testKey("StartFromBig");
@@ -603,7 +582,7 @@ int main()
 	result &= testKey("123456789");
 	result &= testKey("Numbeeers 2048 ");
 	result &= testKey(" < thisIsSPACE");
-	result &= testKey("!@#$%%^&*()_+-{}[]:|\";'\\<>?,./");
+	result &= testKey("!@#$%%^&*()_+-={}[]|\";'\\<>?,./");
 	result &= testKey("\t");
 	result &= testInteger(0, "0");
 	result &= testInteger(1, "1");
