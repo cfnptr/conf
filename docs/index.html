@@ -66,7 +66,7 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 <h1><a class="anchor" id="features"></a>
 Features</h1>
 <ul>
-<li>Simple configuration syntax (similar to .ini)</li>
+<li>Simple configuration syntax (similar to YAML)</li>
 <li>Automatic variable parsing (int, float, bool, string)</li>
 <li>Built-in configuration syntax validation</li>
 <li>C and C++ implementations</li>
@@ -136,21 +136,21 @@ Usage example</h1>
 </div><!-- fragment --><h1><a class="anchor" id="configuration-file-example"></a>
 Configuration file example</h1>
 <div class="fragment"><div class="line"># Conf comment syntax example</div>
-<div class="line">integerValue = 123</div>
-<div class="line">NegativeOne = -1</div>
+<div class="line">integerValue: 123</div>
+<div class="line">NegativeOne: -1</div>
 <div class="line"> </div>
 <div class="line"># Supported floating values</div>
-<div class="line">FloatingPI = 3.141</div>
-<div class="line">minus Infinity = -INF</div>
-<div class="line">Oh nooo = NaN</div>
+<div class="line">FloatingPI: 3.141</div>
+<div class="line">minus Infinity: -INF</div>
+<div class="line">Oh nooo: NaN</div>
 <div class="line"> </div>
 <div class="line"># Also some booleans</div>
-<div class="line">is.planet.round = true</div>
-<div class="line">caseSensitive = False</div>
+<div class="line">is.planet.round: true</div>
+<div class="line">caseSensitive: False</div>
 <div class="line"> </div>
 <div class="line"># And everything else is strings</div>
-<div class="line">hackingExploit = Hello world!</div>
-<div class="line">Not recommended key example?  = Yes :)</div>
+<div class="line">hackingExploit: Hello world!</div>
+<div class="line">Not recommended key example? : Yes :)</div>
 </div><!-- fragment --><h1><a class="anchor" id="supported-operating-systems"></a>
 Supported operating systems</h1>
 <ul>
@@ -208,7 +208,7 @@ Third-party</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri May 31 2024 for Conf by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
+    <li class="footer">Generated on Fri Jun 7 2024 for Conf by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
   </ul>
 </div>
 </body>

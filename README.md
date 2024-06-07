@@ -6,7 +6,7 @@ See the [documentation](https://cfnptr.github.io/conf).
 
 ## Features
 
-* Simple configuration syntax (similar to .ini)
+* Simple configuration syntax (similar to YAML)
 * Automatic variable parsing (int, float, bool, string)
 * Built-in configuration syntax validation
 * C and C++ implementations
@@ -69,21 +69,21 @@ void confWriterExampleC()
 
 ```
 # Conf comment syntax example
-integerValue = 123
-NegativeOne = -1
+integerValue: 123
+NegativeOne: -1
 
 # Supported floating values
-FloatingPI = 3.141
-minus Infinity = -INF
-Oh nooo = NaN
+FloatingPI: 3.141
+minus Infinity: -INF
+Oh nooo: NaN
 
 # Also some booleans
-is.planet.round = true
-caseSensitive = False
+is.planet.round: true
+caseSensitive: False
 
 # And everything else is strings
-hackingExploit = Hello world!
-Not recommended key example?  = Yes :)
+hackingExploit: Hello world!
+Not recommended key example? : Yes :)
 ```
 
 ## Supported operating systems

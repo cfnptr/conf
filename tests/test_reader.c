@@ -79,7 +79,7 @@ inline static bool testFailedToOpenFile()
 }
 inline static bool testGoodComment()
 {
-	if (!createTestFile("# Some conf comment x=1 "))
+	if (!createTestFile("# Some conf comment x: 1 "))
 		return false;
 
 	ConfReader confReader;
@@ -120,7 +120,7 @@ inline static bool testBadComment()
 }
 inline static bool testBadKey()
 {
-	if (!createTestFile(" = 123"))
+	if (!createTestFile(": 123"))
 		return false;
 
 	ConfReader confReader;
@@ -140,7 +140,7 @@ inline static bool testBadKey()
 }
 inline static bool testBadValue()
 {
-	if (!createTestFile("someKey = "))
+	if (!createTestFile("someKey: "))
 		return false;
 
 	ConfReader confReader;
@@ -160,7 +160,7 @@ inline static bool testBadValue()
 }
 inline static bool testBadKeySpacing()
 {
-	if (!createTestFile("someKey= 123"))
+	if (!createTestFile("someKey :123"))
 		return false;
 
 	ConfReader confReader;
@@ -180,7 +180,7 @@ inline static bool testBadKeySpacing()
 }
 inline static bool testBadValueSpacing()
 {
-	if (!createTestFile("someKey =123"))
+	if (!createTestFile("someKey:123"))
 		return false;
 
 	ConfReader confReader;
@@ -205,7 +205,7 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 	const char* keyName = "someInteger";
 	char content[256];
 
-	sprintf(content, "%s = %s", keyName, stringValue);
+	sprintf(content, "%s: %s", keyName, stringValue);
 	if (!createTestFile(content)) return false;
 
 	ConfReader confReader;
@@ -252,7 +252,7 @@ inline static bool testFloating(double value, const char* stringValue)
 	const char* keyName = "someFloating";
 	char content[256];
 
-	sprintf(content, "%s = %s", keyName, stringValue);
+	sprintf(content, "%s: %s", keyName, stringValue);
 
 	if (!createTestFile(content))
 		return false;
@@ -307,7 +307,7 @@ inline static bool testBoolean(double value, const char* stringValue)
 	const char* keyName = "someBoolean";
 	char content[256];
 
-	sprintf(content, "%s = %s", keyName, stringValue);
+	sprintf(content, "%s: %s", keyName, stringValue);
 	if (!createTestFile(content)) return false;
 
 	ConfReader confReader;
@@ -352,7 +352,7 @@ inline static bool testKey(const char* key)
 	assert(key);
 
 	char content[256];
-	sprintf(content, "%s = 123", key);
+	sprintf(content, "%s: 123", key);
 	if (!createTestFile(content)) return false;
 
 	ConfReader confReader;
@@ -401,7 +401,7 @@ inline static bool testString(const char* value)
 	const char* keyName = "someString";
 	char content[256];
 
-	sprintf(content, "%s = %s", keyName, value);
+	sprintf(content, "%s: %s", keyName, value);
 	if (!createTestFile(content)) return false;
 
 	ConfReader confReader;
@@ -447,15 +447,15 @@ static const char* const testConfigString =
 	"#similar to real \n"
 	"\n"
 	"# Some integer value\n"
-	"integer = 123456789\n"
+	"integer: 123456789\n"
 	"\n"
 	"\n"
 	"# SOME_DOUBLE_VALUE?\n"
 	"\n"
-	"DOUBLE = 0.123\n"
-	"Boolean = True\n"
+	"DOUBLE: 0.123\n"
+	"Boolean: True\n"
 	"\n"
-	"string  = Hello world!\n"
+	"string : Hello world!\n"
 	"#comment\n";
 inline static bool testConfig(ConfReader confReader)
 {
@@ -563,7 +563,7 @@ inline static bool testFileConfig()
 
 	bool result = testConfig(confReader);
 	destroyConfReader(confReader);
-	return removeTestFile() & result;
+	return removeTestFile() && result;
 }
 inline static bool testDataConfig()
 {

@@ -117,9 +117,9 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 	while (true)
 	{
 		int currentChar = getNextChar(handle);
-		if (currentChar == '=' && item.keySize == 0)
+		if (currentChar == ':' && item.keySize == 0)
 		{
-			if (bufferSize <= 1 || buffer[bufferSize - 1] != ' ')
+			if (bufferSize == 0)
 			{
 				free(buffer); destroyConfItems(items, itemCount);
 				if (errorLine)
@@ -127,7 +127,7 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 				return BAD_KEY_CONF_RESULT;
 			}
 
-			char* key = malloc(bufferSize * sizeof(char));
+			char* key = malloc((bufferSize + 1) * sizeof(char));
 			if (!key)
 			{
 				free(buffer); destroyConfItems(items, itemCount);
@@ -136,7 +136,6 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 				return FAILED_TO_ALLOCATE_CONF_RESULT;
 			}
 
-			bufferSize--;
 			memcpy(key, buffer, bufferSize * sizeof(char));
 			key[bufferSize] = '\0';
 

@@ -71,7 +71,7 @@ bool writeConfInt(ConfWriter confWriter, const char* key, int64_t value)
 {
 	assert(confWriter);
 	assert(key);
-	return fprintf(confWriter->file, "%s = %lld\n", key, (long long int)value) > 0;
+	return fprintf(confWriter->file, "%s: %lld\n", key, (long long int)value) > 0;
 }
 
 inline static bool getDoubleDigitCount(double value, uint8_t* count)
@@ -96,15 +96,15 @@ bool writeConfFloat(ConfWriter confWriter, const char* key, double value, uint8_
 
 	if (value == INFINITY)
 	{
-		return fprintf( confWriter->file, "%s = inf\n", key) > 0;
+		return fprintf( confWriter->file, "%s: inf\n", key) > 0;
 	}
 	else if (value == -INFINITY)
 	{
-		return fprintf(confWriter->file, "%s = -inf\n", key) > 0;
+		return fprintf(confWriter->file, "%s: -inf\n", key) > 0;
 	}
 	else if (isnan(value))
 	{
-		return fprintf(confWriter->file, "%s = nan\n", key) > 0;
+		return fprintf(confWriter->file, "%s: nan\n", key) > 0;
 	}
 	else
 	{
@@ -115,7 +115,7 @@ bool writeConfFloat(ConfWriter confWriter, const char* key, double value, uint8_
 		if (precision > 0 && precision < digitCount)
 			digitCount = precision;
 
-		return fprintf(confWriter->file, "%s = %.*f\n", key, digitCount, value) > 0;
+		return fprintf(confWriter->file, "%s: %.*f\n", key, digitCount, value) > 0;
 	}
 }
 
@@ -125,9 +125,9 @@ bool writeConfBool(ConfWriter confWriter, const char* key, bool value)
 	assert(key);
 	
 	if (value)
-		return fprintf(confWriter->file, "%s = true\n", key) > 0;
+		return fprintf(confWriter->file, "%s: true\n", key) > 0;
 	else
-		return fprintf( confWriter->file, "%s = false\n", key) > 0;
+		return fprintf( confWriter->file, "%s: false\n", key) > 0;
 }
 
 bool writeConfString(ConfWriter confWriter, const char* key, const char* value, size_t length)
@@ -137,7 +137,7 @@ bool writeConfString(ConfWriter confWriter, const char* key, const char* value, 
 	assert(value);
 
 	if (length == 0)
-		return fprintf(confWriter->file, "%s = %s\n", key, value) > 0;
+		return fprintf(confWriter->file, "%s: %s\n", key, value) > 0;
 	else
-		return fprintf(confWriter->file, "%s = %.*s\n", key, (int)length, value) > 0;
+		return fprintf(confWriter->file, "%s: %.*s\n", key, (int)length, value) > 0;
 }
