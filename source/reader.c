@@ -549,11 +549,20 @@ bool getConfReaderFloat(ConfReader confReader, const char* key, double* value)
 	ConfItem* foundItem = bsearch(&item, confReader->items,
 		confReader->itemCount, sizeof(struct ConfItem), compareConfItems);
 
-	if (!foundItem || foundItem->type != FLOATING_CONF_DATA_TYPE)
+	if (!foundItem)
 		return false;
 
-	*value = foundItem->value.floating;
-	return true;
+	if (foundItem->type == FLOATING_CONF_DATA_TYPE)
+	{
+		*value = foundItem->value.floating;
+		return true;
+	}
+	else if (foundItem->type == INTEGER_CONF_DATA_TYPE)
+	{
+		*value = foundItem->value.integer;
+		return true;
+	}
+	return false;
 }
 
 bool getConfReaderBool(ConfReader confReader, const char* key, bool* value)
