@@ -19,8 +19,7 @@
  **********************************************************************************************************************/
 
 #pragma once
-#include <string>
-#include <exception>
+#include "conf/error.hpp"
 #include <filesystem>
 #include <string_view>
 
@@ -31,8 +30,6 @@ extern "C"
 
 namespace conf
 {
-
-using namespace std;
 
 /***********************************************************************************************************************
  * @brief Conf reader instance handle.
@@ -47,7 +44,7 @@ public:
 	 * @brief Creates a new Conf file reader instance.
 	 * @details See the @ref createFileConfReader().
 	 * @param[in] filePath target Conf file path string
-	 * @throw runtime_error with a @ref ConfResult string on failure.
+	 * @throw Error with a @ref ConfResult string and line number on failure.
 	 */
 	Reader(const filesystem::path& filePath)
 	{
@@ -55,27 +52,21 @@ public:
 		auto string = filePath.generic_string();
 		auto result = createFileConfReader(string.c_str(), &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
-		{
-			throw runtime_error(confResultToString(result) + (" at line " + 
-				to_string(errorLine) + ", path: " + filePath.generic_string()));
-		}
+			throw Error(confResultToString(result), errorLine);
 	}
 
 	/**
 	 * @brief Creates a new Conf data reader instance.
 	 * @details See the @ref createDataConfReader().
 	 * @param[in] data target Conf data string
-	 * @throw runtime_error with a @ref ConfResult string on failure.
+	 * @throw Error with a @ref ConfResult string and line number on failure.
 	 */
 	Reader(const char* data)
 	{
 		size_t errorLine = 0;
 		auto result = createDataConfReader(data, &instance, &errorLine);
 		if (result != SUCCESS_CONF_RESULT)
-		{
-			throw runtime_error(confResultToString(result) +
-				(" at line " + to_string(errorLine)));
-		}
+			throw Error(confResultToString(result), errorLine);
 	}
 
 	/**

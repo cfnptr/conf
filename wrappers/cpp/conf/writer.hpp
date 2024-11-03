@@ -19,8 +19,7 @@
  **********************************************************************************************************************/
 
 #pragma once
-#include <string>
-#include <exception>
+#include "conf/error.hpp"
 #include <filesystem>
 #include <string_view>
 
@@ -31,8 +30,6 @@ extern "C"
 
 namespace conf
 {
-
-using namespace std;
 
 /***********************************************************************************************************************
  * @brief Conf writer instance handle.
@@ -47,17 +44,14 @@ public:
 	 * @brief Creates a new Conf file writer instance.
 	 * @details See the @ref createFileConfWriter().
 	 * @param[in] filePath target Conf file path string
-	 * @throw runtime_error with a @ref ConfResult string on failure.
+	 * @throw Error with a @ref ConfResult string on failure.
 	 */
 	Writer(const filesystem::path& filePath)
 	{
 		auto pathString = filePath.generic_string();
 		auto result = createFileConfWriter(pathString.c_str(), &instance);
 		if (result != SUCCESS_CONF_RESULT)
-		{
-			throw runtime_error(confResultToString(result) +
-				(", path:" + filePath.generic_string()));
-		}
+			throw Error(confResultToString(result));
 	}
 
 	/**
@@ -70,23 +64,23 @@ public:
 	 * @brief Writes a comment to the config.
 	 * @details See the @ref writeConfComment().
 	 * @param[in] comment target comment string
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a comment write failure.
 	 */
 	void writeComment(const string& comment)
 	{
 		if (!writeConfComment(instance, comment.c_str()))
-			throw runtime_error("Failed to write a comment");
+			throw Error("Failed to write a comment");
 	}
 
 	/**
 	 * @brief Writes a new line to the config. ('\\n')
 	 * @details See the @ref writeConfNewLine().
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a new line write failure.
 	 */
 	void writeNewLine()
 	{
 		if (!writeConfNewLine(instance))
-			throw runtime_error("Failed to write a new line");
+			throw Error("Failed to write a new line");
 	}
 
 	/**
@@ -96,12 +90,12 @@ public:
 	 * @param[in] key target item key string
 	 * @param value integer item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, int64_t value)
 	{
 		if (!writeConfInt(instance, key.c_str(), value))
-			throw runtime_error("Failed to write a integer item");
+			throw Error("Failed to write a integer item");
 	}
 
 	/**
@@ -111,7 +105,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param value integer item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, int32_t value) { write(key, (int64_t)value); }
 
@@ -122,7 +116,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param value integer item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, uint32_t value) { write(key, (int64_t)value); }
 
@@ -133,7 +127,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param value integer item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, int16_t value) { write(key, (int64_t)value); }
 
@@ -144,7 +138,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param value integer item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, uint16_t value) { write(key, (int64_t)value); }
 
@@ -155,7 +149,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param value integer item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, int8_t value) { write(key, (int64_t)value); }
 
@@ -166,7 +160,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param value integer item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, uint8_t value) { write(key, (int64_t)value); }
 
@@ -178,12 +172,12 @@ public:
 	 * @param value floating item value
 	 * @param precision number of digits after the decimal point, or 0 (auto detect).
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, double value, uint8_t precision = 0)
 	{
 		if (!writeConfFloat(instance, key.data(), value, precision))
-			throw runtime_error("Failed to write a floating item");
+			throw Error("Failed to write a floating item");
 	}
 
 	/**
@@ -194,7 +188,7 @@ public:
 	 * @param value floating item value
 	 * @param precision number of digits after the decimal point, or 0 (auto detect).
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, float value, uint8_t precision = 0)
 	{
@@ -208,12 +202,12 @@ public:
 	 * @param[in] key target item key string
 	 * @param value boolean item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, bool value)
 	{
 		if (!writeConfBool(instance, key.c_str(), value))
-			throw runtime_error("Failed to write a boolean item");
+			throw Error("Failed to write a boolean item");
 	}
 
 	/**
@@ -223,12 +217,12 @@ public:
 	 * @param[in] key target item key string
 	 * @param[in] value string item value
 	 * 
-	 * @throw runtime_error on a failure.
+	 * @throw Error on a write failure.
 	 */
 	void write(const string& key, string_view value)
 	{
 		if (!writeConfString(instance, key.c_str(), value.data(), value.size()))
-			throw runtime_error("Failed to write a string item");
+			throw Error("Failed to write a string item");
 	}
 };
 
