@@ -92,7 +92,7 @@ void destroyConfReader(ConfReader confReader);
  * @param[in] key target item key string
  * @param[out] type pointer to the value type
  * 
- * @return True on succes, false if item is not found.
+ * @return True on success, false if item is not found.
  */
 bool getConfReaderType(ConfReader confReader, const char* key, ConfDataType* type);
 
@@ -103,7 +103,7 @@ bool getConfReaderType(ConfReader confReader, const char* key, ConfDataType* typ
  * @param[in] key target item key string
  * @param[out] value pointer to the integer value
  * 
- * @return True on succes, false if item is not found or has a different type.
+ * @return True on success, false if item is not found or has a different type.
  */
 bool getConfReaderInt(ConfReader confReader, const char* key, int64_t* value);
 
@@ -114,7 +114,7 @@ bool getConfReaderInt(ConfReader confReader, const char* key, int64_t* value);
  * @param[in] key target item key string
  * @param[out] value pointer to the floating value
  * 
- * @return True on succes, false if item is not found or has a different type.
+ * @return True on success, false if item is not found or has a different type.
  */
 bool getConfReaderFloat(ConfReader confReader, const char* key, double* value);
 
@@ -125,7 +125,7 @@ bool getConfReaderFloat(ConfReader confReader, const char* key, double* value);
  * @param[in] key target item key string
  * @param[out] value pointer to the boolean value
  * 
- * @return True on succes, false if item is not found or has a different type.
+ * @return True on success, false if item is not found or has a different type.
  */
 bool getConfReaderBool(ConfReader confReader, const char* key, bool* value);
 
@@ -138,6 +138,6 @@ bool getConfReaderBool(ConfReader confReader, const char* key, bool* value);
  * @param[out] value pointer to the string value
  * @param[out] length pointer to the string length or NULL
  * 
- * @return True on succes, false if item is not found or has a different type.
+ * @return True on success, false if item is not found or has a different type.
  */
 bool getConfReaderString(ConfReader confReader, const char* key, const char** value, uint64_t* length);

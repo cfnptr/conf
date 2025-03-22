@@ -82,7 +82,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] type reference to the value type
 	 * 
-	 * @return True on succes, false if item is not found.
+	 * @return True on success, false if item is not found.
 	 */
 	bool getType(const string& key, ConfDataType& type) const noexcept
 	{
@@ -96,7 +96,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the integer value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, int64_t& value) const noexcept
 	{
@@ -110,7 +110,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the integer value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, int32_t& value) const noexcept
 	{
@@ -130,7 +130,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the integer value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, uint32_t& value) const noexcept
 	{
@@ -150,7 +150,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the integer value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, int16_t& value) const noexcept
 	{
@@ -170,7 +170,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the integer value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, uint16_t& value) const noexcept
 	{
@@ -190,7 +190,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the integer value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, int8_t& value) const noexcept
 	{
@@ -210,7 +210,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the integer value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, uint8_t& value) const noexcept
 	{
@@ -230,7 +230,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the floating value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, double& value) const noexcept
 	{
@@ -244,7 +244,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the floating value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, float& value) const noexcept
 	{
@@ -264,7 +264,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the boolean value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, bool& value) const noexcept
 	{
@@ -278,7 +278,7 @@ public:
 	 * @param[in] key target item key string
 	 * @param[out] value reference to the string value
 	 * 
-	 * @return True on succes, false if item is not found or has a different type.
+	 * @return True on success, false if item is not found or has a different type.
 	 */
 	bool get(const string& key, string_view& value) const noexcept
 	{
