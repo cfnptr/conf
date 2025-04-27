@@ -1,4 +1,4 @@
 var reader_8hpp =
 [
-    [ "Reader", "classconf_1_1_reader.html", "classconf_1_1_reader" ]
+    [ "Reader", "classconf_1_1Reader.html", "classconf_1_1Reader" ]
 ];

@@ -36,7 +36,9 @@ class Error : public exception
 public:
 	/**
 	 * @brief Creates a new Conf error (exception) instance. 
+	 *
 	 * @param message target error message
+	 * @param line error line index in the file
 	 */
 	Error(const string& message, size_t line = 0) : message(message), line(line) { }
 
