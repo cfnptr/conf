@@ -5,13 +5,7 @@
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://cfnptr.github.io/conf/writer_8h.html</loc>
-  </url>
-  <url>
     <loc>https://cfnptr.github.io/conf/common_8h.html</loc>
-  </url>
-  <url>
-    <loc>https://cfnptr.github.io/conf/reader_8h.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/conf/reader_8hpp.html</loc>
@@ -20,7 +14,13 @@
     <loc>https://cfnptr.github.io/conf/error_8hpp.html</loc>
   </url>
   <url>
+    <loc>https://cfnptr.github.io/conf/reader_8h.html</loc>
+  </url>
+  <url>
     <loc>https://cfnptr.github.io/conf/writer_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://cfnptr.github.io/conf/writer_8h.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/conf/md_BUILDING.html</loc>
@@ -29,10 +29,10 @@
     <loc>https://cfnptr.github.io/conf/classconf_1_1Error.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/conf/classconf_1_1Reader.html</loc>
+    <loc>https://cfnptr.github.io/conf/classconf_1_1Writer.html</loc>
   </url>
   <url>
-    <loc>https://cfnptr.github.io/conf/classconf_1_1Writer.html</loc>
+    <loc>https://cfnptr.github.io/conf/classconf_1_1Reader.html</loc>
   </url>
   <url>
     <loc>https://cfnptr.github.io/conf/dir_5078fa4b037495af7f2183084da91e6b.html</loc>

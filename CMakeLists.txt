@@ -22,7 +22,7 @@ if(TARGET conf-static)
 	return()
 endif()
 
-project(conf VERSION 1.5.0 LANGUAGES C
+project(conf VERSION 1.6.0 LANGUAGES C
 	DESCRIPTION "Simple and fast multi-platform \
  		configuration file library (similar to .ini) "
 	HOMEPAGE_URL "https://github.com/cfnptr/conf")
