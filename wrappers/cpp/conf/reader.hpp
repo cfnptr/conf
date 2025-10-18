@@ -290,6 +290,25 @@ public:
 		}
 		return false;
 	}
+	/**
+	 * @brief Returns the string value by key.
+	 * @details See the @ref getConfReaderString().
+	 *
+	 * @param[in] key target item key string
+	 * @param[out] value reference to the string value
+	 * 
+	 * @return True on success, false if item is not found or has a different type.
+	 */
+	bool get(const string& key, string& value) const noexcept
+	{
+		uint64_t length; const char* _string;
+		if (getConfReaderString(instance, key.data(), &_string, &length))
+		{
+			value = string(_string, (size_t)length);
+			return true;
+		}
+		return false;
+	}
 };
 
 } // conf
