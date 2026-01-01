@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * @file
  * @brief Conf file reader.
  * @details See the @ref reader.h
- **********************************************************************************************************************/
+ */
 
 #pragma once
 #include "conf/error.hpp"
@@ -31,7 +31,7 @@ extern "C"
 namespace conf
 {
 
-/***********************************************************************************************************************
+/**
  * @brief Conf reader instance handle.
  * @details See the @ref reader.h
  */
@@ -143,7 +143,7 @@ public:
 		return false;
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Returns the integer value by key. (int16)
 	 * @details See the @ref getConfReaderInt().
 	 *
@@ -223,7 +223,7 @@ public:
 		return false;
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Returns the floating value by key. (double)
 	 * @details See the @ref getConfReaderFloat().
 	 *
@@ -311,4 +311,4 @@ public:
 	}
 };
 
-} // conf
+} // namespace conf

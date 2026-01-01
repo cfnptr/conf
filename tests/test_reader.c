@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ inline static bool removeTestFile()
 	return true;
 }
 
+//**********************************************************************************************************************
 inline static bool testFailedToOpenFile()
 {
 	ConfReader confReader;
@@ -118,6 +119,8 @@ inline static bool testBadComment()
 
 	return removeTestFile();
 }
+
+//**********************************************************************************************************************
 inline static bool testBadKey()
 {
 	if (!createTestFile(": 123"))
@@ -178,6 +181,8 @@ inline static bool testBadValueSpacing()
 
 	return removeTestFile();
 }
+
+//**********************************************************************************************************************
 inline static bool testInteger(int64_t value, const char* stringValue)
 {
 	assert(stringValue);
@@ -280,6 +285,8 @@ inline static bool testFloating(double value, const char* stringValue)
 	destroyConfReader(confReader);
 	return removeTestFile();
 }
+
+//**********************************************************************************************************************
 inline static bool testBoolean(double value, const char* stringValue)
 {
 	assert(stringValue);
@@ -374,6 +381,8 @@ inline static bool testKey(const char* key)
 	destroyConfReader(confReader);
 	return removeTestFile();
 }
+
+//**********************************************************************************************************************
 inline static bool testString(const char* value)
 {
 	assert(value);
@@ -437,6 +446,8 @@ static const char* const testConfigString =
 	"\n"
 	"string : Hello world!\n"
 	"#comment\n";
+
+//**********************************************************************************************************************
 inline static bool testConfig(ConfReader confReader)
 {
 	assert(confReader);
@@ -565,6 +576,7 @@ inline static bool testDataConfig()
 	return result;
 }
 
+//**********************************************************************************************************************
 int main()
 {
 	bool result = testFailedToOpenFile();

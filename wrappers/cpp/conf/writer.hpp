@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * @file
  * @brief Pack file writer.
  * @details See the @ref writer.h
- **********************************************************************************************************************/
+ */
 
 #pragma once
 #include "conf/error.hpp"
@@ -31,7 +31,7 @@ extern "C"
 namespace conf
 {
 
-/***********************************************************************************************************************
+/**
  * @brief Conf writer instance handle.
  * @details See the @ref writer.h
  */
@@ -83,7 +83,7 @@ public:
 			throw Error("Failed to write a new line");
 	}
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Writes an integer value to the config. (int64)
 	 * @details See the @ref writeConfInt().
 	 *
@@ -164,7 +164,7 @@ public:
 	 */
 	void write(const string& key, uint8_t value) { write(key, (int64_t)value); }
 
-	/**
+	/*******************************************************************************************************************
 	 * @brief Writes a floating value to the config. (double)
 	 * @details See the @ref writeConfFloat().
 	 *
@@ -226,4 +226,4 @@ public:
 	}
 };
 
-} // conf
+} // namespace conf

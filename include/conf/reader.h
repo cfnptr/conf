@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
  * @details
  * Used to read Conf files. Reads all data from a file and 
  * organizes it into a list optimized for fast retrieval of values by key.
- **********************************************************************************************************************/
+ */
 
 #pragma once
 #include "conf/common.h"

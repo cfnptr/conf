@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -57,6 +57,7 @@ struct ConfReader_T
 	size_t itemCount;
 };
 
+//**********************************************************************************************************************
 inline static int compareConfItems(const void* a, const void* b)
 {
 	// NOTE: a and b should not be NULL!
@@ -393,6 +394,7 @@ inline static ConfResult createConfItems(int(*getNextChar)(void*), void* handle,
 	return SUCCESS_CONF_RESULT;
 }
 
+//**********************************************************************************************************************
 static int onNextFileChar(void* handle)
 {
 	// NOTE: handle should not be NULL!
@@ -497,6 +499,7 @@ void destroyConfReader(ConfReader confReader)
 	free(confReader);
 }
 
+//**********************************************************************************************************************
 bool getConfReaderType(ConfReader confReader, const char* key, ConfDataType* type)
 {
 	assert(confReader != NULL);
@@ -565,6 +568,7 @@ bool getConfReaderFloat(ConfReader confReader, const char* key, double* value)
 	return false;
 }
 
+//**********************************************************************************************************************
 bool getConfReaderBool(ConfReader confReader, const char* key, bool* value)
 {
 	assert(confReader != NULL);

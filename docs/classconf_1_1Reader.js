@@ -14,5 +14,6 @@ var classconf_1_1Reader =
     [ "get", "classconf_1_1Reader.html#aa846f2e499078229223a9d07168d8a3f", null ],
     [ "get", "classconf_1_1Reader.html#a71505d7ed35383437d529629902bba78", null ],
     [ "get", "classconf_1_1Reader.html#a5311247609aff71ba8b808b13b8d6b3c", null ],
-    [ "get", "classconf_1_1Reader.html#a6cc142d38a0ccfa25813602e6cbe927d", null ]
+    [ "get", "classconf_1_1Reader.html#a6cc142d38a0ccfa25813602e6cbe927d", null ],
+    [ "get", "classconf_1_1Reader.html#aabf8bd4c18d50bec69914c55781c5bda", null ]
 ];

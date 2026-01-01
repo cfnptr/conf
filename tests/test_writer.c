@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -100,6 +100,7 @@ inline static bool removeTestFile()
 	return true;
 }
 
+//**********************************************************************************************************************
 inline static bool testComment()
 {
 	ConfWriter confWriter;
@@ -174,6 +175,8 @@ inline static bool testInteger(int64_t value, const char* stringValue)
 
 	return removeTestFile();
 }
+
+//**********************************************************************************************************************
 inline static bool testFloating(double value, const char* stringValue)
 {
 	assert(stringValue);
@@ -250,6 +253,8 @@ inline static bool testBoolean(bool value, const char* stringValue)
 
 	return removeTestFile();
 }
+
+//**********************************************************************************************************************
 inline static bool testString(const char* value)
 {
 	assert(value);
@@ -377,6 +382,7 @@ inline static bool testConfig()
 	return removeTestFile();
 }
 
+//**********************************************************************************************************************
 int main()
 {
 	bool result = testComment();

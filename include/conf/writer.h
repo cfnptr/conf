@@ -1,4 +1,4 @@
-// Copyright 2021-2025 Nikita Fediuchin. All rights reserved.
+// Copyright 2021-2026 Nikita Fediuchin. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
  * @details
  * Used to write Conf files. It opens a new file stream and writes the key / value pairs to it. 
  * After destroying the Conf writer instance, it closes the file stream.
- **********************************************************************************************************************/
+ */
 
 #pragma once
 #include "conf/common.h"
