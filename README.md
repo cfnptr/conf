@@ -1,3 +1,5 @@
+# Deprecated. Use [INI](https://en.wikipedia.org/wiki/INI_file), [YAML](https://en.wikipedia.org/wiki/YAML) or [JSON](https://en.wikipedia.org/wiki/JSON) instead!!!
+
 # Conf
 
 A [library](https://github.com/cfnptr/conf) providing API for **configuration** file reading and writing.
